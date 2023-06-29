@@ -1,0 +1,14 @@
+{
+  "hash": "7e055438c13b2f4da862c30321f2907b",
+  "result": {
+    "markdown": "---\ntitle: \"פוסט עם קוד\"\nauthor: \"\"\ndate: \"2023-06-28\"\ncategories: [פונקציית חלון, code, analysis]\n---\n\n\nניוזלטר ראשון\n\n\n::: {.cell}\n\n```{.r .cell-code}\n1 + 1\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n[1] 2\n```\n:::\n:::\n\n\nאה יפה אפשר להוסיף פה עוד טקסט.\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
