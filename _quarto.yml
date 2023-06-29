@@ -3,6 +3,7 @@ project:
 
 website:
   title: "שאילתות מהחיים"
+  description: 'שאלות SQL מהיום-יום של אנליסט'
   navbar:
     right:
       - about.qmd
