@@ -6,15 +6,15 @@ website:
   description: 'שאלות SQL מהיום-יום של אנליסט'
   navbar:
     right:
+      - website.qmd
       - about.qmd
       - icon: github
-        href: https://github.com/
-      - icon: twitter
-        href: https://twitter.com
+        href: https://github.com/AmitLevinson/sql-website
+
 format:
   html:
     theme: cosmo
     css: styles.css
 
-editor: visual
+editor: source
 

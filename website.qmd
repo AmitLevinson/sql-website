@@ -1,23 +1,24 @@
 ---
-title: "מקבץ תרגילים ממקרים שהיו"
-listing:
-  contents: posts
-  sort: "date desc"
-  type: default
-  categories: true
-  sort-ui: false
-  filter-ui: false
-page-layout: full
-title-block-banner: true
+title: "אודות האתר"
 ---
 
+### היי!
+
+ברוכים הבאים לאתר שאילתות מהחיים. בבלוג/אוסף של שאלות אני מרכז מקרים מעניינים שיצא לי להתקל בהם במסגרת העבודה. לרוב זה יהיה משהו שפתרתי ואחשוב לעצמי "מגניב! בא לי שעוד אנשים יתנסו בזה" ואעלה את השאלה לפה כדי שתוכלו לנסות לפתור לבד, ולהשוות לפתרון שלי. כמובן כל הדאטה עובר איזשהי אנונימיזציה כך שלא יהיו פרטים מזהים.
+
+לצערי, המון מעבודת האנליסט לא קיים בבלוג הזה, וזה שאילת השאלות האנליטיות שיביאו אותנו לכתוב את הקוד שיתן לנו את הדאטה שאנחנו צריכים. עם זאת, אני מאמין שהאתגרים הללו יוכלו לעזור לכם לתרגל בעצמכם ובכך להתכונן למשרה הראשונה/הבאה. חלק מהשאלות יהיו לכם קלות, חלק אולי קשות; מקווה כי מכולם תלמדו!
+
+מוזמנים להירשם לניוזלטר ולקבל תזכורת כשיוצאת שאלה חדשה!
+
+
 ```{=html}
+<hr>
 <div id="mc_embed_shell">
       <link href="//cdn-images.mailchimp.com/embedcode/classic-061523.css" rel="stylesheet" type="text/css">
 <div id="mc_embed_signup">
     <form action="https://app.us21.list-manage.com/subscribe/post?u=35937fe07b07072fab364d305&amp;id=a03aaa869b&amp;f_id=00e22be7f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
         
-            <div class="mc-field-group"><div id  id="signup-text"><label for="mce-EMAIL">הירשמו לניוזלטר וקבלו עידכונים על שאלות חדשות</label></div><input type="email" name="EMAIL" class="required email" id="mce-EMAIL" required="" value=""></div>
+            <div class="mc-field-group"><div id  id="signup-text"><label for="mce-EMAIL">הזינו כתובת מייל:</label></div><input type="email" name="EMAIL" class="required email" id="mce-EMAIL" required="" value=""></div>
         <div id="mce-responses" class="clear foot">
             <div class="response" id="mce-error-response" style="display: none;"></div>
             <div class="response" id="mce-success-response" style="display: none;"></div>
@@ -32,7 +33,7 @@ title-block-banner: true
     </div>
 </form>
 </div>
-<hr>
+
 <script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script><script type="text/javascript">(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]=EMAIL;ftypes[0]=merge;,fnames[1]=FNAME;ftypes[1]=merge;,fnames[2]=LNAME;ftypes[2]=merge;,fnames[3]=ADDRESS;ftypes[3]=merge;,fnames[4]=PHONE;ftypes[4]=merge;,fnames[5]=BIRTHDAY;ftypes[5]=merge;false}(jQuery));var $mcj = jQuery.noConflict(true);</script></div>
 
 ```
