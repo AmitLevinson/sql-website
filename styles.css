@@ -4,6 +4,14 @@ html {
   direction:rtl;
 }
 
+.knitsql-table {
+  direction: ltr;
+}
+
+.knitsql-table caption {
+  display: none;
+}
+
 .me-auto {
   margin-right: 0 !important;
 }
@@ -16,4 +24,9 @@ html {
 
 #mc_embed_signup label {
   text-align: right;
+}
+
+.create-table {
+  max-height: 150px;
+  overflow: scroll;
 }
