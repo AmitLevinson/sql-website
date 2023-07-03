@@ -2,14 +2,21 @@ project:
   type: website
 
 website:
+  site-url: https://sql.amitgrinson.com/
   title: "שאילתות מהחיים"
   description: 'שאלות SQL מהיום-יום של אנליסט'
+  favicon: static/img/favicon.png
   navbar:
     right:
       - website.qmd
       - about.qmd
       - icon: github
         href: https://github.com/AmitLevinson/sql-website
+  twitter-card:
+    title: "שאילתות מהחיים"
+    description: "שאילתות לתרגול מהעבודה היום-יומית של אנליסט"
+    card-style: summary
+    image: static/img/avatar.png
 
 format:
   html:
