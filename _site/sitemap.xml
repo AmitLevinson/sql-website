@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://sql.amitgrinson.com/index.html</loc>
-    <lastmod>2023-07-03T18:42:13.461Z</lastmod>
+    <lastmod>2023-07-04T19:57:42.211Z</lastmod>
   </url>
   <url>
     <loc>https://sql.amitgrinson.com/website.html</loc>
@@ -11,5 +11,9 @@
   <url>
     <loc>https://sql.amitgrinson.com/about.html</loc>
     <lastmod>2023-07-03T18:44:56.886Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sql.amitgrinson.com/posts/post-with-code/index.html</loc>
+    <lastmod>2023-07-04T19:58:12.843Z</lastmod>
   </url>
 </urlset>

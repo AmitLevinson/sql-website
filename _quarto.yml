@@ -17,6 +17,10 @@ website:
     description: "שאילתות לתרגול מהעבודה היום-יומית של אנליסט"
     card-style: summary
     image: static/img/avatar.png
+    creator: '@Amit_Levinson'
+  open-graph:
+    title: "שאילתות מהחיים"
+    description: "שאילתות לתרגול מהעבודה היום-יומית של אנליסט"
 
 format:
   html:

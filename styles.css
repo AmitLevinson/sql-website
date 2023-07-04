@@ -1,7 +1,15 @@
 /* css styles */
 /* css styles */
+
+@import url(https://fonts.googleapis.com/earlyaccess/opensanshebrew.css);
+
+
 html {
   direction:rtl;
+}
+
+body { 
+  font-family: 'Open Sans Hebrew', serif;
 }
 
 .knitsql-table {

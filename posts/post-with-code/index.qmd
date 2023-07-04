@@ -39,31 +39,31 @@ SELECT TOP 10 * FROM LOGINS;
 ```{r echo = FALSE}
 dat <- dbGetQuery(sqlconn, 'SELECT *
 FROM LOGINS
-WHERE id = 2
-order by timestamp')
+WHERE user_id = 2
+order by login_date')
 
 DT::datatable(dat)
 ```
 
 
 
-נחזיר את הרשומה הבאה (שכן ניתן לראות למעלה שיש לו רצף של 6 הצלחות התחברות כמספר הגבוה ביותר)
+נחזיר את הרשומה הבאה (שכן ניתן לראות למעלה שיש לו רצף של 6 הצלחות התחברות כמספר הגבוה ביותר):    
 
 ```{sql connection='sqlconn', echo = FALSE}
 WITH GROUPS AS (
-  SELECT ID,
+  SELECT user_id,
   login,
-  timestamp,
-    ROW_NUMBER() OVER(PARTITION BY ID order by timestamp) - ROW_NUMBER() OVER(PARTITION BY ID, LOGIN order by timestamp asc) as grp
+  login_date,
+    ROW_NUMBER() OVER(PARTITION BY user_id order by login_date) - ROW_NUMBER() OVER(PARTITION BY user_id, LOGIN order by login_date asc) as grp
   FROM LOGINS
-  where id = 2
+  where user_id = 2
 )
 
-SELECT TOP 1 ID,
+SELECT TOP 1 user_id,
   COUNT(*) AS most_consecutive_logins
 FROM GROUPS
 where login = 'success'
-GROUP BY ID,
+GROUP BY user_id,
   GRP
 ORDER BY COUNT(*) DESC
 ```
@@ -72,160 +72,159 @@ ORDER BY COUNT(*) DESC
 ### שאלה 2
 
 ברגע שיוזרים נכשלים בהתחברות יותר מדי פעמים החשבון שלהם ננעל. עבור כל יוזר עם 3 כשלונות התחברות או יותר, החזירו את
-חותם הזמן (timestamp) בו הוא קיבל לראשונה את הכשלון השלישי באופן רצוף.
+התאריך (login_date) בו הוא קיבל *לראשונה* את הכשלון השלישי באופן רצוף.
 
 לדוג', עבור יוזר 1:
 
 ```{sql connection='sqlconn'}
 SELECT TOP 7 * FROM LOGINS
-where id = 1
-order by timestamp;
+where user_id = 1
+order by login_date;
 ```
 
-ניתן לראות שבניסיון התחברות ה-4, 5, ו-6 הוא נכשל לראשונה לפחות שלוש פעמים. לכן נחזיר עבורו רק את הערך 2022-08-22.
+ניתן לראות שבניסיון התחברות ה-4, 5, ו-6 הוא נכשל לראשונה לפחות שלוש פעמים. לכן נחזיר עבורו את הערך 2022-08-22.
 
 ```{sql connection='sqlconn', echo = FALSE}
 WITH GROUPS AS (
-  SELECT ID,
+  SELECT user_id,
   login,
-  timestamp,
-    ROW_NUMBER() OVER(PARTITION BY ID order by timestamp) - ROW_NUMBER() OVER(PARTITION BY ID, LOGIN order by timestamp asc) as grp
+  login_date,
+    ROW_NUMBER() OVER(PARTITION BY user_id order by login_date) - ROW_NUMBER() OVER(PARTITION BY user_id, LOGIN order by login_date asc) as grp
   FROM LOGINS
-  where id = 1
+  where user_id = 1
 ),
 
 grp_stamps as (
-SELECT ID,
-  timestamp,
-  rn_within_group = ROW_NUMBER() OVER(PARTITION BY ID, GRP order by grp, timestamp),
-  count_per_group = count(*) over(partition by id, grp),
+SELECT user_id,
+  login_date,
+  rn_within_group = ROW_NUMBER() OVER(PARTITION BY user_id, GRP order by grp, login_date),
+  count_per_group = count(*) over(partition by user_id, grp),
   grp
 FROM GROUPS
 where login = 'fail'
 )
 
-select id, 
-  min(timestamp) AS FIRST_3rd_failed_login
+select user_id, 
+  min(login_date) AS FIRST_3rd_failed_login
 from grp_stamps
 where count_per_group >= 3
-GROUP BY ID
+GROUP BY user_id
 ```
 
 ## יצירת הטבלה
-
-בדיקה פה.
 
 מוזמנים להשתמש בקוד הבא ליצירת טבלה זמנית:
 
 
 ```{r, eval=  FALSE, attr.source='style="max-height: 200px;overflow: scroll;"', connection='sqlconn'}
 
-create table #logins (
-	id INT,
-	timestamp DATE,
+drop table if exists logins;
+
+create table logins (
+	user_id INT,
+	login_date DATE,
 	login VARCHAR(50)
 );
-insert into #logins (id, timestamp, login) values (3, '8/12/2022', 'success');
-insert into #logins (id, timestamp, login) values (4, '8/26/2022', 'success');
-insert into #logins (id, timestamp, login) values (5, '7/17/2022', 'success');
-insert into #logins (id, timestamp, login) values (5, '11/2/2022', 'success');
-insert into #logins (id, timestamp, login) values (2, '6/7/2023', 'success');
-insert into #logins (id, timestamp, login) values (1, '5/7/2023', 'success');
-insert into #logins (id, timestamp, login) values (5, '4/28/2023', 'fail');
-insert into #logins (id, timestamp, login) values (3, '4/26/2023', 'success');
-insert into #logins (id, timestamp, login) values (2, '2/5/2023', 'success');
-insert into #logins (id, timestamp, login) values (5, '12/22/2022', 'fail');
-insert into #logins (id, timestamp, login) values (1, '4/22/2023', 'fail');
-insert into #logins (id, timestamp, login) values (4, '6/29/2023', 'success');
-insert into #logins (id, timestamp, login) values (3, '4/19/2023', 'fail');
-insert into #logins (id, timestamp, login) values (3, '4/6/2023', 'fail');
-insert into #logins (id, timestamp, login) values (5, '4/16/2023', 'fail');
-insert into #logins (id, timestamp, login) values (2, '5/22/2023', 'success');
-insert into #logins (id, timestamp, login) values (5, '3/10/2023', 'fail');
-insert into #logins (id, timestamp, login) values (4, '6/23/2023', 'fail');
-insert into #logins (id, timestamp, login) values (4, '1/18/2023', 'fail');
-insert into #logins (id, timestamp, login) values (2, '4/27/2023', 'success');
-insert into #logins (id, timestamp, login) values (5, '11/6/2022', 'fail');
-insert into #logins (id, timestamp, login) values (3, '11/18/2022', 'fail');
-insert into #logins (id, timestamp, login) values (2, '9/17/2022', 'fail');
-insert into #logins (id, timestamp, login) values (2, '11/14/2022', 'success');
-insert into #logins (id, timestamp, login) values (3, '7/23/2022', 'fail');
-insert into #logins (id, timestamp, login) values (1, '9/13/2022', 'success');
-insert into #logins (id, timestamp, login) values (2, '7/3/2022', 'success');
-insert into #logins (id, timestamp, login) values (1, '12/9/2022', 'success');
-insert into #logins (id, timestamp, login) values (4, '4/3/2023', 'fail');
-insert into #logins (id, timestamp, login) values (5, '10/11/2022', 'success');
-insert into #logins (id, timestamp, login) values (4, '3/16/2023', 'fail');
-insert into #logins (id, timestamp, login) values (5, '1/10/2023', 'success');
-insert into #logins (id, timestamp, login) values (3, '12/3/2022', 'fail');
-insert into #logins (id, timestamp, login) values (3, '7/2/2022', 'success');
-insert into #logins (id, timestamp, login) values (1, '10/11/2022', 'fail');
-insert into #logins (id, timestamp, login) values (1, '2/24/2023', 'fail');
-insert into #logins (id, timestamp, login) values (5, '9/11/2022', 'fail');
-insert into #logins (id, timestamp, login) values (3, '4/11/2023', 'fail');
-insert into #logins (id, timestamp, login) values (4, '6/3/2023', 'fail');
-insert into #logins (id, timestamp, login) values (2, '1/30/2023', 'fail');
-insert into #logins (id, timestamp, login) values (4, '10/21/2022', 'fail');
-insert into #logins (id, timestamp, login) values (1, '7/9/2022', 'fail');
-insert into #logins (id, timestamp, login) values (1, '8/12/2022', 'fail');
-insert into #logins (id, timestamp, login) values (1, '5/30/2023', 'fail');
-insert into #logins (id, timestamp, login) values (3, '8/11/2022', 'fail');
-insert into #logins (id, timestamp, login) values (2, '10/22/2022', 'success');
-insert into #logins (id, timestamp, login) values (3, '1/6/2023', 'fail');
-insert into #logins (id, timestamp, login) values (1, '11/10/2022', 'fail');
-insert into #logins (id, timestamp, login) values (2, '4/2/2023', 'success');
-insert into #logins (id, timestamp, login) values (2, '7/17/2022', 'fail');
-insert into #logins (id, timestamp, login) values (2, '8/6/2022', 'fail');
-insert into #logins (id, timestamp, login) values (4, '1/11/2023', 'success');
-insert into #logins (id, timestamp, login) values (2, '2/20/2023', 'fail');
-insert into #logins (id, timestamp, login) values (2, '1/9/2023', 'success');
-insert into #logins (id, timestamp, login) values (3, '1/3/2023', 'success');
-insert into #logins (id, timestamp, login) values (2, '4/17/2023', 'success');
-insert into #logins (id, timestamp, login) values (5, '3/7/2023', 'fail');
-insert into #logins (id, timestamp, login) values (4, '6/26/2023', 'fail');
-insert into #logins (id, timestamp, login) values (5, '6/30/2023', 'fail');
-insert into #logins (id, timestamp, login) values (5, '2/1/2023', 'fail');
-insert into #logins (id, timestamp, login) values (3, '3/26/2023', 'success');
-insert into #logins (id, timestamp, login) values (5, '11/13/2022', 'success');
-insert into #logins (id, timestamp, login) values (5, '8/11/2022', 'fail');
-insert into #logins (id, timestamp, login) values (5, '1/30/2023', 'success');
-insert into #logins (id, timestamp, login) values (3, '12/2/2022', 'fail');
-insert into #logins (id, timestamp, login) values (3, '9/27/2022', 'fail');
-insert into #logins (id, timestamp, login) values (1, '10/26/2022', 'success');
-insert into #logins (id, timestamp, login) values (2, '2/23/2023', 'fail');
-insert into #logins (id, timestamp, login) values (4, '12/25/2022', 'fail');
-insert into #logins (id, timestamp, login) values (1, '8/22/2022', 'fail');
-insert into #logins (id, timestamp, login) values (5, '5/27/2023', 'fail');
-insert into #logins (id, timestamp, login) values (5, '8/17/2022', 'success');
-insert into #logins (id, timestamp, login) values (2, '10/2/2022', 'success');
-insert into #logins (id, timestamp, login) values (1, '7/15/2022', 'fail');
-insert into #logins (id, timestamp, login) values (3, '2/6/2023', 'fail');
-insert into #logins (id, timestamp, login) values (4, '6/5/2023', 'fail');
-insert into #logins (id, timestamp, login) values (1, '8/15/2022', 'fail');
-insert into #logins (id, timestamp, login) values (3, '8/3/2022', 'success');
-insert into #logins (id, timestamp, login) values (4, '12/17/2022', 'fail');
-insert into #logins (id, timestamp, login) values (3, '9/11/2022', 'success');
-insert into #logins (id, timestamp, login) values (5, '7/6/2022', 'success');
-insert into #logins (id, timestamp, login) values (5, '1/14/2023', 'success');
-insert into #logins (id, timestamp, login) values (1, '11/4/2022', 'fail');
-insert into #logins (id, timestamp, login) values (3, '11/18/2022', 'success');
-insert into #logins (id, timestamp, login) values (2, '12/17/2022', 'success');
-insert into #logins (id, timestamp, login) values (4, '5/2/2023', 'success');
-insert into #logins (id, timestamp, login) values (5, '8/14/2022', 'success');
-insert into #logins (id, timestamp, login) values (1, '7/20/2022', 'success');
-insert into #logins (id, timestamp, login) values (2, '10/27/2022', 'success');
-insert into #logins (id, timestamp, login) values (2, '2/24/2023', 'success');
-insert into #logins (id, timestamp, login) values (5, '9/17/2022', 'fail');
-insert into #logins (id, timestamp, login) values (5, '10/5/2022', 'fail');
-insert into #logins (id, timestamp, login) values (5, '1/12/2023', 'fail');
-insert into #logins (id, timestamp, login) values (4, '4/30/2023', 'fail');
-insert into #logins (id, timestamp, login) values (4, '6/14/2023', 'success');
-insert into #logins (id, timestamp, login) values (2, '10/5/2022', 'fail');
-insert into #logins (id, timestamp, login) values (3, '7/24/2022', 'fail');
-insert into #logins (id, timestamp, login) values (4, '6/3/2023', 'fail');
-insert into #logins (id, timestamp, login) values (2, '11/27/2022', 'success');
-insert into #logins (id, timestamp, login) values (1, '3/15/2023', 'success');
-
+insert into logins (user_id, login_date, login) values (3, '8/12/2022', 'success');
+insert into logins (user_id, login_date, login) values (4, '8/26/2022', 'success');
+insert into logins (user_id, login_date, login) values (5, '7/17/2022', 'success');
+insert into logins (user_id, login_date, login) values (5, '11/2/2022', 'success');
+insert into logins (user_id, login_date, login) values (2, '6/7/2023', 'success');
+insert into logins (user_id, login_date, login) values (1, '5/7/2023', 'success');
+insert into logins (user_id, login_date, login) values (5, '4/28/2023', 'fail');
+insert into logins (user_id, login_date, login) values (3, '4/26/2023', 'success');
+insert into logins (user_id, login_date, login) values (2, '2/5/2023', 'success');
+insert into logins (user_id, login_date, login) values (5, '12/22/2022', 'fail');
+insert into logins (user_id, login_date, login) values (1, '4/22/2023', 'fail');
+insert into logins (user_id, login_date, login) values (4, '6/29/2023', 'success');
+insert into logins (user_id, login_date, login) values (3, '4/19/2023', 'fail');
+insert into logins (user_id, login_date, login) values (3, '4/6/2023', 'fail');
+insert into logins (user_id, login_date, login) values (5, '4/16/2023', 'fail');
+insert into logins (user_id, login_date, login) values (2, '5/22/2023', 'success');
+insert into logins (user_id, login_date, login) values (5, '3/10/2023', 'fail');
+insert into logins (user_id, login_date, login) values (4, '6/23/2023', 'fail');
+insert into logins (user_id, login_date, login) values (4, '1/18/2023', 'fail');
+insert into logins (user_id, login_date, login) values (2, '4/27/2023', 'success');
+insert into logins (user_id, login_date, login) values (5, '11/6/2022', 'fail');
+insert into logins (user_id, login_date, login) values (3, '11/18/2022', 'fail');
+insert into logins (user_id, login_date, login) values (2, '9/17/2022', 'fail');
+insert into logins (user_id, login_date, login) values (2, '11/14/2022', 'success');
+insert into logins (user_id, login_date, login) values (3, '7/23/2022', 'fail');
+insert into logins (user_id, login_date, login) values (1, '9/13/2022', 'success');
+insert into logins (user_id, login_date, login) values (2, '7/3/2022', 'success');
+insert into logins (user_id, login_date, login) values (1, '12/9/2022', 'success');
+insert into logins (user_id, login_date, login) values (4, '4/3/2023', 'fail');
+insert into logins (user_id, login_date, login) values (5, '10/11/2022', 'success');
+insert into logins (user_id, login_date, login) values (4, '3/16/2023', 'fail');
+insert into logins (user_id, login_date, login) values (5, '1/10/2023', 'success');
+insert into logins (user_id, login_date, login) values (3, '12/3/2022', 'fail');
+insert into logins (user_id, login_date, login) values (3, '7/2/2022', 'success');
+insert into logins (user_id, login_date, login) values (1, '10/11/2022', 'fail');
+insert into logins (user_id, login_date, login) values (1, '2/24/2023', 'fail');
+insert into logins (user_id, login_date, login) values (5, '9/11/2022', 'fail');
+insert into logins (user_id, login_date, login) values (3, '4/11/2023', 'fail');
+insert into logins (user_id, login_date, login) values (4, '6/3/2023', 'fail');
+insert into logins (user_id, login_date, login) values (2, '1/30/2023', 'fail');
+insert into logins (user_id, login_date, login) values (4, '10/21/2022', 'fail');
+insert into logins (user_id, login_date, login) values (1, '7/9/2022', 'fail');
+insert into logins (user_id, login_date, login) values (1, '8/12/2022', 'fail');
+insert into logins (user_id, login_date, login) values (1, '5/30/2023', 'fail');
+insert into logins (user_id, login_date, login) values (3, '8/11/2022', 'fail');
+insert into logins (user_id, login_date, login) values (2, '10/22/2022', 'success');
+insert into logins (user_id, login_date, login) values (3, '1/6/2023', 'fail');
+insert into logins (user_id, login_date, login) values (1, '11/10/2022', 'fail');
+insert into logins (user_id, login_date, login) values (2, '4/2/2023', 'success');
+insert into logins (user_id, login_date, login) values (2, '7/17/2022', 'fail');
+insert into logins (user_id, login_date, login) values (2, '8/6/2022', 'fail');
+insert into logins (user_id, login_date, login) values (4, '1/11/2023', 'success');
+insert into logins (user_id, login_date, login) values (2, '2/20/2023', 'fail');
+insert into logins (user_id, login_date, login) values (2, '1/9/2023', 'success');
+insert into logins (user_id, login_date, login) values (3, '1/3/2023', 'success');
+insert into logins (user_id, login_date, login) values (2, '4/17/2023', 'success');
+insert into logins (user_id, login_date, login) values (5, '3/7/2023', 'fail');
+insert into logins (user_id, login_date, login) values (4, '6/26/2023', 'fail');
+insert into logins (user_id, login_date, login) values (5, '6/30/2023', 'fail');
+insert into logins (user_id, login_date, login) values (5, '2/1/2023', 'fail');
+insert into logins (user_id, login_date, login) values (3, '3/26/2023', 'success');
+insert into logins (user_id, login_date, login) values (5, '11/13/2022', 'success');
+insert into logins (user_id, login_date, login) values (5, '8/11/2022', 'fail');
+insert into logins (user_id, login_date, login) values (5, '1/30/2023', 'success');
+insert into logins (user_id, login_date, login) values (3, '12/2/2022', 'fail');
+insert into logins (user_id, login_date, login) values (3, '9/27/2022', 'fail');
+insert into logins (user_id, login_date, login) values (1, '10/26/2022', 'success');
+insert into logins (user_id, login_date, login) values (2, '2/23/2023', 'fail');
+insert into logins (user_id, login_date, login) values (4, '12/25/2022', 'fail');
+insert into logins (user_id, login_date, login) values (1, '8/22/2022', 'fail');
+insert into logins (user_id, login_date, login) values (5, '5/27/2023', 'fail');
+insert into logins (user_id, login_date, login) values (5, '8/17/2022', 'success');
+insert into logins (user_id, login_date, login) values (2, '10/2/2022', 'success');
+insert into logins (user_id, login_date, login) values (1, '7/15/2022', 'fail');
+insert into logins (user_id, login_date, login) values (3, '2/6/2023', 'fail');
+insert into logins (user_id, login_date, login) values (4, '6/5/2023', 'fail');
+insert into logins (user_id, login_date, login) values (1, '8/15/2022', 'fail');
+insert into logins (user_id, login_date, login) values (3, '8/3/2022', 'success');
+insert into logins (user_id, login_date, login) values (4, '12/17/2022', 'fail');
+insert into logins (user_id, login_date, login) values (3, '9/11/2022', 'success');
+insert into logins (user_id, login_date, login) values (5, '7/6/2022', 'success');
+insert into logins (user_id, login_date, login) values (5, '1/14/2023', 'success');
+insert into logins (user_id, login_date, login) values (1, '11/4/2022', 'fail');
+insert into logins (user_id, login_date, login) values (3, '11/18/2022', 'success');
+insert into logins (user_id, login_date, login) values (2, '12/17/2022', 'success');
+insert into logins (user_id, login_date, login) values (4, '5/2/2023', 'success');
+insert into logins (user_id, login_date, login) values (5, '8/14/2022', 'success');
+insert into logins (user_id, login_date, login) values (1, '7/20/2022', 'success');
+insert into logins (user_id, login_date, login) values (2, '10/27/2022', 'success');
+insert into logins (user_id, login_date, login) values (2, '2/24/2023', 'success');
+insert into logins (user_id, login_date, login) values (5, '9/17/2022', 'fail');
+insert into logins (user_id, login_date, login) values (5, '10/5/2022', 'fail');
+insert into logins (user_id, login_date, login) values (5, '1/12/2023', 'fail');
+insert into logins (user_id, login_date, login) values (4, '4/30/2023', 'fail');
+insert into logins (user_id, login_date, login) values (4, '6/14/2023', 'success');
+insert into logins (user_id, login_date, login) values (2, '10/5/2022', 'fail');
+insert into logins (user_id, login_date, login) values (3, '7/24/2022', 'fail');
+insert into logins (user_id, login_date, login) values (4, '6/3/2023', 'fail');
+insert into logins (user_id, login_date, login) values (2, '11/27/2022', 'success');
+insert into logins (user_id, login_date, login) values (1, '3/15/2023', 'success');
 
 ```
 
@@ -235,3 +234,60 @@ insert into #logins (id, timestamp, login) values (1, '3/15/2023', 'success');
 ## תשובות
 
 להלן הפלטים לשאלות. 
+
+### 1.
+
+```{sql connection='sqlconn', echo = FALSE}
+WITH GROUPS AS (
+  SELECT user_id,
+  login,
+  login_date,
+    ROW_NUMBER() OVER(PARTITION BY user_id order by login_date) - ROW_NUMBER() OVER(PARTITION BY user_id, LOGIN order by login_date asc) as grp
+  FROM LOGINS
+),
+
+login_ranks as (
+  SELECT user_id,
+    COUNT(*) AS most_consecutive_logins,
+    ROW_NUMBER() OVER(partition by user_id ORDER BY count(*) desc) as rnk
+  FROM GROUPS
+  where login = 'success'
+  GROUP BY user_id,
+    GRP
+  )
+  
+SELECT user_id,
+  most_consecutive_logins
+FROM LOGIN_RANKS
+WHERE RNK = 1
+```
+
+### 2.
+
+
+```{sql connection='sqlconn', echo = FALSE}
+WITH GROUPS AS (
+  SELECT user_id,
+  login,
+  login_date,
+    ROW_NUMBER() OVER(PARTITION BY user_id order by login_date) - ROW_NUMBER() OVER(PARTITION BY user_id, LOGIN order by login_date asc) as grp
+  FROM LOGINS
+),
+
+grp_stamps as (
+SELECT user_id,
+  login_date,
+  rn_within_group = ROW_NUMBER() OVER(PARTITION BY user_id, GRP order by grp, login_date),
+  count_per_group = count(*) over(partition by user_id, grp),
+  grp
+FROM GROUPS
+where login = 'fail'
+)
+
+select user_id, 
+  min(login_date) AS FIRST_3rd_failed_login
+from grp_stamps
+where count_per_group >= 3
+GROUP BY user_id
+```
+
