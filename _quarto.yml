@@ -14,13 +14,13 @@ website:
         href: https://github.com/AmitLevinson/sql-website
   twitter-card:
     title: "שאילתות מהחיים"
-    description: "שאילתות לתרגול מהעבודה היום-יומית של אנליסט"
+    description: "תרגילי SQL משגרת העבודה של אנליסט"
     card-style: summary
-    image: static/img/avatar.png
+    image: static/img/banner.png
     creator: '@Amit_Levinson'
   open-graph:
     title: "שאילתות מהחיים"
-    description: "שאילתות לתרגול מהעבודה היום-יומית של אנליסט"
+    description: "תרגילי SQL משגרת העבודה של אנליסט"
 
 format:
   html:

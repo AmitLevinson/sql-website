@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="">
-<meta name="dcterms.date" content="2023-06-28">
+<meta name="dcterms.date" content="2023-07-11">
 
 <title>שאילתות מהחיים - זיהוי רצף כשלונות בהתחברות</title>
 <style>
@@ -113,7 +113,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta property="og:site-name" content="שאילתות מהחיים">
 <meta name="twitter:title" content="שאילתות מהחיים">
 <meta name="twitter:description" content="תרגילי SQL משגרת העבודה של אנליסט">
-<meta name="twitter:image" content="https://sql.amitgrinson.com/posts/post-with-code/static/img/avatar.png">
+<meta name="twitter:image" content="https://sql.amitgrinson.com/questions/1-consecutive-actions/static/img/banner.png">
 <meta name="twitter:creator" content="@Amit_Levinson">
 <meta name="twitter:card" content="summary">
 </head>
@@ -162,8 +162,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <h1 class="title">זיהוי רצף כשלונות בהתחברות</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">פונקציית חלון</div>
-                <div class="quarto-category">code</div>
-                <div class="quarto-category">analysis</div>
+                <div class="quarto-category">קשה</div>
               </div>
                   </div>
   </div>
@@ -175,7 +174,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">June 28, 2023</p>
+        <p class="date">July 11, 2023</p>
       </div>
     </div>
     
@@ -293,8 +292,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="cell-output-display">
 
-<div id="htmlwidget-93c2405c04be41982bac" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-93c2405c04be41982bac">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22"],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],["2022-07-03","2022-07-17","2022-08-06","2022-09-17","2022-10-02","2022-10-05","2022-10-22","2022-10-27","2022-11-14","2022-11-27","2022-12-17","2023-01-09","2023-01-30","2023-02-05","2023-02-20","2023-02-23","2023-02-24","2023-04-02","2023-04-17","2023-04-27","2023-05-22","2023-06-07"],["success","fail","fail","fail","success","fail","success","success","success","success","success","success","fail","success","fail","fail","success","success","success","success","success","success"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>user_id<\/th>\n      <th>login_date<\/th>\n      <th>login<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":1},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-8157ed6d8cdf21bcf54c" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-8157ed6d8cdf21bcf54c">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22"],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],["2022-07-03","2022-07-17","2022-08-06","2022-09-17","2022-10-02","2022-10-05","2022-10-22","2022-10-27","2022-11-14","2022-11-27","2022-12-17","2023-01-09","2023-01-30","2023-02-05","2023-02-20","2023-02-23","2023-02-24","2023-04-02","2023-04-17","2023-04-27","2023-05-22","2023-06-07"],["success","fail","fail","fail","success","fail","success","success","success","success","success","success","fail","success","fail","fail","success","success","success","success","success","success"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>user_id<\/th>\n      <th>login_date<\/th>\n      <th>login<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":1},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>נחזיר את הרשומה הבאה (שכן ניתן לראות למעלה שיש לו רצף של 6 הצלחות התחברות כמספר הגבוה ביותר):</p>
@@ -514,7 +513,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="תשובות" class="level2">
 <h2 class="anchored" data-anchor-id="תשובות">תשובות</h2>
-<p>להלן הפלטים לשאלות.</p>
+<p>להלן הפלטים לשאלות. דרכי פתרון יפורסמו כאן יחד עם השאלה הבאה.</p>
 <section id="section" class="level3">
 <h3 class="anchored" data-anchor-id="section">1.</h3>
 <div class="cell">

@@ -9,10 +9,10 @@ about:
       href: https://twitter.com/Amit_Levinson
     - icon: linkedin
       text: LinkedIn
-      href: https://github.com/AmitLevinson
+      href: https://www.linkedin.com/in/amit-grinson/
     - icon: github
       text: Github
-      href: https://github.com
+      href: https://github.com/AmitLevinson
     - icon: globe
       text: Website
       href: https://www.amitgrinson.com/
@@ -22,4 +22,4 @@ about:
 
 אני עמית, דאטה אנליסט בחברת פיוניר ובכללי בתחום הדאטה כבר כמה שנים. את האתרון הזה החלטתי לפתוח כשהבנתי שאני אוהב לשתף דברים מגניבים שיצא לי לפתור בעבודה, אבל הבנתי שאין לי יותר מדי עם מי. ולכן במקום לנסות למצוא אנשים ספציפיים, החלטתי להנגיש את זה לכולם. חוץ מזה, התחשק לי להנגיש קצת תוכן על דאטה בעברית, אז עוד סיבה לפתיחה שלו.
 
-זהו, מוזמנים להגיד שלום באחד מהקישורים מטה =\>
+זהו, מוזמנים להגיד שלום/הערות/בקשות באחד מהקישורים מטה =\>

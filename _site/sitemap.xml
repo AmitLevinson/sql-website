@@ -2,18 +2,26 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://sql.amitgrinson.com/index.html</loc>
-    <lastmod>2023-07-04T19:57:42.211Z</lastmod>
+    <lastmod>2023-07-04T20:13:47.610Z</lastmod>
   </url>
   <url>
     <loc>https://sql.amitgrinson.com/website.html</loc>
-    <lastmod>2023-07-03T18:42:29.797Z</lastmod>
+    <lastmod>2023-07-04T20:12:17.858Z</lastmod>
   </url>
   <url>
     <loc>https://sql.amitgrinson.com/about.html</loc>
-    <lastmod>2023-07-03T18:44:56.886Z</lastmod>
+    <lastmod>2023-07-04T20:12:56.246Z</lastmod>
   </url>
   <url>
     <loc>https://sql.amitgrinson.com/posts/post-with-code/index.html</loc>
-    <lastmod>2023-07-04T19:58:12.843Z</lastmod>
+    <lastmod>2023-07-04T20:04:01.670Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sql.amitgrinson.com/posts/1-consecutive-actions/index.html</loc>
+    <lastmod>2023-07-04T20:06:00.369Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sql.amitgrinson.com/questions/1-consecutive-actions/index.html</loc>
+    <lastmod>2023-07-04T20:09:23.313Z</lastmod>
   </url>
 </urlset>
