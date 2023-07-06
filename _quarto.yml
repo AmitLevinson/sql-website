@@ -21,6 +21,7 @@ website:
   open-graph:
     title: "שאילתות מהחיים"
     description: "תרגילי SQL משגרת העבודה של אנליסט"
+    image: static/img/banner.png
 
 format:
   html:
