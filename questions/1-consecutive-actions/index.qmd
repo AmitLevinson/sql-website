@@ -1,9 +1,10 @@
 ---
-title: "זיהוי רצף כשלונות בהתחברות"
+title: "זיהוי רצפים בהתחברות"
 author: ""
 date: "2023-07-11"
 toc: true
-categories: [פונקציית חלון, קשה]
+categories: [קשה]
+image: featured.png
 ---
 
 ```{r, include = FALSE}
