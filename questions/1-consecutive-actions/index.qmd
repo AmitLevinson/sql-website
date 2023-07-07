@@ -1,9 +1,14 @@
 ---
 title: "זיהוי רצפים בהתחברות"
+description: "תרגול זיהוי פעולות רצופות"
 author: ""
 date: "2023-07-11"
 toc: true
 categories: [קשה]
+twitter-card:
+  image: featured.png
+open-graph:
+  image: featured.png
 image: featured.png
 ---
 
