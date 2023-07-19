@@ -22,5 +22,14 @@
   },
   "questions/1-consecutive-actions/index.qmd": {
     "index.html": "3dc13504"
+  },
+  "questions/2-identical-different-outcomes/index.qmd": {
+    "index.html": "19472a30"
+  },
+  "questions/4-before-and-after/index.qmd": {
+    "index.html": "73adc244"
+  },
+  "questions/3-ranking-without-window-function/index.qmd": {
+    "index.html": "5ffdf462"
   }
 }

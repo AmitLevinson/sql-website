@@ -1,0 +1,101 @@
+---
+title: "אפיון תשלומים זהים או שונים"
+description: |
+  קטלוג לקוחות עם סטטוס תשלומים זהה או לפחות אחד שונה
+author: ""
+date: "2023-07-20"
+toc: true
+categories: [קל]
+image: featured.png
+draft: true
+---
+
+```{r, include = FALSE}
+library(odbc)
+library(DBI)
+
+sqlconn <- dbConnect(odbc(),
+                      Driver = "SQL Server",
+                      Server = "localhost\\SQLEXPRESS",
+                      Database = "sql-questions")
+```
+
+
+
+ברוכים הבאים לתרגיל השני!
+
+## הדאטה
+
+בטבלה למטה ניתן לראות פירוט תשלומים של יוזרים:
+
+```{sql connection='sqlconn'}
+SELECT TOP 10 * FROM payments_ag_2;
+```
+
+
+## שאלה
+
+ עבור כל יוזר החזר את מספר התשלומים שהוא קיבל, האם כל התשלומים שהוא קיבל הם עם סטטוס 'Load' (1 כן, 0 לא), האם מספר התשלומים שנטענו היה גדול ממספר התשלומים שבוטלו (1 כן, 0 לא) והאם יש לו לפחות תשלום אחד שהוא 'Pending' (1 כן, 0 לא)
+
+
+**בהצלחה!**
+
+## יצירת הטבלה
+
+
+```{r, eval=  FALSE, attr.source='style="max-height: 200px;overflow: scroll;"', connection='sqlconn'}
+
+DROP table if exists payments_ag_2;
+
+
+CREATE TABLE payments_ag_2
+    ([user_id] int, [date] date, [status] varchar(7), [amount] int)
+;
+    
+INSERT INTO payments_ag_2
+    ([user_id], [date], [status], [amount])
+VALUES
+    (1, '2023-06-01', 'Load', 234),
+    (1, '2023-06-14', 'Cancel', 42),
+    (1, '2023-06-16', 'Load', 52),
+    (1, '2023-06-22', 'Load', 6),
+    (1, '2023-06-23', 'Load', 36),
+    (1, '2023-06-24', 'Pending', 74),
+    (2, '2023-06-03', 'Load', 58),
+    (2, '2023-06-05', 'Load', 33),
+    (2, '2023-06-09', 'Load', 65),
+    (2, '2023-06-10', 'Load', 74),
+    (2, '2023-06-14', 'Load', 98),
+    (2, '2023-06-18', 'Load', 14),
+    (3, '2023-06-01', 'Cancel', 52),
+    (3, '2023-06-04', 'Cancel', 5),
+    (3, '2023-06-07', 'Pending', 99),
+    (4, '2023-06-09', 'Load', 100),
+    (4, '2023-06-10', 'Cancel', 15),
+    (5, '2023-06-15', 'Load', 20),
+    (6, '2023-06-16', 'Pending', 21),
+    (6, '2023-06-16', 'Load', 42)
+;
+
+```
+
+
+
+## תשובה
+
+(פתרון יפורסם עם השאלה הבאה)
+
+```{sql connection='sqlconn', echo = FALSE}
+SELECT user_id,
+  count(*) as n_payments,
+  all_loaded = CASE WHEN SUM(CASE WHEN STATUS = 'Load' then 1 END) = COUNT(*) then 1 else 0 end,
+  more_loaded_than_failed = CASE WHEN SUM(CASE WHEN STATUS = 'Load' then 1 END) > SUM(CASE WHEN STATUS = 'Cancel' then 1 else 0 END) then 1 else 0 end,
+  has_pending_payment = MAX(CASE when status = 'Pending' then 1 else 0 end)
+FROM payments_ag_2
+GROUP BY user_id
+```
+
+```{r echo = FALSE}
+dbDisconnect(sqlconn)
+```
+

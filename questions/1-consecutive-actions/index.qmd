@@ -1,15 +1,13 @@
 ---
 title: "זיהוי רצפים בהתחברות"
-description: "תרגול זיהוי פעולות רצופות"
+description: |
+  תרגול זיהוי פעולות רצופות
 author: ""
 date: "2023-07-11"
 toc: true
 categories: [קשה]
-twitter-card:
-  image: featured.png
-open-graph:
-  image: featured.png
 image: featured.png
+draft: false
 ---
 
 ```{r, include = FALSE}
@@ -48,7 +46,10 @@ FROM LOGINS
 WHERE user_id = 2
 order by login_date')
 
-DT::datatable(dat)
+dat |>
+  dplyr::select(login, login_date, user_id) |>
+  dplyr::arrange(login_date) |>
+  DT::datatable()
 ```
 
 
@@ -119,7 +120,7 @@ GROUP BY user_id
 
 ## יצירת הטבלה
 
-מוזמנים להשתמש בקוד הבא ליצירת טבלה זמנית:
+מוזמנים להשתמש בקוד הבא ליצירת טבלה (יש סימן להעתקה בצד ימין למעלה של המלבן כשמעבירים את העכבר מעליו):
 
 
 ```{r, eval=  FALSE, attr.source='style="max-height: 200px;overflow: scroll;"', connection='sqlconn'}
@@ -291,9 +292,13 @@ where login = 'fail'
 )
 
 select user_id, 
-  min(login_date) AS FIRST_3rd_failed_login
+  min(case when rn_within_group = 3 then login_date END) AS FIRST_3rd_failed_login
 from grp_stamps
 where count_per_group >= 3
 GROUP BY user_id
 ```
 
+
+```{r echo = FALSE}
+dbDisconnect(sqlconn)
+```

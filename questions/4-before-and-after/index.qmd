@@ -1,0 +1,104 @@
+---
+title: "ערכים לפני ואחרי נקודת זמן"
+description: |
+  החזרת ציון 'סכנת עזיבה' לפני התשלום הראשון ומיד לאחריו
+author: ""
+date: "2023-09-14"
+toc: true
+categories: [קל]
+image: featured.png
+draft: true
+---
+
+```{r, include = FALSE}
+library(odbc)
+library(DBI)
+
+sqlconn <- dbConnect(odbc(),
+                      Driver = "SQL Server",
+                      Server = "localhost\\SQLEXPRESS",
+                      Database = "sql-questions")
+```
+
+
+
+ברוכים הבאים לתרגיל הרביעי!
+
+## הדאטה
+
+בטבלה למטה ניתן לראות פירוט תשלומים של יוזרים:
+
+```{sql connection='sqlconn'}
+--SELECT TOP 10 * FROM payments;
+```
+
+
+## שאלה
+
+לכל יוזר יש ציון 'סכנת נטישה' שמעיד על הסיכוי של אותו יוזר לנטוש את הפלטפורמה (נע בין 1-100, כאשר ציון גבוה יותר מעיד על סיכוי גבוה יותר לנטישה).
+
+עבור כל יוזר יש לחלץ שני ציוני סכנת נטישה: הציון המאוחר ביותר שמתועד *לפני* קבלת התשלום הראשון, וציון המוקדם ביותר שמתועד *לאחר* התשלום הראשון.
+
+### דוגמא
+
+לדוג', להלן טבלת ציוני 'סכנת נטישה' ליוזר כלשהו:
+
+XXXX
+
+ולהלן דגימה מתוך התשלומים הראשונים שלו:
+
+XXX
+
+לכן, אנחנו נרצה להחזיר את הרשומה הבאה:
+
+XXX
+
+ניתן לראות שהציון 'סכנת נטישה' המאוחר ביותר לפני התשלום הראשוני הוא XXX ואילו ציון 'סכנת נטישה' המוקדם ביותר לאחר התשלום הראשוני הוא XXX.
+
+## יצירת הטבלה
+
+```{r, eval=  FALSE, attr.source='style="max-height: 200px;overflow: scroll;"', connection='sqlconn'}
+
+create table payments_ag_4 (
+	user_id INT,
+	payment_date DATE,
+	amount DECIMAL(4,1)
+);
+insert into payments_ag_4 (user_id, payment_date, amount) values (4, '11/26/2022', 89.7);
+insert into payments_ag_4 (user_id, payment_date, amount) values (5, '11/29/2022', 57.5);
+insert into payments_ag_4 (user_id, payment_date, amount) values (4, '10/14/2022', 52.6);
+insert into payments_ag_4 (user_id, payment_date, amount) values (5, '12/3/2022', 18.3);
+insert into payments_ag_4 (user_id, payment_date, amount) values (2, '10/14/2022', 73.9);
+insert into payments_ag_4 (user_id, payment_date, amount) values (5, '11/30/2022', 4.2);
+insert into payments_ag_4 (user_id, payment_date, amount) values (1, '11/13/2022', 4.0);
+insert into payments_ag_4 (user_id, payment_date, amount) values (2, '11/9/2022', 97.3);
+insert into payments_ag_4 (user_id, payment_date, amount) values (3, '10/22/2022', 4.6);
+insert into payments_ag_4 (user_id, payment_date, amount) values (4, '10/16/2022', 42.0);
+insert into payments_ag_4 (user_id, payment_date, amount) values (4, '12/6/2022', 89.6);
+insert into payments_ag_4 (user_id, payment_date, amount) values (5, '11/29/2022', 36.9);
+insert into payments_ag_4 (user_id, payment_date, amount) values (5, '10/19/2022', 62.5);
+insert into payments_ag_4 (user_id, payment_date, amount) values (1, '11/10/2022', 61.8);
+insert into payments_ag_4 (user_id, payment_date, amount) values (2, '10/31/2022', 17.5);
+insert into payments_ag_4 (user_id, payment_date, amount) values (2, '11/10/2022', 5.7);
+insert into payments_ag_4 (user_id, payment_date, amount) values (1, '10/13/2022', 71.7);
+insert into payments_ag_4 (user_id, payment_date, amount) values (2, '11/2/2022', 35.8);
+insert into payments_ag_4 (user_id, payment_date, amount) values (4, '11/21/2022', 52.3);
+insert into payments_ag_4 (user_id, payment_date, amount) values (2, '10/19/2022', 31.2);
+```
+
+
+
+## תשובה
+
+(פתרון יפורסם עם השאלה הבאה)
+
+### 1.
+
+```{sql connection='sqlconn', echo = FALSE, eval = FALSE}
+
+```
+
+```{r echo = FALSE}
+dbDisconnect(sqlconn)
+```
+
