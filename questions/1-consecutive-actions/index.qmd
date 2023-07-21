@@ -5,7 +5,7 @@ description: |
 author: ""
 date: "2023-07-11"
 toc: true
-categories: [קשה]
+categories: [מתקדם]
 image: featured.png
 draft: false
 ---

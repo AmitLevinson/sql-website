@@ -10,3 +10,7 @@ title-block-banner: true
 comments: 
   utterances: 
     repo:  AmitLevinson/sql-website-comments
+    
+format:
+  html:
+    include-after-body: ../footer.html

@@ -1,5 +1,7 @@
 ---
 title: "מקבץ תרגילים ממקרים שהיו"
+subtitle: |
+  תרגילי SQL ברמות קושי שונות מהיום-יום שלי
 listing:
   contents: questions
   sort: "date desc"
@@ -10,6 +12,7 @@ listing:
 page-layout: full
 title-block-banner: true
 ---
+
 
 ```{=html}
 <div id="mc_embed_shell">
@@ -22,7 +25,7 @@ title-block-banner: true
             <div class="response" id="mce-error-response" style="display: none;"></div>
             <div class="response" id="mce-success-response" style="display: none;"></div>
         </div>
-    <div aria-hidden="true" style="position: absolute; left: -5000px;"></div>
+    <div aria-hidden="true" style=""></div>
         <div class="optionalParent">
             <div class="clear foot">
                 <input type="submit" name="subscribe" id="mc-embedded-subscribe" class="button" value="רשום אותי">
@@ -32,8 +35,14 @@ title-block-banner: true
     </div>
 </form>
 </div>
+<script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="AGrinson" data-color="#FFDD00" data-emoji=""  data-font="Cookie" data-text="קנו לי קפה" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
 <hr>
 <br>
-<script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script><script type="text/javascript">(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]=EMAIL;ftypes[0]=merge;,fnames[1]=FNAME;ftypes[1]=merge;,fnames[2]=LNAME;ftypes[2]=merge;,fnames[3]=ADDRESS;ftypes[3]=merge;,fnames[4]=PHONE;ftypes[4]=merge;,fnames[5]=BIRTHDAY;ftypes[5]=merge;false}(jQuery));var $mcj = jQuery.noConflict(true);</script></div>
+<script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script>
+
+<script type="text/javascript">(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]=EMAIL;ftypes[0]=merge;,fnames[1]=FNAME;ftypes[1]=merge;,fnames[2]=LNAME;ftypes[2]=merge;,fnames[3]=ADDRESS;ftypes[3]=merge;,fnames[4]=PHONE;ftypes[4]=merge;,fnames[5]=BIRTHDAY;ftypes[5]=merge;false}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+
+</div>
 
 ```
+
