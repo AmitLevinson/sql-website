@@ -3,7 +3,7 @@ title: "זיהוי רצפים בהתחברות"
 description: |
   תרגול זיהוי פעולות רצופות
 author: ""
-date: "2023-07-11"
+date: "2023-09-05"
 toc: true
 categories: [מתקדם]
 image: featured.png
@@ -123,9 +123,9 @@ GROUP BY user_id
 מוזמנים להשתמש בקוד הבא ליצירת טבלה (יש סימן להעתקה בצד ימין למעלה של המלבן כשמעבירים את העכבר מעליו):
 
 
-```{r, eval=  FALSE, attr.source='style="max-height: 200px;overflow: scroll;"', connection='sqlconn'}
+```{sql, eval=  FALSE, attr.source='style="max-height: 200px;overflow: scroll;"', connection='sqlconn'}
 
-drop table if exists logins;
+--drop table if exists logins; /* Drop with caution */
 
 create table logins (
 	user_id INT,

@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="">
-<meta name="dcterms.date" content="2023-08-01">
-<meta name="description" content="ניסיון ליצור פונקציית דירוג בלי שימוש בפונקצית חלון">
+<meta name="dcterms.date" content="2023-07-20">
+<meta name="description" content="קטלוג לקוחות עם סטטוס תשלומים זהה או לפחות אחד שונה">
 
-<title>שאילתות מהחיים - סינון מקומות גבוהים בלי פונקציית דירוג</title>
+<title>שאילתות מהחיים - אפיון תשלומים זהים או שונים</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -101,11 +101,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="שאילתות מהחיים">
 <meta property="og:description" content="תרגילי SQL משגרת העבודה של אנליסט">
-<meta property="og:image" content="https://sql.amitgrinson.com/questions/3-ranking-without-window-function/static/img/banner.png">
+<meta property="og:image" content="https://sql.amitgrinson.com/questions/2-identical-different-payments/static/img/banner.png">
 <meta property="og:site-name" content="שאילתות מהחיים">
 <meta name="twitter:title" content="שאילתות מהחיים">
 <meta name="twitter:description" content="תרגילי SQL משגרת העבודה של אנליסט">
-<meta name="twitter:image" content="https://sql.amitgrinson.com/questions/3-ranking-without-window-function/static/img/banner.png">
+<meta name="twitter:image" content="https://sql.amitgrinson.com/questions/2-identical-different-payments/static/img/banner.png">
 <meta name="twitter:creator" content="@Amit_Levinson">
 <meta name="twitter:card" content="summary">
 </head>
@@ -151,14 +151,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">סינון מקומות גבוהים בלי פונקציית דירוג</h1>
+      <h1 class="title">אפיון תשלומים זהים או שונים</h1>
                   <div>
         <div class="description">
-          <p>ניסיון ליצור פונקציית דירוג בלי שימוש בפונקצית חלון</p>
+          <p>קטלוג לקוחות עם סטטוס תשלומים זהה או לפחות אחד שונה</p>
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">מתקדם</div>
+                <div class="quarto-category">קל</div>
               </div>
                   </div>
   </div>
@@ -170,7 +170,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">August 1, 2023</p>
+        <p class="date">July 20, 2023</p>
       </div>
     </div>
     
@@ -189,10 +189,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#הדאטה" id="toc-הדאטה" class="nav-link active" data-scroll-target="#הדאטה">הדאטה</a></li>
   <li><a href="#שאלה" id="toc-שאלה" class="nav-link" data-scroll-target="#שאלה">שאלה</a></li>
   <li><a href="#יצירת-הטבלה" id="toc-יצירת-הטבלה" class="nav-link" data-scroll-target="#יצירת-הטבלה">יצירת הטבלה</a></li>
-  <li><a href="#תשובה" id="toc-תשובה" class="nav-link" data-scroll-target="#תשובה">תשובה</a>
-  <ul class="collapse">
-  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section">1.</a></li>
-  </ul></li>
+  <li><a href="#תשובה" id="toc-תשובה" class="nav-link" data-scroll-target="#תשובה">תשובה</a></li>
   </ul>
 </nav>
     </div>
@@ -202,52 +199,202 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>ברוכים הבאים לתרגיל השלישי!</p>
+<p>ברוכים הבאים לתרגיל השני!</p>
 <section id="הדאטה" class="level2">
 <h2 class="anchored" data-anchor-id="הדאטה">הדאטה</h2>
 <p>בטבלה למטה ניתן לראות פירוט תשלומים של יוזרים:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">--SELECT TOP 10 * FROM payments;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> TOP <span class="dv">10</span> <span class="op">*</span> <span class="kw">FROM</span> payments_ag_2;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="knitsql-table">
+<table class="table table-sm table-striped small">
+<caption>Displaying records 1 - 10</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">user_id</th>
+<th style="text-align: left;">date</th>
+<th style="text-align: left;">status</th>
+<th style="text-align: right;">amount</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">2023-06-01</td>
+<td style="text-align: left;">Load</td>
+<td style="text-align: right;">234</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">2023-06-14</td>
+<td style="text-align: left;">Cancel</td>
+<td style="text-align: right;">42</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">2023-06-16</td>
+<td style="text-align: left;">Load</td>
+<td style="text-align: right;">52</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">2023-06-22</td>
+<td style="text-align: left;">Load</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">2023-06-23</td>
+<td style="text-align: left;">Load</td>
+<td style="text-align: right;">36</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">2023-06-24</td>
+<td style="text-align: left;">Pending</td>
+<td style="text-align: right;">74</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">2023-06-03</td>
+<td style="text-align: left;">Load</td>
+<td style="text-align: right;">58</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">2023-06-05</td>
+<td style="text-align: left;">Load</td>
+<td style="text-align: right;">33</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">2023-06-09</td>
+<td style="text-align: left;">Load</td>
+<td style="text-align: right;">65</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">2023-06-10</td>
+<td style="text-align: left;">Load</td>
+<td style="text-align: right;">74</td>
+</tr>
+</tbody>
+</table>
 </div>
-<p>האמת זו לא ממש שאלה שנדרשתי לה בעבודה אלא שאלה שעלתה בקבוצת הפייסבוק לאנליסטים. אחרי שעניתי עליה חשבתי שיהיה נחמד לאתגר גם אתכם בה. אומנם ברוב הגדול של הפעמים תוכלו להשתמש בפונקצית חלון, התרגול דורש מאיתנו לחשוב מה פונקצית חלון של דירוג עושה ובכך לענות בצורה יעילה שמחקה זאת.</p>
+</div>
 </section>
 <section id="שאלה" class="level2">
 <h2 class="anchored" data-anchor-id="שאלה">שאלה</h2>
-<p>ללא שימוש בפונקצית חלון, סנן את הרשומות כך שתקבל את הקטגוריות הנמצאות במקום הראשון, שני או שלישי לפי מכירות באותה שנה (לפי amount). במידה ויש תיקו יש להחזיר את כלל הקטגוריות המדורגות בשלוש הכי גבוהים.</p>
+<p>עבור כל יוזר החזר טבלה עם מספר התשלומים שהוא קיבל, עמודה המציינת האם כל התשלומים שהוא קיבל הם עם סטטוס ‘Load’ (1 כן, 0 לא), האם מספר התשלומים שנטענו היה גדול ממספר התשלומים שבוטלו (1 כן, 0 לא) והאם יש לו לפחות תשלום אחד שהוא ‘Pending’ (1 כן, 0 לא)</p>
 <p><strong>בהצלחה!</strong></p>
 </section>
 <section id="יצירת-הטבלה" class="level2">
 <h2 class="anchored" data-anchor-id="יצירת-הטבלה">יצירת הטבלה</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2" style="max-height: 200px;overflow: scroll;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>DROP TABLE IF EXISTS Sales_ag;</span>
+<div class="sourceCode cell-code" id="cb2" style="max-height: 200px;overflow: scroll;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>DROP table <span class="cf">if</span> exists payments_ag_2;</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>CREATE TABLE <span class="fu">sales_ag</span> (</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    year INT,</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    category <span class="fu">NVARCHAR</span>(MAX),</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    amount INT</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>INSERT into <span class="fu">Sales_ag</span> (year, category, amount) <span class="fu">values</span> (<span class="dv">2000</span>, <span class="st">'Automotive'</span>, <span class="dv">89</span>);</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>insert into <span class="fu">Sales_ag</span> (year, category, amount) <span class="fu">values</span> (<span class="dv">2000</span>, <span class="st">'Computers'</span>, <span class="dv">59</span>);</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>insert into <span class="fu">Sales_ag</span> (year, category, amount) <span class="fu">values</span> (<span class="dv">2000</span>, <span class="st">'Books'</span>, <span class="dv">19</span>);</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>insert into <span class="fu">Sales_ag</span> (year, category, amount) <span class="fu">values</span> (<span class="dv">2000</span>, <span class="st">'Movies'</span>, <span class="dv">74</span>);</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>insert into <span class="fu">Sales_ag</span> (year, category, amount) <span class="fu">values</span> (<span class="dv">2000</span>, <span class="st">'Garden'</span>, <span class="dv">74</span>);</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>insert into <span class="fu">Sales_ag</span> (year, category, amount) <span class="fu">values</span> (<span class="dv">2001</span>, <span class="st">'Clothing'</span>, <span class="dv">49</span>);</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>insert into <span class="fu">Sales_ag</span> (year, category, amount) <span class="fu">values</span> (<span class="dv">2001</span>, <span class="st">'Computers'</span>, <span class="dv">53</span>);</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>insert into <span class="fu">Sales_ag</span> (year, category, amount) <span class="fu">values</span> (<span class="dv">2001</span>, <span class="st">'Automotive'</span>, <span class="dv">65</span>);</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>insert into <span class="fu">Sales_ag</span> (year, category, amount) <span class="fu">values</span> (<span class="dv">2001</span>, <span class="st">'Garden'</span>, <span class="dv">24</span>);</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>insert into <span class="fu">Sales_ag</span> (year, category, amount) <span class="fu">values</span> (<span class="dv">2001</span>, <span class="st">'Movies'</span>, <span class="dv">39</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>CREATE TABLE payments_ag_2</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    ([user_id] int, [date] date, [status] <span class="fu">varchar</span>(<span class="dv">7</span>), [amount] int)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>;</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>INSERT INTO payments_ag_2</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    ([user_id], [date], [status], [amount])</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>VALUES</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="st">'2023-06-01'</span>, <span class="st">'Load'</span>, <span class="dv">234</span>),</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="st">'2023-06-14'</span>, <span class="st">'Cancel'</span>, <span class="dv">42</span>),</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="st">'2023-06-16'</span>, <span class="st">'Load'</span>, <span class="dv">52</span>),</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="st">'2023-06-22'</span>, <span class="st">'Load'</span>, <span class="dv">6</span>),</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="st">'2023-06-23'</span>, <span class="st">'Load'</span>, <span class="dv">36</span>),</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="st">'2023-06-24'</span>, <span class="st">'Pending'</span>, <span class="dv">74</span>),</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2</span>, <span class="st">'2023-06-03'</span>, <span class="st">'Load'</span>, <span class="dv">58</span>),</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2</span>, <span class="st">'2023-06-05'</span>, <span class="st">'Load'</span>, <span class="dv">33</span>),</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2</span>, <span class="st">'2023-06-09'</span>, <span class="st">'Load'</span>, <span class="dv">65</span>),</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2</span>, <span class="st">'2023-06-10'</span>, <span class="st">'Load'</span>, <span class="dv">74</span>),</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2</span>, <span class="st">'2023-06-14'</span>, <span class="st">'Load'</span>, <span class="dv">98</span>),</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2</span>, <span class="st">'2023-06-18'</span>, <span class="st">'Load'</span>, <span class="dv">14</span>),</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3</span>, <span class="st">'2023-06-01'</span>, <span class="st">'Cancel'</span>, <span class="dv">52</span>),</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3</span>, <span class="st">'2023-06-04'</span>, <span class="st">'Cancel'</span>, <span class="dv">5</span>),</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3</span>, <span class="st">'2023-06-07'</span>, <span class="st">'Pending'</span>, <span class="dv">99</span>),</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">4</span>, <span class="st">'2023-06-09'</span>, <span class="st">'Load'</span>, <span class="dv">100</span>),</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">4</span>, <span class="st">'2023-06-10'</span>, <span class="st">'Cancel'</span>, <span class="dv">15</span>),</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">5</span>, <span class="st">'2023-06-15'</span>, <span class="st">'Load'</span>, <span class="dv">20</span>),</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">6</span>, <span class="st">'2023-06-16'</span>, <span class="st">'Pending'</span>, <span class="dv">21</span>),</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">6</span>, <span class="st">'2023-06-16'</span>, <span class="st">'Load'</span>, <span class="dv">42</span>)</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="תשובה" class="level2">
 <h2 class="anchored" data-anchor-id="תשובה">תשובה</h2>
-<p>(פתרון יפורסם עם השאלה הבאה)</p>
-<section id="section" class="level3">
-<h3 class="anchored" data-anchor-id="section">1.</h3>
+<p>(דרך הפתרון תפורסם עם השאלה הבאה)</p>
+<div class="cell">
+<div class="knitsql-table">
+<table class="table table-sm table-striped small">
+<caption>6 records</caption>
+<colgroup>
+<col style="width: 10%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 32%">
+<col style="width: 27%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">user_id</th>
+<th style="text-align: right;">n_payments</th>
+<th style="text-align: right;">all_loaded</th>
+<th style="text-align: right;">more_loaded_than_failed</th>
+<th style="text-align: right;">has_pending_payment</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">6</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

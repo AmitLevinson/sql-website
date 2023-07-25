@@ -31,5 +31,8 @@
   },
   "questions/3-ranking-without-window-function/index.qmd": {
     "index.html": "5ffdf462"
+  },
+  "questions/2-identical-different-payments/index.qmd": {
+    "index.html": "55204318"
   }
 }

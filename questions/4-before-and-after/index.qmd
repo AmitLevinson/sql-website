@@ -26,38 +26,85 @@ sqlconn <- dbConnect(odbc(),
 
 ## הדאטה
 
-בטבלה למטה ניתן לראות פירוט תשלומים של יוזרים:
+התרגיל מורכב מ-2 טבלאות: טבלת תשלומים וטבלת ציוני 'סכנת נטישה' (עוד הסבר למטה). 
+
+טבלת תשלומים:
 
 ```{sql connection='sqlconn'}
---SELECT TOP 10 * FROM payments;
+SELECT TOP 5 * 
+FROM payments_ag_4
+order by payment_date;
 ```
+
+טבלת ציוני סכנת נטישה:
+
+```{sql connection='sqlconn'}
+SELECT TOP 5 * 
+FROM churn_scores_ag_4
+order by score_date;
+```
+
 
 
 ## שאלה
 
-לכל יוזר יש ציון 'סכנת נטישה' שמעיד על הסיכוי של אותו יוזר לנטוש את הפלטפורמה (נע בין 1-100, כאשר ציון גבוה יותר מעיד על סיכוי גבוה יותר לנטישה).
+לכל יוזר יש ציוני 'סכנת נטישה' המעידים על הסיכוי של אותו יוזר לנטוש את הפלטפורמה לנקודת זמן מסוימת (נע בין 1-100, כאשר ציון גבוה יותר מעיד על סיכוי גבוה יותר לנטישה).
 
-עבור כל יוזר יש לחלץ שני ציוני סכנת נטישה: הציון המאוחר ביותר שמתועד *לפני* קבלת התשלום הראשון, וציון המוקדם ביותר שמתועד *לאחר* התשלום הראשון.
+עבור כל יוזר יש לחלץ את התשלום הראשון שקיבל ושני ציוני סכנת נטישה: הציון המאוחר ביותר שמתועד *לפני* קבלת התשלום הראשון, והציון המוקדם ביותר שמתועד *לאחר* התשלום הראשון.
 
 ### דוגמא
 
 לדוג', להלן טבלת ציוני 'סכנת נטישה' ליוזר כלשהו:
 
-XXXX
+```{sql connection='sqlconn'}
+SELECT TOP 5 * 
+FROM churn_scores_ag_4
+where user_id = 1
+order by score_date;
+```
 
 ולהלן דגימה מתוך התשלומים הראשונים שלו:
 
-XXX
+```{sql connection='sqlconn'}
+SELECT TOP 5 * 
+FROM payments_ag_4
+where user_id = 1
+order by payment_date;
+```
 
-לכן, אנחנו נרצה להחזיר את הרשומה הבאה:
+ניתן לראות שהציון 'סכנת נטישה' המאוחר ביותר לפני התשלום הראשוני באוקטובר 2022 הוא 2022-09-11 ואילו ציון 'סכנת נטישה' המוקדם ביותר לאחר התשלום הראשוני הוא 2022-11-01
 
-XXX
 
-ניתן לראות שהציון 'סכנת נטישה' המאוחר ביותר לפני התשלום הראשוני הוא XXX ואילו ציון 'סכנת נטישה' המוקדם ביותר לאחר התשלום הראשוני הוא XXX.
+לכן, אנחנו נרצה להחזיר את הרשומה הבאה ליוזר 1:
 
-## יצירת הטבלה
+```{sql connection='sqlconn', echo = FALSE}
+WITH user_payment as (
+  SELECT user_id,
+    min(payment_date) as first_payment
+  FROM payments_ag_4
+  WHERE user_id = 1
+  GROUP BY user_id
+  )
 
-```{r, eval=  FALSE, attr.source='style="max-height: 200px;overflow: scroll;"', connection='sqlconn'}
+SELECT * 
+FROM user_payment  
+CROSS apply (
+  SELECT TOP 1 
+    max(CASE WHEN first_payment > score_date then score_date END) OVER(PARTITION BY user_id) as score_date_before_paymet,
+    min(CASE WHEN first_payment < score_date then score_date END) OVER(PARTITION BY user_id) as score_date_after_paymet
+    FROM churn_scores_ag_4 scores
+    WHERE scores.user_id = user_payment.user_id
+) as score_dates
+  ;
+```
+
+**בונוס**: נסו ליצור פלט נוסף שבו במקום תאריכים מופיעים ציוני סכנת הנטישה (הציון לפני התשלום הראשון והציון מיד לאחר התשלום הראשון)
+
+## יצירת הטבלאות
+
+### תשלומים
+
+```{sql, eval=  FALSE, attr.source='style="max-height: 200px;overflow: scroll;"', connection='sqlconn'}
 
 create table payments_ag_4 (
 	user_id INT,
@@ -86,17 +133,147 @@ insert into payments_ag_4 (user_id, payment_date, amount) values (4, '11/21/2022
 insert into payments_ag_4 (user_id, payment_date, amount) values (2, '10/19/2022', 31.2);
 ```
 
+### ציון סכנת נטישה
+
+
+```{sql, eval=  FALSE, attr.source='style="max-height: 200px;overflow: scroll;"', connection='sqlconn'}
+
+drop table if exists churn_scores_ag_4;
+
+create table churn_scores_ag_4 (
+	user_id INT,
+	score_date DATE,
+	churn_score INT
+);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (1, '4/3/2023', 11);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (2, '1/1/2023', 97);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (1, '11/17/2022', 91);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (1, '4/23/2023', 84);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (4, '12/9/2022', 92);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (1, '2/22/2023', 7);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (4, '4/27/2023', 19);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (2, '9/1/2022', 42);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (4, '11/26/2022', 69);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (3, '12/16/2022', 38);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (2, '3/27/2023', 22);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (5, '3/21/2023', 32);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (3, '2/2/2023', 55);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (1, '2/26/2023', 57);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (1, '2/3/2023', 24);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (5, '4/22/2023', 98);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (2, '10/13/2022', 38);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (5, '11/23/2022', 77);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (4, '10/6/2022', 31);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (3, '8/31/2022', 92);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (1, '12/21/2022', 97);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (4, '10/22/2022', 49);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (4, '1/3/2023', 60);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (3, '3/29/2023', 93);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (4, '1/9/2023', 81);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (5, '10/25/2022', 72);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (5, '3/9/2023', 97);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (5, '3/19/2023', 91);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (1, '2/28/2023', 9);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (1, '2/19/2023', 2);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (1, '3/23/2023', 29);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (4, '11/13/2022', 80);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (4, '3/18/2023', 24);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (4, '3/31/2023', 34);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (2, '1/4/2023', 68);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (3, '2/3/2023', 10);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (3, '11/2/2022', 40);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (1, '2/26/2023', 37);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (5, '11/30/2022', 59);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (1, '8/8/2022', 64);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (3, '8/4/2022', 9);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (3, '8/3/2022', 39);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (5, '1/28/2023', 83);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (4, '8/27/2022', 49);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (2, '12/28/2022', 3);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (1, '3/15/2023', 73);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (4, '4/30/2023', 57);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (3, '1/21/2023', 36);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (1, '9/11/2022', 29);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (5, '8/15/2022', 4);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (2, '3/6/2023', 78);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (3, '10/22/2022', 58);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (5, '11/3/2022', 14);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (2, '8/1/2022', 70);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (3, '10/27/2022', 42);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (5, '3/6/2023', 19);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (3, '8/4/2022', 100);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (1, '2/21/2023', 15);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (5, '9/10/2022', 31);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (1, '1/2/2023', 44);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (4, '8/18/2022', 35);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (2, '10/22/2022', 4);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (1, '3/21/2023', 29);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (2, '8/15/2022', 79);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (4, '2/25/2023', 44);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (2, '1/21/2023', 87);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (2, '1/14/2023', 81);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (5, '10/24/2022', 99);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (3, '12/7/2022', 54);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (5, '3/13/2023', 39);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (2, '9/9/2022', 10);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (1, '11/1/2022', 23);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (2, '2/28/2023', 88);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (3, '3/29/2023', 85);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (2, '12/3/2022', 8);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (4, '1/22/2023', 24);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (4, '3/19/2023', 6);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (4, '9/30/2022', 89);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (2, '2/5/2023', 33);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (3, '4/15/2023', 59);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (5, '1/13/2023', 59);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (4, '3/16/2023', 63);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (5, '8/26/2022', 89);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (3, '12/31/2022', 70);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (2, '12/21/2022', 100);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (3, '4/27/2023', 91);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (4, '8/29/2022', 100);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (2, '9/11/2022', 99);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (4, '9/27/2022', 4);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (1, '12/5/2022', 36);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (5, '9/24/2022', 18);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (3, '9/19/2022', 68);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (5, '12/7/2022', 72);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (3, '12/25/2022', 72);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (5, '1/6/2023', 8);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (5, '9/14/2022', 6);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (3, '2/1/2023', 11);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (4, '9/14/2022', 10);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (2, '3/27/2023', 82);
+insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (3, '11/27/2022', 90);
+
+```
 
 
 ## תשובה
 
 (פתרון יפורסם עם השאלה הבאה)
 
-### 1.
 
-```{sql connection='sqlconn', echo = FALSE, eval = FALSE}
+```{sql connection='sqlconn', echo = FALSE}
+WITH user_payment as (
+  SELECT user_id,
+    min(payment_date) as first_payment
+  FROM payments_ag_4
+  GROUP BY user_id
+  )
 
+SELECT * 
+FROM user_payment  
+CROSS apply (
+  SELECT TOP 1 
+    max(CASE WHEN first_payment > score_date then score_date END) OVER(PARTITION BY user_id) as score_date_before_paymet,
+    min(CASE WHEN first_payment < score_date then score_date END) OVER(PARTITION BY user_id) as score_date_after_paymet
+    FROM churn_scores_ag_4 scores
+    WHERE scores.user_id = user_payment.user_id
+) as score_dates
+  ;
 ```
+
 
 ```{r echo = FALSE}
 dbDisconnect(sqlconn)
