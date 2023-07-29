@@ -1,5 +1,10 @@
 # options specified here will apply to all posts in this folder
 
+image: featured.png
+card-style: "summary"
+
+
+
 # freeze computational output
 # (see https://quarto.org/docs/projects/code-execution.html#freeze)
 freeze: true

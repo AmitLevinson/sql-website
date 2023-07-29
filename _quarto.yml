@@ -4,7 +4,7 @@ project:
 website:
   site-url: https://sql.amitgrinson.com
   title: "שאילתות מהחיים"
-  description: 'שאלות SQL מהיום-יום של אנליסט'
+  description: "תרגילי SQL משגרת העבודה של אנליסט"
   favicon: static/img/favicon.png
   navbar:
     right:
@@ -16,12 +16,10 @@ website:
     title: "שאילתות מהחיים"
     description: "תרגילי SQL משגרת העבודה של אנליסט"
     card-style: summary
-    image: static/img/banner.png
     creator: '@Amit_Levinson'
   open-graph:
     title: "שאילתות מהחיים"
     description: "תרגילי SQL משגרת העבודה של אנליסט"
-    image: static/img/banner.png
 
 format:
   html:
