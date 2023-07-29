@@ -1,25 +1,27 @@
 project:
   type: website
 
+title-meta: "שאילתות מהחיים"
+description-meta: "תרגילי SQL משגרת העבודה של אנליסט"
+
 website:
   site-url: https://sql.amitgrinson.com
+  image: static/img/banner.png
   title: "שאילתות מהחיים"
-  description: "תרגילי SQL משגרת העבודה של אנליסט"
   favicon: static/img/favicon.png
+  description: "תרגילי SQL משגרת העבודה של אנליסט"
   navbar:
     right:
       - website.qmd
       - about.qmd
       - icon: github
         href: https://github.com/AmitLevinson/sql-website
+        
   twitter-card:
-    title: "שאילתות מהחיים"
-    description: "תרגילי SQL משגרת העבודה של אנליסט"
     card-style: summary
     creator: '@Amit_Levinson'
   open-graph:
-    title: "שאילתות מהחיים"
-    description: "תרגילי SQL משגרת העבודה של אנליסט"
+    locale: he_IL
 
 format:
   html:

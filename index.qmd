@@ -1,7 +1,6 @@
 ---
 title: "מקבץ תרגילים ממקרים שהיו"
-subtitle: |
-  תרגילי SQL ברמות קושי שונות מהיום-יום שלי
+subtitle: "תרגילי SQL משגרת העבודה של אנליסט"
 listing:
   contents: questions
   sort: "date desc"
@@ -10,6 +9,7 @@ listing:
   sort-ui: false
   filter-ui: false
 page-layout: full
+image: static/img/banner.png
 title-block-banner: true
 ---
 
