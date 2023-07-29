@@ -46,7 +46,7 @@ order by score_date;
 
 
 
-## שאלה
+## 1 שאלה
 
 לכל יוזר יש ציוני 'סכנת נטישה' המעידים על הסיכוי של אותו יוזר לנטוש את הפלטפורמה לנקודת זמן מסוימת (נע בין 1-100, כאשר ציון גבוה יותר מעיד על סיכוי גבוה יותר לנטישה).
 
@@ -98,7 +98,10 @@ CROSS apply (
   ;
 ```
 
-**בונוס**: נסו ליצור פלט נוסף שבו במקום תאריכים מופיעים ציוני סכנת הנטישה (הציון לפני התשלום הראשון והציון מיד לאחר התשלום הראשון)
+
+## שאלה 2 
+
+נסו ליצור פלט נוסף שבו במקום תאריכים מופיעים ציוני סכנת הנטישה (הציון לפני התשלום הראשון והציון מיד לאחר התשלום הראשון)
 
 ## יצירת הטבלאות
 
@@ -249,7 +252,9 @@ insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (3, '11/
 ```
 
 
-## תשובה
+## תשובות
+
+### תשובה 1
 
 (פתרון יפורסם עם השאלה הבאה)
 
@@ -262,16 +267,37 @@ WITH user_payment as (
   GROUP BY user_id
   )
 
-SELECT * 
+SELECT user_payment.user_id,
+  max(CASE WHEN first_payment > score_date then score_date END) as score_date_before_paymet,
+  first_payment,
+  min(CASE WHEN first_payment < score_date then score_date END) as score_date_after_paymet
 FROM user_payment  
-CROSS apply (
-  SELECT TOP 1 
-    max(CASE WHEN first_payment > score_date then score_date END) OVER(PARTITION BY user_id) as score_date_before_paymet,
-    min(CASE WHEN first_payment < score_date then score_date END) OVER(PARTITION BY user_id) as score_date_after_paymet
-    FROM churn_scores_ag_4 scores
-    WHERE scores.user_id = user_payment.user_id
-) as score_dates
-  ;
+LEFT JOIN churn_scores_ag_4 scores on scores.user_id = user_payment.user_id
+GROUP BY user_payment.user_id, first_payment;
+```
+### תשובה 2
+
+
+```{sql connection='sqlconn', echo = FALSE}
+WITH user_payment as (
+  SELECT user_id,
+    min(payment_date) as first_payment
+  FROM payments_ag_4
+  GROUP BY user_id
+  )
+
+SELECT user_payment.user_id,
+   first_payment,
+  churn_scores.score_before_payment,
+  churn_scores.score_after_payment
+FROM user_payment
+OUTER APPLY (
+  SELECT top 1
+   FIRST_VALUE(churn_score) OVER(ORDER BY CASE WHEN DATEDIFF(day, score_date, first_payment) > 0 THEN 1 ELSE 2 END, score_date desc) as score_before_payment,
+   FIRST_VALUE(churn_score) OVER(ORDER BY CASE WHEN DATEDIFF(day, score_date, first_payment) < 0 THEN 1 ELSE 2 END, score_date asc)  as score_after_payment 
+  from churn_scores_ag_4 scores
+  where scores.user_id = user_payment.user_id
+) AS churn_scores
 ```
 
 

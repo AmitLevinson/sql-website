@@ -8,7 +8,7 @@
 
 <meta name="author" content="">
 <meta name="dcterms.date" content="2023-09-14">
-<meta name="description" content="החזרת ציון ‘סכנת עזיבה’ לפני התשלום הראשון ומיד לאחריו">
+<meta name="description" content="תרגילי SQL משגרת העבודה של אנליסט">
 
 <title>שאילתות מהחיים - ערכים לפני ואחרי נקודת זמן</title>
 <style>
@@ -99,15 +99,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <link rel="stylesheet" href="../../styles.css">
-<meta property="og:title" content="שאילתות מהחיים">
-<meta property="og:description" content="תרגילי SQL משגרת העבודה של אנליסט">
-<meta property="og:image" content="https://sql.amitgrinson.com/questions/4-before-and-after/static/img/banner.png">
+<meta property="og:title" content="שאילתות מהחיים - ערכים לפני ואחרי נקודת זמן">
+<meta property="og:description" content="החזרת ציון ‘סכנת עזיבה’ לפני התשלום הראשון ומיד לאחריו">
+<meta property="og:image" content="https://sql.amitgrinson.com/questions/4-before-and-after/featured.png">
 <meta property="og:site-name" content="שאילתות מהחיים">
-<meta name="twitter:title" content="שאילתות מהחיים">
-<meta name="twitter:description" content="תרגילי SQL משגרת העבודה של אנליסט">
-<meta name="twitter:image" content="https://sql.amitgrinson.com/questions/4-before-and-after/static/img/banner.png">
+<meta property="og:locale" content="he_IL">
+<meta property="og:image:height" content="630">
+<meta property="og:image:width" content="1200">
+<meta name="twitter:title" content="שאילתות מהחיים - ערכים לפני ואחרי נקודת זמן">
+<meta name="twitter:description" content="החזרת ציון ‘סכנת עזיבה’ לפני התשלום הראשון ומיד לאחריו">
+<meta name="twitter:image" content="https://sql.amitgrinson.com/questions/4-before-and-after/featured.png">
 <meta name="twitter:creator" content="@Amit_Levinson">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image-height" content="630">
+<meta name="twitter:image-width" content="1200">
 </head>
 
 <body class="nav-fixed">
@@ -187,16 +192,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#הדאטה" id="toc-הדאטה" class="nav-link active" data-scroll-target="#הדאטה">הדאטה</a></li>
-  <li><a href="#שאלה" id="toc-שאלה" class="nav-link" data-scroll-target="#שאלה">שאלה</a>
+  <li><a href="#שאלה" id="toc-שאלה" class="nav-link" data-scroll-target="#שאלה">1 שאלה</a>
   <ul class="collapse">
   <li><a href="#דוגמא" id="toc-דוגמא" class="nav-link" data-scroll-target="#דוגמא">דוגמא</a></li>
   </ul></li>
+  <li><a href="#שאלה-2" id="toc-שאלה-2" class="nav-link" data-scroll-target="#שאלה-2">שאלה 2</a></li>
   <li><a href="#יצירת-הטבלאות" id="toc-יצירת-הטבלאות" class="nav-link" data-scroll-target="#יצירת-הטבלאות">יצירת הטבלאות</a>
   <ul class="collapse">
   <li><a href="#תשלומים" id="toc-תשלומים" class="nav-link" data-scroll-target="#תשלומים">תשלומים</a></li>
   <li><a href="#ציון-סכנת-נטישה" id="toc-ציון-סכנת-נטישה" class="nav-link" data-scroll-target="#ציון-סכנת-נטישה">ציון סכנת נטישה</a></li>
   </ul></li>
-  <li><a href="#תשובה" id="toc-תשובה" class="nav-link" data-scroll-target="#תשובה">תשובה</a></li>
+  <li><a href="#תשובות" id="toc-תשובות" class="nav-link" data-scroll-target="#תשובות">תשובות</a>
+  <ul class="collapse">
+  <li><a href="#תשובה-1" id="toc-תשובה-1" class="nav-link" data-scroll-target="#תשובה-1">תשובה 1</a></li>
+  <li><a href="#תשובה-2" id="toc-תשובה-2" class="nav-link" data-scroll-target="#תשובה-2">תשובה 2</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -302,7 +312,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section>
 <section id="שאלה" class="level2">
-<h2 class="anchored" data-anchor-id="שאלה">שאלה</h2>
+<h2 class="anchored" data-anchor-id="שאלה">1 שאלה</h2>
 <p>לכל יוזר יש ציוני ‘סכנת נטישה’ המעידים על הסיכוי של אותו יוזר לנטוש את הפלטפורמה לנקודת זמן מסוימת (נע בין 1-100, כאשר ציון גבוה יותר מעיד על סיכוי גבוה יותר לנטישה).</p>
 <p>עבור כל יוזר יש לחלץ את התשלום הראשון שקיבל ושני ציוני סכנת נטישה: הציון המאוחר ביותר שמתועד <em>לפני</em> קבלת התשלום הראשון, והציון המוקדם ביותר שמתועד <em>לאחר</em> התשלום הראשון.</p>
 <section id="דוגמא" class="level3">
@@ -420,8 +430,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 </div>
 </div>
-<p><strong>בונוס</strong>: נסו ליצור פלט נוסף שבו במקום תאריכים מופיעים ציוני סכנת הנטישה (הציון לפני התשלום הראשון והציון מיד לאחר התשלום הראשון)</p>
 </section>
+</section>
+<section id="שאלה-2" class="level2">
+<h2 class="anchored" data-anchor-id="שאלה-2">שאלה 2</h2>
+<p>נסו ליצור פלט נוסף שבו במקום תאריכים מופיעים ציוני סכנת הנטישה (הציון לפני התשלום הראשון והציון מיד לאחר התשלום הראשון)</p>
 </section>
 <section id="יצירת-הטבלאות" class="level2">
 <h2 class="anchored" data-anchor-id="יצירת-הטבלאות">יצירת הטבלאות</h2>
@@ -570,8 +583,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section>
 </section>
-<section id="תשובה" class="level2">
-<h2 class="anchored" data-anchor-id="תשובה">תשובה</h2>
+<section id="תשובות" class="level2">
+<h2 class="anchored" data-anchor-id="תשובות">תשובות</h2>
+<section id="תשובה-1" class="level3">
+<h3 class="anchored" data-anchor-id="תשובה-1">תשובה 1</h3>
 <p>(פתרון יפורסם עם השאלה הבאה)</p>
 <div class="cell">
 <div class="knitsql-table">
@@ -579,48 +594,98 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <caption>5 records</caption>
 <colgroup>
 <col style="width: 11%">
-<col style="width: 19%">
 <col style="width: 35%">
+<col style="width: 19%">
 <col style="width: 33%">
 </colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">user_id</th>
-<th style="text-align: left;">first_payment</th>
 <th style="text-align: left;">score_date_before_paymet</th>
+<th style="text-align: left;">first_payment</th>
 <th style="text-align: left;">score_date_after_paymet</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">1</td>
-<td style="text-align: left;">2022-10-13</td>
 <td style="text-align: left;">2022-09-11</td>
+<td style="text-align: left;">2022-10-13</td>
 <td style="text-align: left;">2022-11-01</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">2</td>
-<td style="text-align: left;">2022-10-14</td>
 <td style="text-align: left;">2022-10-13</td>
+<td style="text-align: left;">2022-10-14</td>
 <td style="text-align: left;">2022-10-22</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">3</td>
-<td style="text-align: left;">2022-10-22</td>
 <td style="text-align: left;">2022-09-19</td>
+<td style="text-align: left;">2022-10-22</td>
 <td style="text-align: left;">2022-10-27</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">4</td>
-<td style="text-align: left;">2022-10-14</td>
 <td style="text-align: left;">2022-10-06</td>
+<td style="text-align: left;">2022-10-14</td>
 <td style="text-align: left;">2022-10-22</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">5</td>
-<td style="text-align: left;">2022-10-19</td>
 <td style="text-align: left;">2022-09-24</td>
+<td style="text-align: left;">2022-10-19</td>
 <td style="text-align: left;">2022-10-24</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="תשובה-2" class="level3">
+<h3 class="anchored" data-anchor-id="תשובה-2">תשובה 2</h3>
+<div class="cell">
+<div class="knitsql-table">
+<table class="table table-sm table-striped small">
+<caption>5 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">user_id</th>
+<th style="text-align: left;">first_payment</th>
+<th style="text-align: right;">score_before_payment</th>
+<th style="text-align: right;">score_after_payment</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">2022-10-13</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">23</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">2022-10-14</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">2022-10-22</td>
+<td style="text-align: right;">68</td>
+<td style="text-align: right;">42</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">2022-10-14</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">49</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">2022-10-19</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">99</td>
 </tr>
 </tbody>
 </table>
@@ -628,6 +693,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

@@ -1,6 +1,7 @@
 ---
 title: "מקבץ תרגילים ממקרים שהיו"
 subtitle: "תרגילי SQL משגרת העבודה של אנליסט"
+description: "תרגילי SQL משגרת העבודה של אנליסט"
 listing:
   contents: questions
   sort: "date desc"
