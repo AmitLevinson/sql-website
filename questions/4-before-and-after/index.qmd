@@ -5,7 +5,7 @@ description: |
 author: ""
 date: "2023-09-14"
 toc: true
-categories: [קל]
+categories: [בסיסי]
 image: featured.png
 draft: true
 ---
