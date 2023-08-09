@@ -303,8 +303,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="cell-output-display">
 
-<div id="htmlwidget-4864ce1f58faf12acd94" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-4864ce1f58faf12acd94">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22"],["success","fail","fail","fail","success","fail","success","success","success","success","success","success","fail","success","fail","fail","success","success","success","success","success","success"],["2022-07-03","2022-07-17","2022-08-06","2022-09-17","2022-10-02","2022-10-05","2022-10-22","2022-10-27","2022-11-14","2022-11-27","2022-12-17","2023-01-09","2023-01-30","2023-02-05","2023-02-20","2023-02-23","2023-02-24","2023-04-02","2023-04-17","2023-04-27","2023-05-22","2023-06-07"],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>login<\/th>\n      <th>login_date<\/th>\n      <th>user_id<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":3},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-6fea3eedb31bccdc8985" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-6fea3eedb31bccdc8985">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22"],["success","fail","fail","fail","success","fail","success","success","success","success","success","success","fail","success","fail","fail","success","success","success","success","success","success"],["2022-07-03","2022-07-17","2022-08-06","2022-09-17","2022-10-02","2022-10-05","2022-10-22","2022-10-27","2022-11-14","2022-11-27","2022-12-17","2023-01-09","2023-01-30","2023-02-05","2023-02-20","2023-02-23","2023-02-24","2023-04-02","2023-04-17","2023-04-27","2023-05-22","2023-06-07"],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>login<\/th>\n      <th>login_date<\/th>\n      <th>user_id<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":3},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>נחזיר את הרשומה הבאה (שכן ניתן לראות למעלה שיש לו רצף של 6 הצלחות התחברות כמספר הגבוה ביותר):</p>
@@ -330,7 +330,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="שאלה-2" class="level3">
 <h3 class="anchored" data-anchor-id="שאלה-2">שאלה 2</h3>
-<p>ברגע שיוזרים נכשלים בהתחברות יותר מדי פעמים החשבון שלהם ננעל. עבור כל יוזר עם 3 כשלונות התחברות או יותר, החזירו את התאריך (login_date) בו הוא קיבל <em>לראשונה</em> את הכשלון השלישי באופן רצוף.</p>
+<p>ברגע שיוזרים נכשלים בהתחברות שלוש פעמים באופן רצוף החשבון שלהם ננעל. עבור כל יוזר עם שלוש כשלונות התחברות או יותר, החזירו את התאריך (login_date) בו הוא קיבל <em>לראשונה</em> את הכשלון השלישי באופן רצוף.</p>
 <p>לדוג’, עבור יוזר 1:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> TOP <span class="dv">7</span> <span class="op">*</span> <span class="kw">FROM</span> LOGINS</span>
@@ -400,7 +400,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td style="text-align: right;">1</td>
-<td style="text-align: left;">2022-08-12</td>
+<td style="text-align: left;">2022-08-22</td>
 </tr>
 </tbody>
 </table>

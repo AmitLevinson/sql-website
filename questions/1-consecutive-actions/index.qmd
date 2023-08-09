@@ -78,7 +78,7 @@ ORDER BY COUNT(*) DESC
 
 ### שאלה 2
 
-ברגע שיוזרים נכשלים בהתחברות יותר מדי פעמים החשבון שלהם ננעל. עבור כל יוזר עם 3 כשלונות התחברות או יותר, החזירו את
+ברגע שיוזרים נכשלים בהתחברות שלוש פעמים באופן רצוף החשבון שלהם ננעל. עבור כל יוזר עם שלוש כשלונות התחברות או יותר, החזירו את
 התאריך (login_date) בו הוא קיבל *לראשונה* את הכשלון השלישי באופן רצוף.
 
 לדוג', עבור יוזר 1:
@@ -115,6 +115,7 @@ select user_id,
   min(login_date) AS FIRST_3rd_failed_login
 from grp_stamps
 where count_per_group >= 3
+AND rn_within_group = 3
 GROUP BY user_id
 ```
 
@@ -292,9 +293,10 @@ where login = 'fail'
 )
 
 select user_id, 
-  min(case when rn_within_group = 3 then login_date END) AS FIRST_3rd_failed_login
+  min(login_date) AS FIRST_3rd_failed_login
 from grp_stamps
 where count_per_group >= 3
+AND rn_within_group = 3
 GROUP BY user_id
 ```
 
