@@ -9,7 +9,7 @@ listing:
   sort-ui: false
   filter-ui: false
 page-layout: full
-image: static/img/banner.png
+image: static/img/banner_new.png
 title-block-banner: true
 ---
 
