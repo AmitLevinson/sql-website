@@ -241,9 +241,43 @@ insert into logins (user_id, login_date, login) values (1, '3/15/2023', 'success
 
 ## תשובות
 
-להלן הפלטים לשאלות. דרכי פתרון יפורסמו כאן יחד עם השאלה הבאה.
+### סרטון הסבר
+
+{{< video https://www.youtube.com/watch?v=SjOp7psbk2o >}}
+
 
 ### 1.
+
+<details>
+<summary>הצג קוד</summary>
+
+```{sql connection='sqlconn', eval = FALSE, echo = TRUE}
+WITH GROUPS AS (
+  SELECT user_id,
+  login,
+  login_date,
+    ROW_NUMBER() OVER(PARTITION BY user_id order by login_date) - ROW_NUMBER() OVER(PARTITION BY user_id, LOGIN order by login_date asc) as grp
+  FROM LOGINS
+),
+
+login_ranks as (
+  SELECT user_id,
+    COUNT(*) AS most_consecutive_logins,
+    ROW_NUMBER() OVER(partition by user_id ORDER BY count(*) desc) as rnk
+  FROM GROUPS
+  where login = 'success'
+  GROUP BY user_id,
+    GRP
+  )
+  
+SELECT user_id,
+  most_consecutive_logins
+FROM LOGIN_RANKS
+WHERE RNK = 1
+```
+
+
+</details>
 
 ```{sql connection='sqlconn', echo = FALSE}
 WITH GROUPS AS (
@@ -270,8 +304,38 @@ FROM LOGIN_RANKS
 WHERE RNK = 1
 ```
 
+
+
 ### 2.
 
+<details>
+<summary>הצג קוד</summary>
+
+```{sql connection='sqlconn', eval = FALSE, echo = TRUE}
+WITH GROUPS AS (
+  SELECT user_id,
+  login,
+  login_date,
+    ROW_NUMBER() OVER(PARTITION BY user_id order by login_date) - ROW_NUMBER() OVER(PARTITION BY user_id, LOGIN order by login_date asc) as grp
+  FROM LOGINS
+),
+
+grp_stamps as (
+SELECT user_id,
+  login_date,
+  rn_within_group = ROW_NUMBER() OVER(PARTITION BY user_id, GRP order by grp, login_date)
+FROM GROUPS
+where login = 'fail'
+)
+
+select user_id, 
+  min(login_date) AS FIRST_3rd_failed_login
+from grp_stamps
+WHERE rn_within_group = 3
+GROUP BY user_id
+```
+
+</details>
 
 ```{sql connection='sqlconn', echo = FALSE}
 WITH GROUPS AS (
@@ -285,9 +349,7 @@ WITH GROUPS AS (
 grp_stamps as (
 SELECT user_id,
   login_date,
-  rn_within_group = ROW_NUMBER() OVER(PARTITION BY user_id, GRP order by grp, login_date),
-  count_per_group = count(*) over(partition by user_id, grp),
-  grp
+  rn_within_group = ROW_NUMBER() OVER(PARTITION BY user_id, GRP order by grp, login_date)
 FROM GROUPS
 where login = 'fail'
 )
@@ -295,8 +357,7 @@ where login = 'fail'
 select user_id, 
   min(login_date) AS FIRST_3rd_failed_login
 from grp_stamps
-where count_per_group >= 3
-AND rn_within_group = 3
+WHERE rn_within_group = 3
 GROUP BY user_id
 ```
 

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="">
-<meta name="dcterms.date" content="2023-07-20">
+<meta name="dcterms.date" content="2023-09-19">
 <meta name="description" content="תרגילי SQL משגרת העבודה של אנליסט">
 
 <title>שאילתות מהחיים - אפיון תשלומים זהים או שונים</title>
@@ -163,7 +163,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">קל</div>
+                <div class="quarto-category">בסיסי</div>
               </div>
                   </div>
   </div>
@@ -175,7 +175,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">July 20, 2023</p>
+        <p class="date">September 19, 2023</p>
       </div>
     </div>
     
@@ -209,7 +209,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="הדאטה">הדאטה</h2>
 <p>בטבלה למטה ניתן לראות פירוט תשלומים של יוזרים:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> TOP <span class="dv">10</span> <span class="op">*</span> <span class="kw">FROM</span> payments_ag_2;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> TOP <span class="dv">10</span> <span class="op">*</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> payments_ag_2;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="knitsql-table">
 <table class="table table-sm table-striped small">
 <caption>Displaying records 1 - 10</caption>
@@ -289,7 +290,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="שאלה" class="level2">
 <h2 class="anchored" data-anchor-id="שאלה">שאלה</h2>
-<p>עבור כל יוזר החזר טבלה עם מספר התשלומים שהוא קיבל, עמודה המציינת האם כל התשלומים שהוא קיבל הם עם סטטוס ‘Load’ (1 כן, 0 לא), האם מספר התשלומים שנטענו היה גדול ממספר התשלומים שבוטלו (1 כן, 0 לא) והאם יש לו לפחות תשלום אחד שהוא ‘Pending’ (1 כן, 0 לא)</p>
+<p>עבור כל יוזר החזר טבלה עם מספר התשלומים שהוא קיבל, עמודה המציינת האם כל התשלומים שהוא קיבל הם עם סטטוס ‘Load’ (1 כל התשלומים עם הסטטוס הזה, 0 לא), האם מספר התשלומים שנטענו היה גדול ממספר התשלומים שבוטלו (1 כן, 0 לא) והאם יש לו <em>לפחות תשלום אחד</em> שהוא ‘Pending’ (1 כן, 0 לא)</p>
 <p><strong>בהצלחה!</strong></p>
 </section>
 <section id="יצירת-הטבלה" class="level2">

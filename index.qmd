@@ -20,7 +20,7 @@ title-block-banner: true
 <div id="mc_embed_signup">
     <form action="https://app.us21.list-manage.com/subscribe/post?u=35937fe07b07072fab364d305&amp;id=a03aaa869b&amp;f_id=00e22be7f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
         
-            <div class="mc-field-group"><div id  id="signup-text"><label for="mce-EMAIL">הירשמו וקבלו עידכונים על שאלות חדשות</label></div><input type="email" name="EMAIL" class="required email" id="mce-EMAIL" required="" value=""></div>
+            <div class="mc-field-group"><div id  id="signup-text"><label for="mce-EMAIL">הירשמו וקבלו עידכונים על תרגילים חדשים</label></div><input type="email" name="EMAIL" class="required email" id="mce-EMAIL" required="" value=""></div>
         <div id="mce-responses" class="clear foot">
             <div class="response" id="mce-error-response" style="display: none;"></div>
             <div class="response" id="mce-success-response" style="display: none;"></div>

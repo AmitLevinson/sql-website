@@ -11,7 +11,7 @@
     "href": "index.html",
     "title": "מקבץ תרגילים ממקרים שהיו",
     "section": "",
-    "text": "הירשמו וקבלו עידכונים על שאלות חדשות\n        \n            \n            \n        \n    \n        \n            \n                \n                \n            \n        \n    \n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n\n\n\n\nזיהוי רצפים בהתחברות\n\n\n\n\n\n\n\nמתקדם\n\n\n\n\nתרגול זיהוי פעולות רצופות\n\n\n\n\n\n\nSep 5, 2023\n\n\n\n\n\n\nNo matching items"
+    "text": "הירשמו וקבלו עידכונים על תרגילים חדשים\n        \n            \n            \n        \n    \n        \n            \n                \n                \n            \n        \n    \n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n\n\n\n\nאפיון תשלומים זהים או שונים\n\n\n\n\n\n\n\nבסיסי\n\n\n\n\nקטלוג לקוחות עם סטטוס תשלומים זהה או לפחות אחד שונה\n\n\n\n\n\n\nSep 19, 2023\n\n\n\n\n\n\n  \n\n\n\n\nזיהוי רצפים בהתחברות\n\n\n\n\n\n\n\nמתקדם\n\n\n\n\nתרגול זיהוי פעולות רצופות\n\n\n\n\n\n\nSep 5, 2023\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "questions/1-consecutive-actions/index.html",
@@ -46,7 +46,7 @@
     "href": "questions/1-consecutive-actions/index.html#תשובות",
     "title": "זיהוי רצפים בהתחברות",
     "section": "תשובות",
-    "text": "תשובות\nלהלן הפלטים לשאלות. דרכי פתרון יפורסמו כאן יחד עם השאלה הבאה.\n\n1.\n\n\n\n5 records\n\n\nuser_id\nmost_consecutive_logins\n\n\n\n\n1\n1\n\n\n2\n6\n\n\n3\n2\n\n\n4\n1\n\n\n5\n2\n\n\n\n\n\n\n\n2.\n\n\n\n5 records\n\n\nuser_id\nFIRST_3rd_failed_login\n\n\n\n\n1\n2022-08-22\n\n\n2\n2022-09-17\n\n\n3\n2023-04-19\n\n\n4\n2022-12-25\n\n\n5\n2022-10-05"
+    "text": "תשובות\n\nסרטון הסבר\n\n\n\n1.\n\n\nהצג קוד\n\n\nWITH GROUPS AS (\n  SELECT user_id,\n  login,\n  login_date,\n    ROW_NUMBER() OVER(PARTITION BY user_id order by login_date) - ROW_NUMBER() OVER(PARTITION BY user_id, LOGIN order by login_date asc) as grp\n  FROM LOGINS\n),\n\nlogin_ranks as (\n  SELECT user_id,\n    COUNT(*) AS most_consecutive_logins,\n    ROW_NUMBER() OVER(partition by user_id ORDER BY count(*) desc) as rnk\n  FROM GROUPS\n  where login = 'success'\n  GROUP BY user_id,\n    GRP\n  )\n  \nSELECT user_id,\n  most_consecutive_logins\nFROM LOGIN_RANKS\nWHERE RNK = 1\n\n\n\n\n\n5 records\n\n\nuser_id\nmost_consecutive_logins\n\n\n\n\n1\n1\n\n\n2\n6\n\n\n3\n2\n\n\n4\n1\n\n\n5\n2\n\n\n\n\n\n\n\n2.\n\n\nהצג קוד\n\n\nWITH GROUPS AS (\n  SELECT user_id,\n  login,\n  login_date,\n    ROW_NUMBER() OVER(PARTITION BY user_id order by login_date) - ROW_NUMBER() OVER(PARTITION BY user_id, LOGIN order by login_date asc) as grp\n  FROM LOGINS\n),\n\ngrp_stamps as (\nSELECT user_id,\n  login_date,\n  rn_within_group = ROW_NUMBER() OVER(PARTITION BY user_id, GRP order by grp, login_date)\nFROM GROUPS\nwhere login = 'fail'\n)\n\nselect user_id, \n  min(login_date) AS FIRST_3rd_failed_login\nfrom grp_stamps\nWHERE rn_within_group = 3\nGROUP BY user_id\n\n\n\n\n\n5 records\n\n\nuser_id\nFIRST_3rd_failed_login\n\n\n\n\n1\n2022-08-22\n\n\n2\n2022-09-17\n\n\n3\n2023-04-19\n\n\n4\n2022-12-25\n\n\n5\n2022-10-05"
   },
   {
     "objectID": "website.html",
@@ -54,5 +54,40 @@
     "title": "אודות האתר",
     "section": "",
     "text": "היי!\nברוכים הבאים לאתר שאילתות מהחיים. בבלוג/אוסף של שאלות אני מרכז מקרים מעניינים שיצא לי להתקל בהם במסגרת העבודה. לרוב זה יהיה משהו שפתרתי ואחשוב לעצמי “מגניב! בא לי שעוד אנשים יתנסו בזה” ואעלה את השאלה לפה כדי שתוכלו לנסות לפתור לבד, ולהשוות לפתרון שלי. כמובן כל הדאטה עובר איזשהי אנונימיזציה כך שלא יהיו פרטים מזהים.\nכל שאלה תפורסם עם דאטה לתרגול בסביבה עצמית (אצלכם במחשב). ניתן יהיה להעתיק את הקוד; כמובן שהרצתו היא באחריותכם בלבד. ברגע ששאלה חדשה תצא אעדכן את דרכי הפתרון לשאלה מהשבוע הקודם. על חלק מהשאלות אענה גם בפורמט של סרטון.\nלצערי, המון מעבודת האנליסט לא קיימת בבלוג הזה, וזה שאילת השאלות האנליטיות שיביאו אותנו לכתוב את הקוד שיתן לנו את הדאטה שאנחנו צריכים. עם זאת, אני מאמין שהאתגרים הללו יוכלו לעזור לכם לתרגל בעצמכם ובכך להתכונן למשרה הראשונה/הבאה. חלק מהשאלות יהיו לכם קלות, חלק אולי קשות; מקווה כי מכולם תלמדו!\nהתרגילים מחולקים לשתי רמות קושי שונות: מתקדם ו-בסיסי. אלה תגיות שתוכלו לראות בעמוד הראשי ולסנן שאלות לפיהן. שאלות עם התגית ‘בסיסי’ לא בהכרח קלות למי שכרגע לומד את השפה; הן בסיסיות במובן שהן עולות הרבה בשגרת העבודה שלי. אלה לדעתי גם שאלות שהייתי שואל בריאיון עבודה כדי לסמן וי שהאנליסט יודע SQL. שאלות עם תגית מתקדם הן יותר קשות ונדירות, כאלה שאני נתקל בהן אחת לכמה חודשים.\nאת האתר הרמתי באמצעות Quarto, שזה בגדול פלטפורמה בקוד פתוח לפרסום של דברים, שווה לנסות :)\nמוזמנים להירשם לניוזלטר ולקבל תזכורת כשיוצאת שאלה ויחד איתה הפתרון לשאלה הקודמת. ואם ממש אהבתם/זה עזר לכם מוזמנים עוד יותר לתמוך בי :)\n\n\n\n\n      \n\n    \n        \n            הירשמו וקבלו עידכונים על שאלות חדשות"
+  },
+  {
+    "objectID": "questions/2-identical-different-payments/index.html",
+    "href": "questions/2-identical-different-payments/index.html",
+    "title": "אפיון תשלומים זהים או שונים",
+    "section": "",
+    "text": "ברוכים הבאים לתרגיל השני!"
+  },
+  {
+    "objectID": "questions/2-identical-different-payments/index.html#הדאטה",
+    "href": "questions/2-identical-different-payments/index.html#הדאטה",
+    "title": "אפיון תשלומים זהים או שונים",
+    "section": "הדאטה",
+    "text": "הדאטה\nבטבלה למטה ניתן לראות פירוט תשלומים של יוזרים:\n\nSELECT TOP 10 *\nFROM payments_ag_2;\n\n\nDisplaying records 1 - 10\n\n\nuser_id\ndate\nstatus\namount\n\n\n\n\n1\n2023-06-01\nLoad\n234\n\n\n1\n2023-06-14\nCancel\n42\n\n\n1\n2023-06-16\nLoad\n52\n\n\n1\n2023-06-22\nLoad\n6\n\n\n1\n2023-06-23\nLoad\n36\n\n\n1\n2023-06-24\nPending\n74\n\n\n2\n2023-06-03\nLoad\n58\n\n\n2\n2023-06-05\nLoad\n33\n\n\n2\n2023-06-09\nLoad\n65\n\n\n2\n2023-06-10\nLoad\n74"
+  },
+  {
+    "objectID": "questions/2-identical-different-payments/index.html#שאלה",
+    "href": "questions/2-identical-different-payments/index.html#שאלה",
+    "title": "אפיון תשלומים זהים או שונים",
+    "section": "שאלה",
+    "text": "שאלה\nעבור כל יוזר החזר טבלה עם מספר התשלומים שהוא קיבל, עמודה המציינת האם כל התשלומים שהוא קיבל הם עם סטטוס ‘Load’ (1 כל התשלומים עם הסטטוס הזה, 0 לא), האם מספר התשלומים שנטענו היה גדול ממספר התשלומים שבוטלו (1 כן, 0 לא) והאם יש לו לפחות תשלום אחד שהוא ‘Pending’ (1 כן, 0 לא)\nבהצלחה!"
+  },
+  {
+    "objectID": "questions/2-identical-different-payments/index.html#יצירת-הטבלה",
+    "href": "questions/2-identical-different-payments/index.html#יצירת-הטבלה",
+    "title": "אפיון תשלומים זהים או שונים",
+    "section": "יצירת הטבלה",
+    "text": "יצירת הטבלה\n\nDROP table if exists payments_ag_2;\n\n\nCREATE TABLE payments_ag_2\n    ([user_id] int, [date] date, [status] varchar(7), [amount] int)\n;\n    \nINSERT INTO payments_ag_2\n    ([user_id], [date], [status], [amount])\nVALUES\n    (1, '2023-06-01', 'Load', 234),\n    (1, '2023-06-14', 'Cancel', 42),\n    (1, '2023-06-16', 'Load', 52),\n    (1, '2023-06-22', 'Load', 6),\n    (1, '2023-06-23', 'Load', 36),\n    (1, '2023-06-24', 'Pending', 74),\n    (2, '2023-06-03', 'Load', 58),\n    (2, '2023-06-05', 'Load', 33),\n    (2, '2023-06-09', 'Load', 65),\n    (2, '2023-06-10', 'Load', 74),\n    (2, '2023-06-14', 'Load', 98),\n    (2, '2023-06-18', 'Load', 14),\n    (3, '2023-06-01', 'Cancel', 52),\n    (3, '2023-06-04', 'Cancel', 5),\n    (3, '2023-06-07', 'Pending', 99),\n    (4, '2023-06-09', 'Load', 100),\n    (4, '2023-06-10', 'Cancel', 15),\n    (5, '2023-06-15', 'Load', 20),\n    (6, '2023-06-16', 'Pending', 21),\n    (6, '2023-06-16', 'Load', 42)\n;"
+  },
+  {
+    "objectID": "questions/2-identical-different-payments/index.html#תשובה",
+    "href": "questions/2-identical-different-payments/index.html#תשובה",
+    "title": "אפיון תשלומים זהים או שונים",
+    "section": "תשובה",
+    "text": "תשובה\n(דרך הפתרון תפורסם עם השאלה הבאה)\n\n\n\n6 records\n\n\n\n\n\n\n\n\n\nuser_id\nn_payments\nall_loaded\nmore_loaded_than_failed\nhas_pending_payment\n\n\n\n\n1\n6\n0\n1\n1\n\n\n2\n6\n1\n1\n0\n\n\n3\n3\n0\n0\n1\n\n\n4\n2\n0\n0\n0\n\n\n5\n1\n1\n1\n0\n\n\n6\n2\n0\n1\n1"
   }
 ]
