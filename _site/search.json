@@ -11,7 +11,7 @@
     "href": "index.html",
     "title": "מקבץ תרגילים ממקרים שהיו",
     "section": "",
-    "text": "הירשמו וקבלו עידכונים על תרגילים חדשים\n        \n            \n            \n        \n    \n        \n            \n                \n                \n            \n        \n    \n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n\n\n\n\nאפיון תשלומים זהים או שונים\n\n\n\n\n\n\n\nבסיסי\n\n\n\n\nקטלוג לקוחות עם סטטוס תשלומים זהה או לפחות אחד שונה\n\n\n\n\n\n\nSep 19, 2023\n\n\n\n\n\n\n  \n\n\n\n\nזיהוי רצפים בהתחברות\n\n\n\n\n\n\n\nמתקדם\n\n\n\n\nתרגול זיהוי פעולות רצופות\n\n\n\n\n\n\nSep 5, 2023\n\n\n\n\n\n\nNo matching items"
+    "text": "הירשמו וקבלו עידכונים על תרגילים חדשים\n        \n            \n            \n        \n    \n        \n            \n                \n                \n            \n        \n    \n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n\n\n\n\nאפיון תשלומים זהים או שונים\n\n\n\n\n\n\n\nבסיסי\n\n\n\n\nקיטלוג לקוחות עם סטטוס תשלומים זהה או לפחות אחד שונה\n\n\n\n\n\n\nSep 19, 2023\n\n\n\n\n\n\n  \n\n\n\n\nזיהוי רצפים בהתחברות\n\n\n\n\n\n\n\nמתקדם\n\n\n\n\nתרגול זיהוי פעולות רצופות\n\n\n\n\n\n\nSep 5, 2023\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "questions/1-consecutive-actions/index.html",
@@ -88,6 +88,6 @@
     "href": "questions/2-identical-different-payments/index.html#תשובה",
     "title": "אפיון תשלומים זהים או שונים",
     "section": "תשובה",
-    "text": "תשובה\n(דרך הפתרון תפורסם עם השאלה הבאה)\n\n\n\n6 records\n\n\n\n\n\n\n\n\n\nuser_id\nn_payments\nall_loaded\nmore_loaded_than_failed\nhas_pending_payment\n\n\n\n\n1\n6\n0\n1\n1\n\n\n2\n6\n1\n1\n0\n\n\n3\n3\n0\n0\n1\n\n\n4\n2\n0\n0\n0\n\n\n5\n1\n1\n1\n0\n\n\n6\n2\n0\n1\n1"
+    "text": "תשובה\n(דרך הפתרון תפורסם עם השאלה הבאה ב-3.10-)\n\n\n\n6 records\n\n\n\n\n\n\n\n\n\nuser_id\nn_payments\nall_loaded\nmore_loaded_than_failed\nhas_pending_payment\n\n\n\n\n1\n6\n0\n1\n1\n\n\n2\n6\n1\n1\n0\n\n\n3\n3\n0\n0\n1\n\n\n4\n2\n0\n0\n0\n\n\n5\n1\n1\n1\n0\n\n\n6\n2\n0\n1\n1"
   }
 ]
