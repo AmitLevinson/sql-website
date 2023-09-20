@@ -22,6 +22,10 @@ website:
     creator: '@Amit_Levinson'
   open-graph:
     locale: he_IL
+  cookie-consent:
+    palette: light
+  google-analytics:
+    tracking-id: "G-YRDSPV195D"
 
 format:
   html:
