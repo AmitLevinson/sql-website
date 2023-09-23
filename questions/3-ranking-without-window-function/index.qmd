@@ -1,7 +1,7 @@
 ---
-title: "סינון מקומות גבוהים בלי פונקציית דירוג"
+title: "דירוג שורות בלי פונקצית חלון"
 description: |
-  ניסיון ליצור פונקציית דירוג בלי שימוש בפונקצית חלון
+  יצירת דירוג שורות בתוך קבוצה בלי שימוש בפונקציית חלון
 author: ""
 date: "2023-08-01"
 toc: true
@@ -18,6 +18,7 @@ sqlconn <- dbConnect(odbc(),
                       Driver = "SQL Server",
                       Server = "localhost\\SQLEXPRESS",
                       Database = "sql-questions")
+
 ```
 
 
@@ -26,17 +27,14 @@ sqlconn <- dbConnect(odbc(),
 
 ## הדאטה
 
-בטבלה למטה ניתן לראות פירוט תשלומים של יוזרים:
+האמת זו לא ממש שאלה שנדרשתי לה בעבודה אלא שאלה שעלתה בקבוצות פייסבוק לאנליסטים ואיציק בן גן דן בה גם בספר שלו [על פונקציות חלון](https://www.amazon.com/T-SQL-Window-Functions-Developer-Reference/dp/0135861446).
 
-```{sql connection='sqlconn'}
---SELECT TOP 10 * FROM payments;
-```
-
-האמת זו לא ממש שאלה שנדרשתי לה בעבודה אלא שאלה שעלתה בקבוצת הפייסבוק לאנליסטים. אחרי שעניתי עליה חשבתי שיהיה נחמד לאתגר גם אתכם בה. אומנם ברוב הגדול של הפעמים תוכלו להשתמש בפונקצית חלון, התרגול דורש מאיתנו לחשוב מה פונקצית חלון של דירוג עושה ובכך לענות בצורה יעילה שמחקה זאת.
+ אומנם ברוב הגדול של הפעמים תוכלו להשתמש בפונקצית חלון, התרגול דורש מאיתנו לחשוב מה קורה בפונקציית דירוג וכך לשחזר אותה רק בלי להשתמש בפונקציית חלון
 
 ## שאלה
 
-ללא שימוש בפונקצית חלון, סנן את הרשומות כך שתקבל את הקטגוריות הנמצאות במקום הראשון, שני או שלישי לפי מכירות באותה שנה (לפי amount). במידה ויש תיקו יש להחזיר את כלל הקטגוריות המדורגות בשלוש הכי גבוהים.
+ללא שימוש בפונקצית חלון, צור עמודה חדשה שמדרגת את השורות לפי מכירות באותה שנה (לפי amount), בדומה לפונקציית [`DESNE_RANK()`](https://learn.microsoft.com/en-us/sql/t-sql/functions/dense-rank-transact-sql?view=sql-server-ver16).
+כלומר, בהינתן תיקו בהיררכיה, ערכים זהים יקבלו את אותו דירוג ואילו הערכים הבאים בסדר יקבלו ערך אחד מעל הערך הקודם שהיה בתיקו.
 
 **בהצלחה!**
 
@@ -48,7 +46,7 @@ DROP TABLE IF EXISTS Sales_ag;
 
 CREATE TABLE sales_ag (
 	year INT,
-	category NVARCHAR(MAX),
+	category varchar(15),
 	amount INT
 )
 
@@ -68,13 +66,33 @@ insert into Sales_ag (year, category, amount) values (2001, 'Movies', 39);
 
 ## תשובה
 
-(פתרון יפורסם עם השאלה הבאה)
+דרך הפתרון תפורסם עם השאלה הבאה
 
 ### 1.
 
-```{sql connection='sqlconn', echo = FALSE, eval=FALSE}
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+library(dplyr)
+library(gt)
+
+# dat <- read.csv('questions/3-ranking-without-window-function/sales_ag.csv')
+
+dat <- read.csv('sales_ag.csv')
+
+dat %>% 
+  group_by(sale_year) %>% 
+  arrange(amount) %>% 
+  mutate(custom_dense_rank = dense_rank(desc(amount))) %>% 
+  ungroup() %>% 
+  arrange(sale_year, custom_dense_rank) %>% 
+  select(custom_dense_rank, amount, category, sale_year ) %>% 
+  gt()
+```
+
+
+
+```{sql connection='sqlconn', echo = FALSE, eval = FALSE}
 SELECT *,
-	(SELECT COUNT(DISTINCT SalesInner.amount)
+	(SELECT COUNT(DISTINCT SalesInner.amount) as rn
 	FROM sales_ag SalesInner
 	WHERE SalesInner.year = SalesOuter.year
 		AND SalesInner.amount >= SalesOuter.amount)  AS custom_dense_rank

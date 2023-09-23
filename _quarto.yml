@@ -10,6 +10,7 @@ website:
   title: "שאילתות מהחיים"
   favicon: static/img/favicon.png
   description: "תרגילי SQL משגרת העבודה של אנליסט"
+  page-navigation: true
   navbar:
     right:
       - website.qmd
