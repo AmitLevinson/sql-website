@@ -6,7 +6,7 @@
   </url>
   <url>
     <loc>https://sql.amitgrinson.com/index.html</loc>
-    <lastmod>2023-10-02T19:12:23.581Z</lastmod>
+    <lastmod>2023-10-02T19:33:45.996Z</lastmod>
   </url>
   <url>
     <loc>https://sql.amitgrinson.com/questions/1-consecutive-actions/index.html</loc>
@@ -18,6 +18,10 @@
   </url>
   <url>
     <loc>https://sql.amitgrinson.com/questions/2-identical-different-payments/index.html</loc>
-    <lastmod>2023-10-02T19:12:26.899Z</lastmod>
+    <lastmod>2023-10-02T19:26:38.651Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sql.amitgrinson.com/questions/3-ranking-without-window-function/index.html</loc>
+    <lastmod>2023-10-02T19:33:45.549Z</lastmod>
   </url>
 </urlset>
