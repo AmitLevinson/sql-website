@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="">
-<meta name="dcterms.date" content="2023-08-01">
+<meta name="dcterms.date" content="2023-10-03">
 <meta name="description" content="תרגילי SQL משגרת העבודה של אנליסט">
 
 <title>שאילתות מהחיים - דירוג שורות בלי פונקצית חלון</title>
@@ -127,14 +127,14 @@ cookieconsent.run({
 
 <link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="שאילתות מהחיים - דירוג שורות בלי פונקצית חלון">
-<meta property="og:description" content="יצירת דירוג שורות בתוך קבוצה בלי שימוש בפונקציית חלון">
+<meta property="og:description" content="דירוג שורות בתוך קבוצה בלי שימוש בפונקציית חלון">
 <meta property="og:image" content="https://sql.amitgrinson.com/questions/3-ranking-without-window-function/featured.png">
 <meta property="og:site-name" content="שאילתות מהחיים">
 <meta property="og:locale" content="he_IL">
 <meta property="og:image:height" content="630">
 <meta property="og:image:width" content="1200">
 <meta name="twitter:title" content="שאילתות מהחיים - דירוג שורות בלי פונקצית חלון">
-<meta name="twitter:description" content="יצירת דירוג שורות בתוך קבוצה בלי שימוש בפונקציית חלון">
+<meta name="twitter:description" content="דירוג שורות בתוך קבוצה בלי שימוש בפונקציית חלון">
 <meta name="twitter:image" content="https://sql.amitgrinson.com/questions/3-ranking-without-window-function/featured.png">
 <meta name="twitter:creator" content="@Amit_Levinson">
 <meta name="twitter:card" content="summary">
@@ -186,7 +186,7 @@ cookieconsent.run({
       <h1 class="title">דירוג שורות בלי פונקצית חלון</h1>
                   <div>
         <div class="description">
-          <p>יצירת דירוג שורות בתוך קבוצה בלי שימוש בפונקציית חלון</p>
+          <p>דירוג שורות בתוך קבוצה בלי שימוש בפונקציית חלון</p>
         </div>
       </div>
                           <div class="quarto-categories">
@@ -202,7 +202,7 @@ cookieconsent.run({
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">August 1, 2023</p>
+        <p class="date">October 3, 2023</p>
       </div>
     </div>
     
@@ -236,6 +236,7 @@ cookieconsent.run({
 <section id="שאלה" class="level2">
 <h2 class="anchored" data-anchor-id="שאלה">שאלה</h2>
 <p>ללא שימוש בפונקצית חלון, צור עמודה חדשה שמדרגת את השורות לפי מכירות (amount) באותה שנה (sale_year), בדומה לפונקציית <a href="https://learn.microsoft.com/en-us/sql/t-sql/functions/dense-rank-transact-sql?view=sql-server-ver16"><code>DESNE_RANK()</code></a>. כלומר, בהינתן תיקו בהיררכיה, ערכים זהים יקבלו את אותו דירוג ואילו הערכים הבאים בסדר יקבלו ערך אחד מעל הערך הקודם שהיה בתיקו.</p>
+<p>אין להשתמש בשום פונקציית חלון.</p>
 <p><strong>בהצלחה!</strong></p>
 </section>
 <section id="יצירת-הטבלה" class="level2">
@@ -268,12 +269,12 @@ cookieconsent.run({
 <div class="cell">
 <div class="cell-output-display">
 
-<div id="xyqciumdvz" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="pgxktknyzx" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#xyqciumdvz .gt_table {
+#pgxktknyzx .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -298,7 +299,7 @@ cookieconsent.run({
   border-left-color: #D3D3D3;
 }
 
-#xyqciumdvz .gt_heading {
+#pgxktknyzx .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -310,7 +311,7 @@ cookieconsent.run({
   border-right-color: #D3D3D3;
 }
 
-#xyqciumdvz .gt_title {
+#pgxktknyzx .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -322,7 +323,7 @@ cookieconsent.run({
   border-bottom-width: 0;
 }
 
-#xyqciumdvz .gt_subtitle {
+#pgxktknyzx .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -334,13 +335,13 @@ cookieconsent.run({
   border-top-width: 0;
 }
 
-#xyqciumdvz .gt_bottom_border {
+#pgxktknyzx .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#xyqciumdvz .gt_col_headings {
+#pgxktknyzx .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -355,7 +356,7 @@ cookieconsent.run({
   border-right-color: #D3D3D3;
 }
 
-#xyqciumdvz .gt_col_heading {
+#pgxktknyzx .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -375,7 +376,7 @@ cookieconsent.run({
   overflow-x: hidden;
 }
 
-#xyqciumdvz .gt_column_spanner_outer {
+#pgxktknyzx .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -387,15 +388,15 @@ cookieconsent.run({
   padding-right: 4px;
 }
 
-#xyqciumdvz .gt_column_spanner_outer:first-child {
+#pgxktknyzx .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#xyqciumdvz .gt_column_spanner_outer:last-child {
+#pgxktknyzx .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#xyqciumdvz .gt_column_spanner {
+#pgxktknyzx .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -407,7 +408,7 @@ cookieconsent.run({
   width: 100%;
 }
 
-#xyqciumdvz .gt_group_heading {
+#pgxktknyzx .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -432,7 +433,7 @@ cookieconsent.run({
   vertical-align: middle;
 }
 
-#xyqciumdvz .gt_empty_group_heading {
+#pgxktknyzx .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -447,15 +448,15 @@ cookieconsent.run({
   vertical-align: middle;
 }
 
-#xyqciumdvz .gt_from_md > :first-child {
+#pgxktknyzx .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#xyqciumdvz .gt_from_md > :last-child {
+#pgxktknyzx .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#xyqciumdvz .gt_row {
+#pgxktknyzx .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -474,7 +475,7 @@ cookieconsent.run({
   overflow-x: hidden;
 }
 
-#xyqciumdvz .gt_stub {
+#pgxktknyzx .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -487,7 +488,7 @@ cookieconsent.run({
   padding-right: 5px;
 }
 
-#xyqciumdvz .gt_stub_row_group {
+#pgxktknyzx .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -501,11 +502,11 @@ cookieconsent.run({
   vertical-align: top;
 }
 
-#xyqciumdvz .gt_row_group_first td {
+#pgxktknyzx .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#xyqciumdvz .gt_summary_row {
+#pgxktknyzx .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -515,16 +516,16 @@ cookieconsent.run({
   padding-right: 5px;
 }
 
-#xyqciumdvz .gt_first_summary_row {
+#pgxktknyzx .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#xyqciumdvz .gt_first_summary_row.thick {
+#pgxktknyzx .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#xyqciumdvz .gt_last_summary_row {
+#pgxktknyzx .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -534,7 +535,7 @@ cookieconsent.run({
   border-bottom-color: #D3D3D3;
 }
 
-#xyqciumdvz .gt_grand_summary_row {
+#pgxktknyzx .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -544,7 +545,7 @@ cookieconsent.run({
   padding-right: 5px;
 }
 
-#xyqciumdvz .gt_first_grand_summary_row {
+#pgxktknyzx .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -554,11 +555,11 @@ cookieconsent.run({
   border-top-color: #D3D3D3;
 }
 
-#xyqciumdvz .gt_striped {
+#pgxktknyzx .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#xyqciumdvz .gt_table_body {
+#pgxktknyzx .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -567,7 +568,7 @@ cookieconsent.run({
   border-bottom-color: #D3D3D3;
 }
 
-#xyqciumdvz .gt_footnotes {
+#pgxktknyzx .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -581,7 +582,7 @@ cookieconsent.run({
   border-right-color: #D3D3D3;
 }
 
-#xyqciumdvz .gt_footnote {
+#pgxktknyzx .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -590,7 +591,7 @@ cookieconsent.run({
   padding-right: 5px;
 }
 
-#xyqciumdvz .gt_sourcenotes {
+#pgxktknyzx .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -604,7 +605,7 @@ cookieconsent.run({
   border-right-color: #D3D3D3;
 }
 
-#xyqciumdvz .gt_sourcenote {
+#pgxktknyzx .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -612,36 +613,36 @@ cookieconsent.run({
   padding-right: 5px;
 }
 
-#xyqciumdvz .gt_left {
+#pgxktknyzx .gt_left {
   text-align: left;
 }
 
-#xyqciumdvz .gt_center {
+#pgxktknyzx .gt_center {
   text-align: center;
 }
 
-#xyqciumdvz .gt_right {
+#pgxktknyzx .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#xyqciumdvz .gt_font_normal {
+#pgxktknyzx .gt_font_normal {
   font-weight: normal;
 }
 
-#xyqciumdvz .gt_font_bold {
+#pgxktknyzx .gt_font_bold {
   font-weight: bold;
 }
 
-#xyqciumdvz .gt_font_italic {
+#pgxktknyzx .gt_font_italic {
   font-style: italic;
 }
 
-#xyqciumdvz .gt_super {
+#pgxktknyzx .gt_super {
   font-size: 65%;
 }
 
-#xyqciumdvz .gt_two_val_uncert {
+#pgxktknyzx .gt_two_val_uncert {
   display: inline-block;
   line-height: 1em;
   text-align: right;
@@ -650,31 +651,31 @@ cookieconsent.run({
   margin-left: 0.1em;
 }
 
-#xyqciumdvz .gt_footnote_marks {
+#pgxktknyzx .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#xyqciumdvz .gt_asterisk {
+#pgxktknyzx .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#xyqciumdvz .gt_slash_mark {
+#pgxktknyzx .gt_slash_mark {
   font-size: 0.7em;
   line-height: 0.7em;
   vertical-align: 0.15em;
 }
 
-#xyqciumdvz .gt_fraction_numerator {
+#pgxktknyzx .gt_fraction_numerator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: 0.45em;
 }
 
-#xyqciumdvz .gt_fraction_denominator {
+#pgxktknyzx .gt_fraction_denominator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: -0.05em;

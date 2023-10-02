@@ -2,9 +2,9 @@
   {
     "listing": "/index.html",
     "items": [
+      "/questions/3-ranking-without-window-function/index.html",
       "/questions/2-identical-different-payments/index.html",
-      "/questions/1-consecutive-actions/index.html",
-      "/questions/3-ranking-without-window-function/index.html"
+      "/questions/1-consecutive-actions/index.html"
     ]
   }
 ]
