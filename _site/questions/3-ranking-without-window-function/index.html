@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="">
-<meta name="dcterms.date" content="2023-08-01">
+<meta name="dcterms.date" content="2023-10-03">
 <meta name="description" content="תרגילי SQL משגרת העבודה של אנליסט">
 
 <title>שאילתות מהחיים - דירוג שורות בלי פונקצית חלון</title>
@@ -127,14 +127,14 @@ cookieconsent.run({
 
 <link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="שאילתות מהחיים - דירוג שורות בלי פונקצית חלון">
-<meta property="og:description" content="יצירת דירוג שורות בתוך קבוצה בלי שימוש בפונקציית חלון">
+<meta property="og:description" content="דירוג שורות בתוך קבוצה בלי שימוש בפונקצית חלון">
 <meta property="og:image" content="https://sql.amitgrinson.com/questions/3-ranking-without-window-function/featured.png">
 <meta property="og:site-name" content="שאילתות מהחיים">
 <meta property="og:locale" content="he_IL">
 <meta property="og:image:height" content="630">
 <meta property="og:image:width" content="1200">
 <meta name="twitter:title" content="שאילתות מהחיים - דירוג שורות בלי פונקצית חלון">
-<meta name="twitter:description" content="יצירת דירוג שורות בתוך קבוצה בלי שימוש בפונקציית חלון">
+<meta name="twitter:description" content="דירוג שורות בתוך קבוצה בלי שימוש בפונקצית חלון">
 <meta name="twitter:image" content="https://sql.amitgrinson.com/questions/3-ranking-without-window-function/featured.png">
 <meta name="twitter:creator" content="@Amit_Levinson">
 <meta name="twitter:card" content="summary">
@@ -186,7 +186,7 @@ cookieconsent.run({
       <h1 class="title">דירוג שורות בלי פונקצית חלון</h1>
                   <div>
         <div class="description">
-          <p>יצירת דירוג שורות בתוך קבוצה בלי שימוש בפונקציית חלון</p>
+          <p>דירוג שורות בתוך קבוצה בלי שימוש בפונקצית חלון</p>
         </div>
       </div>
                           <div class="quarto-categories">
@@ -202,7 +202,7 @@ cookieconsent.run({
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">August 1, 2023</p>
+        <p class="date">October 3, 2023</p>
       </div>
     </div>
     
@@ -218,13 +218,9 @@ cookieconsent.run({
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#הדאטה" id="toc-הדאטה" class="nav-link active" data-scroll-target="#הדאטה">הדאטה</a></li>
-  <li><a href="#שאלה" id="toc-שאלה" class="nav-link" data-scroll-target="#שאלה">שאלה</a></li>
+  <li><a href="#שאלה" id="toc-שאלה" class="nav-link active" data-scroll-target="#שאלה">שאלה</a></li>
   <li><a href="#יצירת-הטבלה" id="toc-יצירת-הטבלה" class="nav-link" data-scroll-target="#יצירת-הטבלה">יצירת הטבלה</a></li>
-  <li><a href="#תשובה" id="toc-תשובה" class="nav-link" data-scroll-target="#תשובה">תשובה</a>
-  <ul class="collapse">
-  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section">1.</a></li>
-  </ul></li>
+  <li><a href="#תשובה" id="toc-תשובה" class="nav-link" data-scroll-target="#תשובה">תשובה</a></li>
   </ul>
 </nav>
     </div>
@@ -235,14 +231,11 @@ cookieconsent.run({
 
 
 <p>ברוכים הבאים לתרגיל השלישי!</p>
-<section id="הדאטה" class="level2">
-<h2 class="anchored" data-anchor-id="הדאטה">הדאטה</h2>
-<p>האמת זו לא ממש שאלה שנדרשתי לה בעבודה אלא שאלה שעלתה בקבוצות פייסבוק לאנליסטים ואיציק בן גן דן בה גם בספר שלו <a href="https://www.amazon.com/T-SQL-Window-Functions-Developer-Reference/dp/0135861446">על פונקציות חלון</a>.</p>
-<p>אומנם ברוב הגדול של הפעמים תוכלו להשתמש בפונקצית חלון, התרגול דורש מאיתנו לחשוב מה קורה בפונקציית דירוג וכך לשחזר אותה רק בלי להשתמש בפונקציית חלון</p>
-</section>
+<p>האמת זו לא ממש שאלה שנדרשתי לה בעבודה אלא שאלה שעלתה בקבוצות פייסבוק לאנליסטים וראיתי כי <a href="https://www.linkedin.com/pulse/%D7%90%D7%99%D7%A6%D7%99%D7%A7-%D7%91%D7%9F-%D7%92%D7%9F-%D7%9E%D7%95%D7%9E%D7%97%D7%94-t-sql-smadar-peled">איציק בן-גן</a> דן בה גם בספר שלו <a href="https://www.amazon.com/T-SQL-Window-Functions-Developer-Reference/dp/0135861446">על פונקציות חלון</a>.</p>
+<p>תכלס, ברוב המקרים תוכלו להשתמש בפונקצית חלון, אבל נראה לי זה תרגול מגניב שדורש מאיתנו לחשוב מה בפועל קורה בפונקצית דירוג ובכך לשחזר אותה.</p>
 <section id="שאלה" class="level2">
 <h2 class="anchored" data-anchor-id="שאלה">שאלה</h2>
-<p>ללא שימוש בפונקצית חלון, צור עמודה חדשה שמדרגת את השורות לפי מכירות באותה שנה (לפי amount), בדומה לפונקציית <a href="https://learn.microsoft.com/en-us/sql/t-sql/functions/dense-rank-transact-sql?view=sql-server-ver16"><code>DESNE_RANK()</code></a>. כלומר, בהינתן תיקו בהיררכיה, ערכים זהים יקבלו את אותו דירוג ואילו הערכים הבאים בסדר יקבלו ערך אחד מעל הערך הקודם שהיה בתיקו.</p>
+<p><em>ללא שימוש בשום פונקצית חלון</em>, צרו עמודה חדשה שמדרגת את השורות לפי מכירות (amount) באותה שנה (sale_year), בדומה לפונקצית <a href="https://learn.microsoft.com/en-us/sql/t-sql/functions/dense-rank-transact-sql?view=sql-server-ver16"><code>DESNE_RANK()</code></a>. כלומר, בהינתן תיקו בהיררכיה, ערכים זהים יקבלו את אותו דירוג ואילו הערכים הבאים בסדר יקבלו דירוג אחד מעל הערך הקודם שהיה בתיקו.</p>
 <p><strong>בהצלחה!</strong></p>
 </section>
 <section id="יצירת-הטבלה" class="level2">
@@ -271,18 +264,16 @@ cookieconsent.run({
 </section>
 <section id="תשובה" class="level2">
 <h2 class="anchored" data-anchor-id="תשובה">תשובה</h2>
-<p>דרך הפתרון תפורסם עם השאלה הבאה</p>
-<section id="section" class="level3">
-<h3 class="anchored" data-anchor-id="section">1.</h3>
+<p>דרך הפתרון תפורסם עם השאלה הבאה ב-17.10</p>
 <div class="cell">
 <div class="cell-output-display">
 
-<div id="ltpwvzpvzt" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="qhcgfwmfcl" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#ltpwvzpvzt .gt_table {
+#qhcgfwmfcl .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -307,7 +298,7 @@ cookieconsent.run({
   border-left-color: #D3D3D3;
 }
 
-#ltpwvzpvzt .gt_heading {
+#qhcgfwmfcl .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -319,7 +310,7 @@ cookieconsent.run({
   border-right-color: #D3D3D3;
 }
 
-#ltpwvzpvzt .gt_title {
+#qhcgfwmfcl .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -331,7 +322,7 @@ cookieconsent.run({
   border-bottom-width: 0;
 }
 
-#ltpwvzpvzt .gt_subtitle {
+#qhcgfwmfcl .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -343,13 +334,13 @@ cookieconsent.run({
   border-top-width: 0;
 }
 
-#ltpwvzpvzt .gt_bottom_border {
+#qhcgfwmfcl .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ltpwvzpvzt .gt_col_headings {
+#qhcgfwmfcl .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -364,7 +355,7 @@ cookieconsent.run({
   border-right-color: #D3D3D3;
 }
 
-#ltpwvzpvzt .gt_col_heading {
+#qhcgfwmfcl .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -384,7 +375,7 @@ cookieconsent.run({
   overflow-x: hidden;
 }
 
-#ltpwvzpvzt .gt_column_spanner_outer {
+#qhcgfwmfcl .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -396,15 +387,15 @@ cookieconsent.run({
   padding-right: 4px;
 }
 
-#ltpwvzpvzt .gt_column_spanner_outer:first-child {
+#qhcgfwmfcl .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ltpwvzpvzt .gt_column_spanner_outer:last-child {
+#qhcgfwmfcl .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ltpwvzpvzt .gt_column_spanner {
+#qhcgfwmfcl .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -416,7 +407,7 @@ cookieconsent.run({
   width: 100%;
 }
 
-#ltpwvzpvzt .gt_group_heading {
+#qhcgfwmfcl .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -441,7 +432,7 @@ cookieconsent.run({
   vertical-align: middle;
 }
 
-#ltpwvzpvzt .gt_empty_group_heading {
+#qhcgfwmfcl .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -456,15 +447,15 @@ cookieconsent.run({
   vertical-align: middle;
 }
 
-#ltpwvzpvzt .gt_from_md > :first-child {
+#qhcgfwmfcl .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ltpwvzpvzt .gt_from_md > :last-child {
+#qhcgfwmfcl .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ltpwvzpvzt .gt_row {
+#qhcgfwmfcl .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -483,7 +474,7 @@ cookieconsent.run({
   overflow-x: hidden;
 }
 
-#ltpwvzpvzt .gt_stub {
+#qhcgfwmfcl .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -496,7 +487,7 @@ cookieconsent.run({
   padding-right: 5px;
 }
 
-#ltpwvzpvzt .gt_stub_row_group {
+#qhcgfwmfcl .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -510,11 +501,11 @@ cookieconsent.run({
   vertical-align: top;
 }
 
-#ltpwvzpvzt .gt_row_group_first td {
+#qhcgfwmfcl .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ltpwvzpvzt .gt_summary_row {
+#qhcgfwmfcl .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -524,16 +515,16 @@ cookieconsent.run({
   padding-right: 5px;
 }
 
-#ltpwvzpvzt .gt_first_summary_row {
+#qhcgfwmfcl .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ltpwvzpvzt .gt_first_summary_row.thick {
+#qhcgfwmfcl .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ltpwvzpvzt .gt_last_summary_row {
+#qhcgfwmfcl .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -543,7 +534,7 @@ cookieconsent.run({
   border-bottom-color: #D3D3D3;
 }
 
-#ltpwvzpvzt .gt_grand_summary_row {
+#qhcgfwmfcl .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -553,7 +544,7 @@ cookieconsent.run({
   padding-right: 5px;
 }
 
-#ltpwvzpvzt .gt_first_grand_summary_row {
+#qhcgfwmfcl .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -563,11 +554,11 @@ cookieconsent.run({
   border-top-color: #D3D3D3;
 }
 
-#ltpwvzpvzt .gt_striped {
+#qhcgfwmfcl .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ltpwvzpvzt .gt_table_body {
+#qhcgfwmfcl .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -576,7 +567,7 @@ cookieconsent.run({
   border-bottom-color: #D3D3D3;
 }
 
-#ltpwvzpvzt .gt_footnotes {
+#qhcgfwmfcl .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -590,7 +581,7 @@ cookieconsent.run({
   border-right-color: #D3D3D3;
 }
 
-#ltpwvzpvzt .gt_footnote {
+#qhcgfwmfcl .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -599,7 +590,7 @@ cookieconsent.run({
   padding-right: 5px;
 }
 
-#ltpwvzpvzt .gt_sourcenotes {
+#qhcgfwmfcl .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -613,7 +604,7 @@ cookieconsent.run({
   border-right-color: #D3D3D3;
 }
 
-#ltpwvzpvzt .gt_sourcenote {
+#qhcgfwmfcl .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -621,36 +612,36 @@ cookieconsent.run({
   padding-right: 5px;
 }
 
-#ltpwvzpvzt .gt_left {
+#qhcgfwmfcl .gt_left {
   text-align: left;
 }
 
-#ltpwvzpvzt .gt_center {
+#qhcgfwmfcl .gt_center {
   text-align: center;
 }
 
-#ltpwvzpvzt .gt_right {
+#qhcgfwmfcl .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ltpwvzpvzt .gt_font_normal {
+#qhcgfwmfcl .gt_font_normal {
   font-weight: normal;
 }
 
-#ltpwvzpvzt .gt_font_bold {
+#qhcgfwmfcl .gt_font_bold {
   font-weight: bold;
 }
 
-#ltpwvzpvzt .gt_font_italic {
+#qhcgfwmfcl .gt_font_italic {
   font-style: italic;
 }
 
-#ltpwvzpvzt .gt_super {
+#qhcgfwmfcl .gt_super {
   font-size: 65%;
 }
 
-#ltpwvzpvzt .gt_two_val_uncert {
+#qhcgfwmfcl .gt_two_val_uncert {
   display: inline-block;
   line-height: 1em;
   text-align: right;
@@ -659,31 +650,31 @@ cookieconsent.run({
   margin-left: 0.1em;
 }
 
-#ltpwvzpvzt .gt_footnote_marks {
+#qhcgfwmfcl .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#ltpwvzpvzt .gt_asterisk {
+#qhcgfwmfcl .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ltpwvzpvzt .gt_slash_mark {
+#qhcgfwmfcl .gt_slash_mark {
   font-size: 0.7em;
   line-height: 0.7em;
   vertical-align: 0.15em;
 }
 
-#ltpwvzpvzt .gt_fraction_numerator {
+#qhcgfwmfcl .gt_fraction_numerator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: 0.45em;
 }
 
-#ltpwvzpvzt .gt_fraction_denominator {
+#qhcgfwmfcl .gt_fraction_denominator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: -0.05em;
@@ -768,7 +759,6 @@ cookieconsent.run({
 </div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

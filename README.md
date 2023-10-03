@@ -1,9 +1,7 @@
 ### sql-website
 
-This is still a WIP website to hold various SQL questions. 
+Website with Data Analysis SQL Questions in Hebrew. Questions are posted with the corresponding data & solutions in the form of text and video.
 
-Anyway, visit here to see the progress:
+Enjoy!
 
 https://sql.amitgrinson.com
-
-And for the R fans, it's a great opportunity to practice Quarto in Hebrew :)

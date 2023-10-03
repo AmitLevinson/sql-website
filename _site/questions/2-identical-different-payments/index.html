@@ -221,7 +221,11 @@ cookieconsent.run({
   <li><a href="#הדאטה" id="toc-הדאטה" class="nav-link active" data-scroll-target="#הדאטה">הדאטה</a></li>
   <li><a href="#שאלה" id="toc-שאלה" class="nav-link" data-scroll-target="#שאלה">שאלה</a></li>
   <li><a href="#יצירת-הטבלה" id="toc-יצירת-הטבלה" class="nav-link" data-scroll-target="#יצירת-הטבלה">יצירת הטבלה</a></li>
-  <li><a href="#תשובה" id="toc-תשובה" class="nav-link" data-scroll-target="#תשובה">תשובה</a></li>
+  <li><a href="#תשובה" id="toc-תשובה" class="nav-link" data-scroll-target="#תשובה">תשובה</a>
+  <ul class="collapse">
+  <li><a href="#סרטון-הסבר" id="toc-סרטון-הסבר" class="nav-link" data-scroll-target="#סרטון-הסבר">סרטון הסבר</a></li>
+  <li><a href="#פלט" id="toc-פלט" class="nav-link" data-scroll-target="#פלט">פלט</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -358,7 +362,26 @@ cookieconsent.run({
 </section>
 <section id="תשובה" class="level2">
 <h2 class="anchored" data-anchor-id="תשובה">תשובה</h2>
-<p>(דרך הפתרון תפורסם עם השאלה הבאה ב-3.10-)</p>
+<section id="סרטון-הסבר" class="level3">
+<h3 class="anchored" data-anchor-id="סרטון-הסבר">סרטון הסבר</h3>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/rHzikQGAnAc" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+</section>
+<section id="פלט" class="level3">
+<h3 class="anchored" data-anchor-id="פלט">פלט</h3>
+<details>
+<summary>
+הצג קוד
+</summary>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> USER_ID,</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> N_PAYMENTS,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">CASE</span> <span class="cf">WHEN</span> <span class="fu">SUM</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> STATUS <span class="op">=</span> <span class="st">'LOAD'</span> <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">ELSE</span> <span class="dv">0</span> <span class="cf">END</span>) <span class="op">=</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">ELSE</span> <span class="dv">0</span> <span class="cf">END</span> <span class="kw">AS</span> ALL_LOADED,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">CASE</span> <span class="cf">WHEN</span> <span class="fu">COUNT</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> STATUS <span class="op">=</span> <span class="st">'LOAD'</span> <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">END</span>) <span class="op">&gt;</span> <span class="fu">COUNT</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> STATUS <span class="op">=</span> <span class="st">'CANCEL'</span> <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">END</span>) <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">ELSE</span> <span class="dv">0</span> <span class="cf">END</span> <span class="kw">AS</span> more_loaded_than_failed,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">MAX</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> STATUS <span class="op">=</span> <span class="st">'PENDING'</span> <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">ELSE</span> <span class="dv">0</span> <span class="cf">END</span>) <span class="kw">AS</span> HAS_PENDING_PAYMENT</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> payments_ag_2</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> USER_ID</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</details>
 <div class="cell">
 <div class="knitsql-table">
 <table class="table table-sm table-striped small">
@@ -372,11 +395,11 @@ cookieconsent.run({
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">user_id</th>
-<th style="text-align: right;">n_payments</th>
-<th style="text-align: right;">all_loaded</th>
+<th style="text-align: left;">USER_ID</th>
+<th style="text-align: right;">N_PAYMENTS</th>
+<th style="text-align: right;">ALL_LOADED</th>
 <th style="text-align: right;">more_loaded_than_failed</th>
-<th style="text-align: right;">has_pending_payment</th>
+<th style="text-align: right;">HAS_PENDING_PAYMENT</th>
 </tr>
 </thead>
 <tbody>
@@ -428,6 +451,7 @@ cookieconsent.run({
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

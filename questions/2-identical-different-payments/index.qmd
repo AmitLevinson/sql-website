@@ -84,16 +84,39 @@ VALUES
 
 ## תשובה
 
-(דרך הפתרון תפורסם עם השאלה הבאה ב-3.10-)
+### סרטון הסבר
+
+{{< video https://youtu.be/rHzikQGAnAc >}}
+
+### פלט
+
+<details>
+<summary>הצג קוד</summary>
+
+```{sql connection='sqlconn', echo = TRUE, eval = FALSE}
+SELECT USER_ID,
+	COUNT(*) AS N_PAYMENTS,
+	CASE WHEN SUM(CASE WHEN STATUS = 'LOAD' THEN 1 ELSE 0 END) = COUNT(*) THEN 1 ELSE 0 END AS ALL_LOADED,
+	CASE WHEN COUNT(CASE WHEN STATUS = 'LOAD' THEN 1 END) > COUNT(CASE WHEN STATUS = 'CANCEL' THEN 1 END) THEN 1 ELSE 0 END AS more_loaded_than_failed,
+	MAX(CASE WHEN STATUS = 'PENDING' THEN 1 ELSE 0 END) AS HAS_PENDING_PAYMENT
+FROM payments_ag_2
+GROUP BY USER_ID
+```
+
+
+</details>
+
+
+
 
 ```{sql connection='sqlconn', echo = FALSE}
-SELECT user_id,
-  count(*) as n_payments,
-  all_loaded = CASE WHEN SUM(CASE WHEN STATUS = 'Load' then 1 END) = COUNT(*) then 1 else 0 end,
-  more_loaded_than_failed = CASE WHEN SUM(CASE WHEN STATUS = 'Load' then 1 END) > SUM(CASE WHEN STATUS = 'Cancel' then 1 else 0 END) then 1 else 0 end,
-  has_pending_payment = MAX(CASE when status = 'Pending' then 1 else 0 end)
+SELECT USER_ID,
+	COUNT(*) AS N_PAYMENTS,
+	CASE WHEN SUM(CASE WHEN STATUS = 'LOAD' THEN 1 ELSE 0 END) = COUNT(*) THEN 1 ELSE 0 END AS ALL_LOADED,
+	CASE WHEN COUNT(CASE WHEN STATUS = 'LOAD' THEN 1 END) > COUNT(CASE WHEN STATUS = 'CANCEL' THEN 1 END) THEN 1 ELSE 0 END AS more_loaded_than_failed,
+	MAX(CASE WHEN STATUS = 'PENDING' THEN 1 ELSE 0 END) AS HAS_PENDING_PAYMENT
 FROM payments_ag_2
-GROUP BY user_id
+GROUP BY USER_ID
 ```
 
 ```{r echo = FALSE}

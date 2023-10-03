@@ -11,7 +11,7 @@
     "href": "index.html",
     "title": "מקבץ תרגילים ממקרים שהיו",
     "section": "",
-    "text": "הירשמו וקבלו עידכונים על תרגילים חדשים\n        \n            \n            \n        \n    \n        \n            \n                \n                \n            \n        \n    \n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n\n\n\n\nאפיון תשלומים זהים או שונים\n\n\n\n\n\n\n\nבסיסי\n\n\n\n\nקיטלוג לקוחות עם סטטוס תשלומים זהה או לפחות אחד שונה\n\n\n\n\n\n\nSep 19, 2023\n\n\n\n\n\n\n  \n\n\n\n\nזיהוי רצפים בהתחברות\n\n\n\n\n\n\n\nמתקדם\n\n\n\n\nתרגול זיהוי פעולות רצופות\n\n\n\n\n\n\nSep 5, 2023\n\n\n\n\n\n\nNo matching items"
+    "text": "הירשמו וקבלו עידכונים על תרגילים חדשים\n        \n            \n            \n        \n    \n        \n            \n                \n                \n            \n        \n    \n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n\n\n\n\nדירוג שורות בלי פונקצית חלון\n\n\n\n\n\n\n\nמתקדם\n\n\n\n\nדירוג שורות בתוך קבוצה בלי שימוש בפונקצית חלון\n\n\n\n\n\n\nOct 3, 2023\n\n\n\n\n\n\n  \n\n\n\n\nאפיון תשלומים זהים או שונים\n\n\n\n\n\n\n\nבסיסי\n\n\n\n\nקיטלוג לקוחות עם סטטוס תשלומים זהה או לפחות אחד שונה\n\n\n\n\n\n\nSep 19, 2023\n\n\n\n\n\n\n  \n\n\n\n\nזיהוי רצפים בהתחברות\n\n\n\n\n\n\n\nמתקדם\n\n\n\n\nתרגול זיהוי פעולות רצופות\n\n\n\n\n\n\nSep 5, 2023\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "questions/1-consecutive-actions/index.html",
@@ -88,6 +88,41 @@
     "href": "questions/2-identical-different-payments/index.html#תשובה",
     "title": "אפיון תשלומים זהים או שונים",
     "section": "תשובה",
-    "text": "תשובה\n(דרך הפתרון תפורסם עם השאלה הבאה ב-3.10-)\n\n\n\n6 records\n\n\n\n\n\n\n\n\n\nuser_id\nn_payments\nall_loaded\nmore_loaded_than_failed\nhas_pending_payment\n\n\n\n\n1\n6\n0\n1\n1\n\n\n2\n6\n1\n1\n0\n\n\n3\n3\n0\n0\n1\n\n\n4\n2\n0\n0\n0\n\n\n5\n1\n1\n1\n0\n\n\n6\n2\n0\n1\n1"
+    "text": "תשובה\n\nסרטון הסבר\n\n\n\nפלט\n\n\nהצג קוד\n\n\nSELECT USER_ID,\n    COUNT(*) AS N_PAYMENTS,\n    CASE WHEN SUM(CASE WHEN STATUS = 'LOAD' THEN 1 ELSE 0 END) = COUNT(*) THEN 1 ELSE 0 END AS ALL_LOADED,\n    CASE WHEN COUNT(CASE WHEN STATUS = 'LOAD' THEN 1 END) &gt; COUNT(CASE WHEN STATUS = 'CANCEL' THEN 1 END) THEN 1 ELSE 0 END AS more_loaded_than_failed,\n    MAX(CASE WHEN STATUS = 'PENDING' THEN 1 ELSE 0 END) AS HAS_PENDING_PAYMENT\nFROM payments_ag_2\nGROUP BY USER_ID\n\n\n\n\n\n6 records\n\n\n\n\n\n\n\n\n\nUSER_ID\nN_PAYMENTS\nALL_LOADED\nmore_loaded_than_failed\nHAS_PENDING_PAYMENT\n\n\n\n\n1\n6\n0\n1\n1\n\n\n2\n6\n1\n1\n0\n\n\n3\n3\n0\n0\n1\n\n\n4\n2\n0\n0\n0\n\n\n5\n1\n1\n1\n0\n\n\n6\n2\n0\n1\n1"
+  },
+  {
+    "objectID": "questions/3-ranking-without-window-function/index.html",
+    "href": "questions/3-ranking-without-window-function/index.html",
+    "title": "דירוג שורות בלי פונקצית חלון",
+    "section": "",
+    "text": "ברוכים הבאים לתרגיל השלישי!\nהאמת זו לא ממש שאלה שנדרשתי לה בעבודה אלא שאלה שעלתה בקבוצות פייסבוק לאנליסטים וראיתי כי איציק בן-גן דן בה גם בספר שלו על פונקציות חלון.\nתכלס, ברוב המקרים תוכלו להשתמש בפונקצית חלון, אבל נראה לי זה תרגול מגניב שדורש מאיתנו לחשוב מה בפועל קורה בפונקצית דירוג ובכך לשחזר אותה."
+  },
+  {
+    "objectID": "questions/3-ranking-without-window-function/index.html#הדאטה",
+    "href": "questions/3-ranking-without-window-function/index.html#הדאטה",
+    "title": "דירוג שורות בלי פונקצית חלון",
+    "section": "הדאטה",
+    "text": "הדאטה\nהאמת זו לא ממש שאלה שנדרשתי לה בעבודה אלא שאלה שעלתה בקבוצות פייסבוק לאנליסטים ואיציק בן גן דן בה גם בספר שלו על פונקציות חלון.\nאומנם ברוב הגדול של הפעמים תוכלו להשתמש בפונקצית חלון, התרגול דורש מאיתנו לחשוב מה קורה בפונקציית דירוג וכך לשחזר אותה רק בלי להשתמש בפונקציית חלון"
+  },
+  {
+    "objectID": "questions/3-ranking-without-window-function/index.html#שאלה",
+    "href": "questions/3-ranking-without-window-function/index.html#שאלה",
+    "title": "דירוג שורות בלי פונקצית חלון",
+    "section": "שאלה",
+    "text": "שאלה\nללא שימוש בשום פונקצית חלון, צרו עמודה חדשה שמדרגת את השורות לפי מכירות (amount) באותה שנה (sale_year), בדומה לפונקצית DESNE_RANK(). כלומר, בהינתן תיקו בהיררכיה, ערכים זהים יקבלו את אותו דירוג ואילו הערכים הבאים בסדר יקבלו דירוג אחד מעל הערך הקודם שהיה בתיקו.\nבהצלחה!"
+  },
+  {
+    "objectID": "questions/3-ranking-without-window-function/index.html#יצירת-הטבלה",
+    "href": "questions/3-ranking-without-window-function/index.html#יצירת-הטבלה",
+    "title": "דירוג שורות בלי פונקצית חלון",
+    "section": "יצירת הטבלה",
+    "text": "יצירת הטבלה\n\nDROP TABLE IF EXISTS Sales_ag;\n\nCREATE TABLE sales_ag (\n    year INT,\n    category varchar(15),\n    amount INT\n)\n\n\nINSERT into Sales_ag (year, category, amount) values (2000, 'Automotive', 89);\ninsert into Sales_ag (year, category, amount) values (2000, 'Computers', 59);\ninsert into Sales_ag (year, category, amount) values (2000, 'Books', 19);\ninsert into Sales_ag (year, category, amount) values (2000, 'Movies', 74);\ninsert into Sales_ag (year, category, amount) values (2000, 'Garden', 74);\ninsert into Sales_ag (year, category, amount) values (2001, 'Clothing', 49);\ninsert into Sales_ag (year, category, amount) values (2001, 'Computers', 53);\ninsert into Sales_ag (year, category, amount) values (2001, 'Automotive', 65);\ninsert into Sales_ag (year, category, amount) values (2001, 'Garden', 24);\ninsert into Sales_ag (year, category, amount) values (2001, 'Movies', 39);"
+  },
+  {
+    "objectID": "questions/3-ranking-without-window-function/index.html#תשובה",
+    "href": "questions/3-ranking-without-window-function/index.html#תשובה",
+    "title": "דירוג שורות בלי פונקצית חלון",
+    "section": "תשובה",
+    "text": "תשובה\nדרך הפתרון תפורסם עם השאלה הבאה ב-17.10\n\n\n\n\n\n\n\n\n\ncustom_dense_rank\namount\ncategory\nsale_year\n\n\n\n\n1\n89\nAutomotive\n2000\n\n\n2\n74\nMovies\n2000\n\n\n2\n74\nGarden\n2000\n\n\n3\n59\nComputers\n2000\n\n\n4\n19\nBooks\n2000\n\n\n1\n65\nAutomotive\n2001\n\n\n2\n53\nComputers\n2001\n\n\n3\n49\nClothing\n2001\n\n\n4\n39\nMovies\n2001\n\n\n5\n24\nGarden\n2001"
   }
 ]
