@@ -55,3 +55,6 @@ body {
 
 
 
+pre>code.sourceCode {
+  white-space: pre-wrap;
+}
