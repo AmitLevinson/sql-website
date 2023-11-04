@@ -3,11 +3,11 @@ title: "ערכים לפני ואחרי נקודת זמן"
 description: |
   החזרת ציון 'סכנת עזיבה' לפני התשלום הראשון ומיד לאחריו
 author: ""
-date: "2023-09-14"
+date: "2023-11-07"
 toc: true
 categories: [בסיסי]
 image: featured.png
-draft: true
+draft: false
 ---
 
 ```{r, include = FALSE}
@@ -261,9 +261,34 @@ insert into churn_scores_ag_4 (user_id, score_date, churn_score) values (3, '11/
 
 ## תשובות
 
+### סרטון הסבר
+
+{{< video https://youtu.be/iBklZWzFN2s >}}
+
+
 ### תשובה 1
 
-(פתרון יפורסם עם השאלה הבאה)
+<details>
+<summary>הצג פתרון</summary>
+
+```{sql connection='sqlconn', echo = TRUE, eval= FALSE}
+WITH user_payment as (
+  SELECT user_id,
+    min(payment_date) as first_payment
+  FROM payments_ag_4
+  GROUP BY user_id
+  )
+
+SELECT user_payment.user_id,
+  max(CASE WHEN first_payment > score_date then score_date END) as score_date_before_paymet,
+  first_payment,
+  min(CASE WHEN first_payment < score_date then score_date END) as score_date_after_paymet
+FROM user_payment  
+LEFT JOIN churn_scores_ag_4 scores on scores.user_id = user_payment.user_id
+GROUP BY user_payment.user_id, first_payment;
+```
+
+</details>
 
 
 ```{sql connection='sqlconn', echo = FALSE}
@@ -284,6 +309,32 @@ GROUP BY user_payment.user_id, first_payment;
 ```
 ### תשובה 2
 
+<details>
+<summary>הצג פתרון</summary>
+
+```{sql connection='sqlconn', echo = TRUE, eval= FALSE}
+WITH user_payment as (
+  SELECT user_id,
+    min(payment_date) as first_payment
+  FROM payments_ag_4
+  GROUP BY user_id
+  )
+
+SELECT user_payment.user_id,
+   first_payment,
+  churn_scores.score_before_payment,
+  churn_scores.score_after_payment
+FROM user_payment
+OUTER APPLY (
+  SELECT top 1
+   FIRST_VALUE(churn_score) OVER(ORDER BY CASE WHEN DATEDIFF(day, score_date, first_payment) > 0 THEN 1 ELSE 2 END, score_date desc) as score_before_payment,
+   FIRST_VALUE(churn_score) OVER(ORDER BY CASE WHEN DATEDIFF(day, score_date, first_payment) < 0 THEN 1 ELSE 2 END, score_date asc)  as score_after_payment 
+  from churn_scores_ag_4 scores
+  where scores.user_id = user_payment.user_id
+) AS churn_scores
+```
+
+</details>
 
 ```{sql connection='sqlconn', echo = FALSE}
 WITH user_payment as (

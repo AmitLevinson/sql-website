@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="">
-<meta name="dcterms.date" content="2023-09-14">
+<meta name="dcterms.date" content="2023-11-07">
 <meta name="description" content="תרגילי SQL משגרת העבודה של אנליסט">
 
 <title>שאילתות מהחיים - ערכים לפני ואחרי נקודת זמן</title>
@@ -202,7 +202,7 @@ cookieconsent.run({
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">September 14, 2023</p>
+        <p class="date">November 7, 2023</p>
       </div>
     </div>
     
@@ -231,6 +231,7 @@ cookieconsent.run({
   </ul></li>
   <li><a href="#תשובות" id="toc-תשובות" class="nav-link" data-scroll-target="#תשובות">תשובות</a>
   <ul class="collapse">
+  <li><a href="#סרטון-הסבר" id="toc-סרטון-הסבר" class="nav-link" data-scroll-target="#סרטון-הסבר">סרטון הסבר</a></li>
   <li><a href="#תשובה-1" id="toc-תשובה-1" class="nav-link" data-scroll-target="#תשובה-1">תשובה 1</a></li>
   <li><a href="#תשובה-2" id="toc-תשובה-2" class="nav-link" data-scroll-target="#תשובה-2">תשובה 2</a></li>
   </ul></li>
@@ -618,9 +619,33 @@ cookieconsent.run({
 </section>
 <section id="תשובות" class="level2">
 <h2 class="anchored" data-anchor-id="תשובות">תשובות</h2>
+<section id="סרטון-הסבר" class="level3">
+<h3 class="anchored" data-anchor-id="סרטון-הסבר">סרטון הסבר</h3>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/iBklZWzFN2s" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+</section>
 <section id="תשובה-1" class="level3">
 <h3 class="anchored" data-anchor-id="תשובה-1">תשובה 1</h3>
-<p>(פתרון יפורסם עם השאלה הבאה)</p>
+<details>
+<summary>
+הצג פתרון
+</summary>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> user_payment <span class="kw">as</span> (</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">SELECT</span> user_id,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">min</span>(payment_date) <span class="kw">as</span> first_payment</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> payments_ag_4</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">GROUP</span> <span class="kw">BY</span> user_id</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> user_payment.user_id,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">max</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> first_payment <span class="op">&gt;</span> score_date <span class="cf">then</span> score_date <span class="cf">END</span>) <span class="kw">as</span> score_date_before_paymet,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  first_payment,</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">min</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> first_payment <span class="op">&lt;</span> score_date <span class="cf">then</span> score_date <span class="cf">END</span>) <span class="kw">as</span> score_date_after_paymet</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> user_payment  </span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> churn_scores_ag_4 scores <span class="kw">on</span> scores.user_id <span class="op">=</span> user_payment.user_id</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> user_payment.user_id, first_payment;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</details>
 <div class="cell">
 <div class="knitsql-table">
 <table class="table table-sm table-striped small">
@@ -677,6 +702,32 @@ cookieconsent.run({
 </section>
 <section id="תשובה-2" class="level3">
 <h3 class="anchored" data-anchor-id="תשובה-2">תשובה 2</h3>
+<details>
+<summary>
+הצג פתרון
+</summary>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> user_payment <span class="kw">as</span> (</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">SELECT</span> user_id,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">min</span>(payment_date) <span class="kw">as</span> first_payment</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> payments_ag_4</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">GROUP</span> <span class="kw">BY</span> user_id</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> user_payment.user_id,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>   first_payment,</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  churn_scores.score_before_payment,</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  churn_scores.score_after_payment</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> user_payment</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="kw">OUTER</span> APPLY (</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  <span class="kw">SELECT</span> top <span class="dv">1</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>   <span class="fu">FIRST_VALUE</span>(churn_score) <span class="kw">OVER</span>(<span class="kw">ORDER</span> <span class="kw">BY</span> <span class="cf">CASE</span> <span class="cf">WHEN</span> DATEDIFF(<span class="dt">day</span>, score_date, first_payment) <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">ELSE</span> <span class="dv">2</span> <span class="cf">END</span>, score_date <span class="kw">desc</span>) <span class="kw">as</span> score_before_payment,</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>   <span class="fu">FIRST_VALUE</span>(churn_score) <span class="kw">OVER</span>(<span class="kw">ORDER</span> <span class="kw">BY</span> <span class="cf">CASE</span> <span class="cf">WHEN</span> DATEDIFF(<span class="dt">day</span>, score_date, first_payment) <span class="op">&lt;</span> <span class="dv">0</span> <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">ELSE</span> <span class="dv">2</span> <span class="cf">END</span>, score_date <span class="kw">asc</span>)  <span class="kw">as</span> score_after_payment </span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  <span class="kw">from</span> churn_scores_ag_4 scores</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span> scores.user_id <span class="op">=</span> user_payment.user_id</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>) <span class="kw">AS</span> churn_scores</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</details>
 <div class="cell">
 <div class="knitsql-table">
 <table class="table table-sm table-striped small">
