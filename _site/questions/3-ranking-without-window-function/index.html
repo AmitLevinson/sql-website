@@ -220,7 +220,10 @@ cookieconsent.run({
   <ul>
   <li><a href="#שאלה" id="toc-שאלה" class="nav-link active" data-scroll-target="#שאלה">שאלה</a></li>
   <li><a href="#יצירת-הטבלה" id="toc-יצירת-הטבלה" class="nav-link" data-scroll-target="#יצירת-הטבלה">יצירת הטבלה</a></li>
-  <li><a href="#תשובה" id="toc-תשובה" class="nav-link" data-scroll-target="#תשובה">תשובה</a></li>
+  <li><a href="#תשובה" id="toc-תשובה" class="nav-link" data-scroll-target="#תשובה">תשובה</a>
+  <ul class="collapse">
+  <li><a href="#סרטון-הסבר" id="toc-סרטון-הסבר" class="nav-link" data-scroll-target="#סרטון-הסבר">סרטון הסבר</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -264,16 +267,32 @@ cookieconsent.run({
 </section>
 <section id="תשובה" class="level2">
 <h2 class="anchored" data-anchor-id="תשובה">תשובה</h2>
-<p>דרך הפתרון תפורסם עם השאלה הבאה ב-17.10</p>
+<section id="סרטון-הסבר" class="level3">
+<h3 class="anchored" data-anchor-id="סרטון-הסבר">סרטון הסבר</h3>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/zujkxjVyz4U" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<details>
+<summary>
+הצג פתרון
+</summary>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span>,</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    (<span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> SalesInner.amount) <span class="kw">as</span> rn</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> sales_ag SalesInner</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span> SalesInner.<span class="dt">year</span> <span class="op">=</span> SalesOuter.<span class="dt">year</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">AND</span> SalesInner.amount <span class="op">&gt;=</span> SalesOuter.amount)  <span class="kw">AS</span> custom_dense_rank</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> sales_ag SalesOuter</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> <span class="dt">year</span>, custom_dense_rank</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</details>
 <div class="cell">
 <div class="cell-output-display">
 
-<div id="qhcgfwmfcl" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="qasfxjjbli" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#qhcgfwmfcl .gt_table {
+#qasfxjjbli .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -298,7 +317,7 @@ cookieconsent.run({
   border-left-color: #D3D3D3;
 }
 
-#qhcgfwmfcl .gt_heading {
+#qasfxjjbli .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -310,7 +329,7 @@ cookieconsent.run({
   border-right-color: #D3D3D3;
 }
 
-#qhcgfwmfcl .gt_title {
+#qasfxjjbli .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -322,7 +341,7 @@ cookieconsent.run({
   border-bottom-width: 0;
 }
 
-#qhcgfwmfcl .gt_subtitle {
+#qasfxjjbli .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -334,13 +353,13 @@ cookieconsent.run({
   border-top-width: 0;
 }
 
-#qhcgfwmfcl .gt_bottom_border {
+#qasfxjjbli .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#qhcgfwmfcl .gt_col_headings {
+#qasfxjjbli .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -355,7 +374,7 @@ cookieconsent.run({
   border-right-color: #D3D3D3;
 }
 
-#qhcgfwmfcl .gt_col_heading {
+#qasfxjjbli .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -375,7 +394,7 @@ cookieconsent.run({
   overflow-x: hidden;
 }
 
-#qhcgfwmfcl .gt_column_spanner_outer {
+#qasfxjjbli .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -387,15 +406,15 @@ cookieconsent.run({
   padding-right: 4px;
 }
 
-#qhcgfwmfcl .gt_column_spanner_outer:first-child {
+#qasfxjjbli .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#qhcgfwmfcl .gt_column_spanner_outer:last-child {
+#qasfxjjbli .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#qhcgfwmfcl .gt_column_spanner {
+#qasfxjjbli .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -407,7 +426,7 @@ cookieconsent.run({
   width: 100%;
 }
 
-#qhcgfwmfcl .gt_group_heading {
+#qasfxjjbli .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -432,7 +451,7 @@ cookieconsent.run({
   vertical-align: middle;
 }
 
-#qhcgfwmfcl .gt_empty_group_heading {
+#qasfxjjbli .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -447,15 +466,15 @@ cookieconsent.run({
   vertical-align: middle;
 }
 
-#qhcgfwmfcl .gt_from_md > :first-child {
+#qasfxjjbli .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#qhcgfwmfcl .gt_from_md > :last-child {
+#qasfxjjbli .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#qhcgfwmfcl .gt_row {
+#qasfxjjbli .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -474,7 +493,7 @@ cookieconsent.run({
   overflow-x: hidden;
 }
 
-#qhcgfwmfcl .gt_stub {
+#qasfxjjbli .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -487,7 +506,7 @@ cookieconsent.run({
   padding-right: 5px;
 }
 
-#qhcgfwmfcl .gt_stub_row_group {
+#qasfxjjbli .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -501,11 +520,11 @@ cookieconsent.run({
   vertical-align: top;
 }
 
-#qhcgfwmfcl .gt_row_group_first td {
+#qasfxjjbli .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#qhcgfwmfcl .gt_summary_row {
+#qasfxjjbli .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -515,16 +534,16 @@ cookieconsent.run({
   padding-right: 5px;
 }
 
-#qhcgfwmfcl .gt_first_summary_row {
+#qasfxjjbli .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#qhcgfwmfcl .gt_first_summary_row.thick {
+#qasfxjjbli .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#qhcgfwmfcl .gt_last_summary_row {
+#qasfxjjbli .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -534,7 +553,7 @@ cookieconsent.run({
   border-bottom-color: #D3D3D3;
 }
 
-#qhcgfwmfcl .gt_grand_summary_row {
+#qasfxjjbli .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -544,7 +563,7 @@ cookieconsent.run({
   padding-right: 5px;
 }
 
-#qhcgfwmfcl .gt_first_grand_summary_row {
+#qasfxjjbli .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -554,11 +573,11 @@ cookieconsent.run({
   border-top-color: #D3D3D3;
 }
 
-#qhcgfwmfcl .gt_striped {
+#qasfxjjbli .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#qhcgfwmfcl .gt_table_body {
+#qasfxjjbli .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -567,7 +586,7 @@ cookieconsent.run({
   border-bottom-color: #D3D3D3;
 }
 
-#qhcgfwmfcl .gt_footnotes {
+#qasfxjjbli .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -581,7 +600,7 @@ cookieconsent.run({
   border-right-color: #D3D3D3;
 }
 
-#qhcgfwmfcl .gt_footnote {
+#qasfxjjbli .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -590,7 +609,7 @@ cookieconsent.run({
   padding-right: 5px;
 }
 
-#qhcgfwmfcl .gt_sourcenotes {
+#qasfxjjbli .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -604,7 +623,7 @@ cookieconsent.run({
   border-right-color: #D3D3D3;
 }
 
-#qhcgfwmfcl .gt_sourcenote {
+#qasfxjjbli .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -612,36 +631,36 @@ cookieconsent.run({
   padding-right: 5px;
 }
 
-#qhcgfwmfcl .gt_left {
+#qasfxjjbli .gt_left {
   text-align: left;
 }
 
-#qhcgfwmfcl .gt_center {
+#qasfxjjbli .gt_center {
   text-align: center;
 }
 
-#qhcgfwmfcl .gt_right {
+#qasfxjjbli .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#qhcgfwmfcl .gt_font_normal {
+#qasfxjjbli .gt_font_normal {
   font-weight: normal;
 }
 
-#qhcgfwmfcl .gt_font_bold {
+#qasfxjjbli .gt_font_bold {
   font-weight: bold;
 }
 
-#qhcgfwmfcl .gt_font_italic {
+#qasfxjjbli .gt_font_italic {
   font-style: italic;
 }
 
-#qhcgfwmfcl .gt_super {
+#qasfxjjbli .gt_super {
   font-size: 65%;
 }
 
-#qhcgfwmfcl .gt_two_val_uncert {
+#qasfxjjbli .gt_two_val_uncert {
   display: inline-block;
   line-height: 1em;
   text-align: right;
@@ -650,31 +669,31 @@ cookieconsent.run({
   margin-left: 0.1em;
 }
 
-#qhcgfwmfcl .gt_footnote_marks {
+#qasfxjjbli .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#qhcgfwmfcl .gt_asterisk {
+#qasfxjjbli .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#qhcgfwmfcl .gt_slash_mark {
+#qasfxjjbli .gt_slash_mark {
   font-size: 0.7em;
   line-height: 0.7em;
   vertical-align: 0.15em;
 }
 
-#qhcgfwmfcl .gt_fraction_numerator {
+#qasfxjjbli .gt_fraction_numerator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: 0.45em;
 }
 
-#qhcgfwmfcl .gt_fraction_denominator {
+#qasfxjjbli .gt_fraction_denominator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: -0.05em;
@@ -759,6 +778,7 @@ cookieconsent.run({
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

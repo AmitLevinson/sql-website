@@ -65,6 +65,27 @@ insert into Sales_ag (year, category, amount) values (2001, 'Movies', 39);
 ## תשובה
 
 
+### סרטון הסבר
+
+{{< video https://youtu.be/zujkxjVyz4U >}}
+
+
+<details>
+<summary>הצג פתרון</summary>
+
+
+```{sql connection='sqlconn', echo = TRUE, eval = FALSE}
+SELECT *,
+	(SELECT COUNT(DISTINCT SalesInner.amount) as rn
+	FROM sales_ag SalesInner
+	WHERE SalesInner.year = SalesOuter.year
+		AND SalesInner.amount >= SalesOuter.amount)  AS custom_dense_rank
+FROM sales_ag SalesOuter
+ORDER BY year, custom_dense_rank
+```
+
+</details>
+
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
 library(dplyr)
 library(gt)
@@ -82,6 +103,7 @@ dat %>%
   select(custom_dense_rank, amount, category, sale_year ) %>% 
   gt()
 ```
+
 
 
 

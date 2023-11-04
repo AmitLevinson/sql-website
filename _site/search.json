@@ -123,6 +123,6 @@
     "href": "questions/3-ranking-without-window-function/index.html#תשובה",
     "title": "דירוג שורות בלי פונקצית חלון",
     "section": "תשובה",
-    "text": "תשובה\nדרך הפתרון תפורסם עם השאלה הבאה ב-17.10\n\n\n\n\n\n\n\n\n\ncustom_dense_rank\namount\ncategory\nsale_year\n\n\n\n\n1\n89\nAutomotive\n2000\n\n\n2\n74\nMovies\n2000\n\n\n2\n74\nGarden\n2000\n\n\n3\n59\nComputers\n2000\n\n\n4\n19\nBooks\n2000\n\n\n1\n65\nAutomotive\n2001\n\n\n2\n53\nComputers\n2001\n\n\n3\n49\nClothing\n2001\n\n\n4\n39\nMovies\n2001\n\n\n5\n24\nGarden\n2001"
+    "text": "תשובה\n\nסרטון הסבר\n\n\n\nהצג פתרון\n\n\nSELECT *,\n    (SELECT COUNT(DISTINCT SalesInner.amount) as rn\n    FROM sales_ag SalesInner\n    WHERE SalesInner.year = SalesOuter.year\n        AND SalesInner.amount &gt;= SalesOuter.amount)  AS custom_dense_rank\nFROM sales_ag SalesOuter\nORDER BY year, custom_dense_rank\n\n\n\n\n\n\n\n\n\n\n\ncustom_dense_rank\namount\ncategory\nsale_year\n\n\n\n\n1\n89\nAutomotive\n2000\n\n\n2\n74\nMovies\n2000\n\n\n2\n74\nGarden\n2000\n\n\n3\n59\nComputers\n2000\n\n\n4\n19\nBooks\n2000\n\n\n1\n65\nAutomotive\n2001\n\n\n2\n53\nComputers\n2001\n\n\n3\n49\nClothing\n2001\n\n\n4\n39\nMovies\n2001\n\n\n5\n24\nGarden\n2001"
   }
 ]
