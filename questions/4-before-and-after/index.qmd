@@ -46,13 +46,19 @@ order by score_date;
 
 
 
-## 1 שאלה
+## שאלה 1
 
 לכל יוזר יש ציוני 'סכנת נטישה' המעידים על הסיכוי של אותו יוזר לנטוש את הפלטפורמה לנקודת זמן מסוימת (נע בין 1-100, כאשר ציון גבוה יותר מעיד על סיכוי גבוה יותר לנטישה).
 
-עבור כל יוזר יש לחלץ את התשלום הראשון שקיבל ושני ציוני סכנת נטישה: הציון המאוחר ביותר שמתועד *לפני* קבלת התשלום הראשון, והציון המוקדם ביותר שמתועד *לאחר* התשלום הראשון.
+עבור כל יוזר יש לחלץ את התשלום הראשון שקיבל ושני *תאריכי* סכנת נטישה: התאריך המאוחר ביותר שמתועד *לפני* קבלת התשלום הראשון, והתאריך המוקדם ביותר שמתועד *לאחר* התשלום הראשון.
 
 ### דוגמא
+
+
+<details>
+<summary>לחץ להצגת הדוגמא</summary>
+
+<br>
 
 לדוג', להלן טבלת ציוני 'סכנת נטישה' ליוזר כלשהו:
 
@@ -78,7 +84,8 @@ order by payment_date;
 לכן, אנחנו נרצה להחזיר את הרשומה הבאה ליוזר 1:
 
 ```{sql connection='sqlconn', echo = FALSE}
-WITH user_payment as (
+
+  WITH user_payment as (
   SELECT user_id,
     min(payment_date) as first_payment
   FROM payments_ag_4
@@ -86,22 +93,22 @@ WITH user_payment as (
   GROUP BY user_id
   )
 
-SELECT * 
+SELECT user_payment.user_id,
+  max(CASE WHEN first_payment > score_date then score_date END) as score_date_before_paymet,
+  first_payment,
+  min(CASE WHEN first_payment < score_date then score_date END) as score_date_after_paymet
 FROM user_payment  
-CROSS apply (
-  SELECT TOP 1 
-    max(CASE WHEN first_payment > score_date then score_date END) OVER(PARTITION BY user_id) as score_date_before_paymet,
-    min(CASE WHEN first_payment < score_date then score_date END) OVER(PARTITION BY user_id) as score_date_after_paymet
-    FROM churn_scores_ag_4 scores
-    WHERE scores.user_id = user_payment.user_id
-) as score_dates
-  ;
+LEFT JOIN churn_scores_ag_4 scores on scores.user_id = user_payment.user_id
+GROUP BY user_payment.user_id, first_payment;
 ```
 
 
+
+</details>
+
 ## שאלה 2 
 
-נסו ליצור פלט נוסף שבו במקום תאריכים מופיעים ציוני סכנת הנטישה (הציון לפני התשלום הראשון והציון מיד לאחר התשלום הראשון)
+צרו פלט נוסף שבו במקום תאריכים מופיעים ציוני סכנת הנטישה (הציון לפני התשלום הראשון והציון מיד לאחר התשלום הראשון)
 
 ## יצירת הטבלאות
 

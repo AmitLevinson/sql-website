@@ -190,7 +190,7 @@ cookieconsent.run({
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">קל</div>
+                <div class="quarto-category">בסיסי</div>
               </div>
                   </div>
   </div>
@@ -219,7 +219,7 @@ cookieconsent.run({
    
   <ul>
   <li><a href="#הדאטה" id="toc-הדאטה" class="nav-link active" data-scroll-target="#הדאטה">הדאטה</a></li>
-  <li><a href="#שאלה" id="toc-שאלה" class="nav-link" data-scroll-target="#שאלה">1 שאלה</a>
+  <li><a href="#שאלה-1" id="toc-שאלה-1" class="nav-link" data-scroll-target="#שאלה-1">שאלה 1</a>
   <ul class="collapse">
   <li><a href="#דוגמא" id="toc-דוגמא" class="nav-link" data-scroll-target="#דוגמא">דוגמא</a></li>
   </ul></li>
@@ -338,12 +338,17 @@ cookieconsent.run({
 </div>
 </div>
 </section>
-<section id="שאלה" class="level2">
-<h2 class="anchored" data-anchor-id="שאלה">1 שאלה</h2>
+<section id="שאלה-1" class="level2">
+<h2 class="anchored" data-anchor-id="שאלה-1">שאלה 1</h2>
 <p>לכל יוזר יש ציוני ‘סכנת נטישה’ המעידים על הסיכוי של אותו יוזר לנטוש את הפלטפורמה לנקודת זמן מסוימת (נע בין 1-100, כאשר ציון גבוה יותר מעיד על סיכוי גבוה יותר לנטישה).</p>
-<p>עבור כל יוזר יש לחלץ את התשלום הראשון שקיבל ושני ציוני סכנת נטישה: הציון המאוחר ביותר שמתועד <em>לפני</em> קבלת התשלום הראשון, והציון המוקדם ביותר שמתועד <em>לאחר</em> התשלום הראשון.</p>
+<p>עבור כל יוזר יש לחלץ את התשלום הראשון שקיבל ושני <em>תאריכי</em> סכנת נטישה: התאריך המאוחר ביותר שמתועד <em>לפני</em> קבלת התשלום הראשון, והתאריך המוקדם ביותר שמתועד <em>לאחר</em> התשלום הראשון.</p>
 <section id="דוגמא" class="level3">
 <h3 class="anchored" data-anchor-id="דוגמא">דוגמא</h3>
+<details>
+<summary>
+לחץ להצגת הדוגמא
+</summary>
+<p><br></p>
 <p>לדוג’, להלן טבלת ציוני ‘סכנת נטישה’ ליוזר כלשהו:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> TOP <span class="dv">5</span> <span class="op">*</span> </span>
@@ -434,34 +439,35 @@ cookieconsent.run({
 <caption>1 records</caption>
 <colgroup>
 <col style="width: 11%">
-<col style="width: 19%">
 <col style="width: 35%">
+<col style="width: 19%">
 <col style="width: 33%">
 </colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: right;">user_id</th>
-<th style="text-align: left;">first_payment</th>
 <th style="text-align: left;">score_date_before_paymet</th>
+<th style="text-align: left;">first_payment</th>
 <th style="text-align: left;">score_date_after_paymet</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: right;">1</td>
-<td style="text-align: left;">2022-10-13</td>
 <td style="text-align: left;">2022-09-11</td>
+<td style="text-align: left;">2022-10-13</td>
 <td style="text-align: left;">2022-11-01</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
+</details>
 </section>
 </section>
 <section id="שאלה-2" class="level2">
 <h2 class="anchored" data-anchor-id="שאלה-2">שאלה 2</h2>
-<p>נסו ליצור פלט נוסף שבו במקום תאריכים מופיעים ציוני סכנת הנטישה (הציון לפני התשלום הראשון והציון מיד לאחר התשלום הראשון)</p>
+<p>צרו פלט נוסף שבו במקום תאריכים מופיעים ציוני סכנת הנטישה (הציון לפני התשלום הראשון והציון מיד לאחר התשלום הראשון)</p>
 </section>
 <section id="יצירת-הטבלאות" class="level2">
 <h2 class="anchored" data-anchor-id="יצירת-הטבלאות">יצירת הטבלאות</h2>
