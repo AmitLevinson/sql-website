@@ -327,8 +327,8 @@ SELECT user_payment.user_id,
 FROM user_payment
 OUTER APPLY (
   SELECT top 1
-   FIRST_VALUE(churn_score) OVER(ORDER BY CASE WHEN DATEDIFF(day, score_date, first_payment) > 0 THEN 1 ELSE 2 END, score_date desc) as score_before_payment,
-   FIRST_VALUE(churn_score) OVER(ORDER BY CASE WHEN DATEDIFF(day, score_date, first_payment) < 0 THEN 1 ELSE 2 END, score_date asc)  as score_after_payment 
+   FIRST_VALUE(churn_score) OVER(ORDER BY CASE WHEN score_date < first_payment THEN 1 ELSE 2 END, score_date desc) as score_before_payment,
+   FIRST_VALUE(churn_score) OVER(ORDER BY CASE WHEN score_date > first_payment THEN 1 ELSE 2 END, score_date asc)  as score_after_payment 
   from churn_scores_ag_4 scores
   where scores.user_id = user_payment.user_id
 ) AS churn_scores
@@ -351,8 +351,8 @@ SELECT user_payment.user_id,
 FROM user_payment
 OUTER APPLY (
   SELECT top 1
-   FIRST_VALUE(churn_score) OVER(ORDER BY CASE WHEN DATEDIFF(day, score_date, first_payment) > 0 THEN 1 ELSE 2 END, score_date desc) as score_before_payment,
-   FIRST_VALUE(churn_score) OVER(ORDER BY CASE WHEN DATEDIFF(day, score_date, first_payment) < 0 THEN 1 ELSE 2 END, score_date asc)  as score_after_payment 
+   FIRST_VALUE(churn_score) OVER(ORDER BY CASE WHEN score_date < first_payment THEN 1 ELSE 2 END, score_date desc) as score_before_payment,
+   FIRST_VALUE(churn_score) OVER(ORDER BY CASE WHEN score_date > first_payment THEN 1 ELSE 2 END, score_date asc)  as score_after_payment 
   from churn_scores_ag_4 scores
   where scores.user_id = user_payment.user_id
 ) AS churn_scores
