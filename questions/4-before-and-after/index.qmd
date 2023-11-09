@@ -3,7 +3,7 @@ title: "ערכים לפני ואחרי נקודת זמן"
 description: |
   החזרת ציון 'סכנת עזיבה' לפני התשלום הראשון ומיד לאחריו
 author: ""
-date: "2023-11-07"
+date: "2023-11-09"
 toc: true
 categories: [בסיסי]
 image: featured.png
@@ -343,7 +343,6 @@ WITH user_payment as (
   FROM payments_ag_4
   GROUP BY user_id
   )
-
 SELECT user_payment.user_id,
    first_payment,
   churn_scores.score_before_payment,
