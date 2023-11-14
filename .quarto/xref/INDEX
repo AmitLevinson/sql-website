@@ -34,5 +34,8 @@
   },
   "questions/2-identical-different-payments/index.qmd": {
     "index.html": "55204318"
+  },
+  "questions/5-extract-text-from-logs/index.qmd": {
+    "index.html": "099d8a59"
   }
 }

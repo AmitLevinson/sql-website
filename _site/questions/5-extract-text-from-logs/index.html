@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.333">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="">
+<meta name="dcterms.date" content="2023-11-21">
+<meta name="description" content="תרגילי SQL משגרת העבודה של אנליסט">
+
+<title>שאילתות מהחיים - חילוץ טקסט ספציפי</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../static/img/favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-YRDSPV195D"></script>
+
+<script type="text/plain" cookie-consent="tracking">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-YRDSPV195D', { 'anonymize_ip': true});
+</script>
+
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({
+  "notice_banner_type":"simple",
+  "consent_type":"implied",
+  "palette":"light",
+  "language":"en",
+  "page_load_consent_levels":["strictly-necessary","functionality","tracking","targeting"],
+  "notice_banner_reject_button_hide":false,
+  "preferences_center_close_button_hide":false,
+  "website_name":""
+  });
+});
+</script> 
+  
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="שאילתות מהחיים - חילוץ טקסט ספציפי">
+<meta property="og:description" content="חילוץ חלקי טקסט מתוך לוגים">
+<meta property="og:image" content="https://sql.amitgrinson.com/questions/5-extract-text-from-logs/featured.png">
+<meta property="og:site-name" content="שאילתות מהחיים">
+<meta property="og:locale" content="he_IL">
+<meta property="og:image:height" content="630">
+<meta property="og:image:width" content="1200">
+<meta name="twitter:title" content="שאילתות מהחיים - חילוץ טקסט ספציפי">
+<meta name="twitter:description" content="חילוץ חלקי טקסט מתוך לוגים">
+<meta name="twitter:image" content="https://sql.amitgrinson.com/questions/5-extract-text-from-logs/featured.png">
+<meta name="twitter:creator" content="@Amit_Levinson">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image-height" content="630">
+<meta name="twitter:image-width" content="1200">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">שאילתות מהחיים</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../website.html" rel="" target="">
+ <span class="menu-text">אודות האתר</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html" rel="" target="">
+ <span class="menu-text">אודותיי</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/AmitLevinson/sql-website" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">חילוץ טקסט ספציפי</h1>
+                  <div>
+        <div class="description">
+          <p>חילוץ חלקי טקסט מתוך לוגים</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">בסיסי</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">November 21, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#הדאטה" id="toc-הדאטה" class="nav-link active" data-scroll-target="#הדאטה">הדאטה</a></li>
+  <li><a href="#שאלה-1" id="toc-שאלה-1" class="nav-link" data-scroll-target="#שאלה-1">שאלה 1</a></li>
+  <li><a href="#שאלה-2" id="toc-שאלה-2" class="nav-link" data-scroll-target="#שאלה-2">שאלה 2</a></li>
+  <li><a href="#יצירת-הטבלה" id="toc-יצירת-הטבלה" class="nav-link" data-scroll-target="#יצירת-הטבלה">יצירת הטבלה</a></li>
+  <li><a href="#תשובות" id="toc-תשובות" class="nav-link" data-scroll-target="#תשובות">תשובות</a>
+  <ul class="collapse">
+  <li><a href="#סרטון-הסבר" id="toc-סרטון-הסבר" class="nav-link" data-scroll-target="#סרטון-הסבר">סרטון הסבר</a></li>
+  <li><a href="#תשובה-1" id="toc-תשובה-1" class="nav-link" data-scroll-target="#תשובה-1">תשובה 1</a></li>
+  <li><a href="#תשובה-2" id="toc-תשובה-2" class="nav-link" data-scroll-target="#תשובה-2">תשובה 2</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>ברוכים הבאים לתרגיל החמישי!</p>
+<section id="הדאטה" class="level2">
+<h2 class="anchored" data-anchor-id="הדאטה">הדאטה</h2>
+<p>התרגיל מורכב מטבלת לוגים לכל יוזר:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> TOP <span class="dv">5</span> <span class="op">*</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> LOGS_Q5</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="knitsql-table">
+<table class="table table-sm table-striped small">
+<caption>5 records</caption>
+<colgroup>
+<col style="width: 5%">
+<col style="width: 7%">
+<col style="width: 87%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">user_id</th>
+<th style="text-align: left;">log_date</th>
+<th style="text-align: left;">log_text</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">2023-09-20</td>
+<td style="text-align: left;">user 1 registered in 2018. Closure reason: Duplicate account.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">2023-04-01</td>
+<td style="text-align: left;">user 2 registered in 2022. Closure reason: Fraudulent behaviour.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">2023-06-26</td>
+<td style="text-align: left;">user 3 registered in 2016. Closure reason: Unsupported activity. Current status: open. Account has been re-opened</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">2023-06-21</td>
+<td style="text-align: left;">user 4 registered in 2016. Closure reason: Did not provide relevant documents. Current status: open. Account has been re-opened</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">2023-02-04</td>
+<td style="text-align: left;">user 5 registered in 2017. Closure reason: Unsupported activity.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="שאלה-1" class="level2">
+<h2 class="anchored" data-anchor-id="שאלה-1">שאלה 1</h2>
+<p>מתוך כל טקסט בלוג חלצו את השנה בה נרשם היוזר וסכמו את מספר המופעים של כל שנה. סדרו את הפלט לפי מספר השנים (השנה העדכנית ביותר תופיע ראשונה וכן הלאה).</p>
+<p>[פלט למטה]</p>
+</section>
+<section id="שאלה-2" class="level2">
+<h2 class="anchored" data-anchor-id="שאלה-2">שאלה 2</h2>
+<p>הלוגים מעט שונים אחד מהשני אבל בכולם יש סיבת סגירה של יוזר. חלצו את סיבות הסגירה השונות וסכמו אותן. את הפלט סדרו באופן יורד כך שהסיבה עם מספר המופעים הרב ביותר תופיע ראשונה.</p>
+<details>
+<summary>
+רמז
+</summary>
+<p>שימו לב למבנה של הלוג — מה מופיע לפני הסיבה? מה יכול להופיע אחרי הסיבה? איך אפשר להיעזר בזה כדי לחלץ את מה שאנחנו צריכים?</p>
+</details>
+</section>
+<section id="יצירת-הטבלה" class="level2">
+<h2 class="anchored" data-anchor-id="יצירת-הטבלה">יצירת הטבלה</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2" style="max-height: 200px;overflow: scroll;"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> LOGS_Q5;</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> LOGS_Q5</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    (user_id <span class="dt">int</span>, log_date datetime, log_text <span class="dt">varchar</span>(<span class="dv">128</span>))</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>;</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> LOGS_Q5</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    (user_id, log_date, log_text)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="st">'2023-09-20 00:00:00'</span>, <span class="st">'user 1 registered in 2018. Closure reason: Duplicate account.'</span>),</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2</span>, <span class="st">'2023-04-01 00:00:00'</span>, <span class="st">'user 2 registered in 2022. Closure reason: Fraudulent behaviour.'</span>),</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3</span>, <span class="st">'2023-06-26 00:00:00'</span>, <span class="st">'user 3 registered in 2016. Closure reason: Unsupported activity. Current status: open. Account has been re-opened'</span>),</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">4</span>, <span class="st">'2023-06-21 00:00:00'</span>, <span class="st">'user 4 registered in 2016. Closure reason: Did not provide relevant documents. Current status: open. Account has been re-opened'</span>),</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">5</span>, <span class="st">'2023-02-04 00:00:00'</span>, <span class="st">'user 5 registered in 2017. Closure reason: Unsupported activity.'</span>),</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">6</span>, <span class="st">'2023-03-09 00:00:00'</span>, <span class="st">'user 6 registered in 2022. Closure reason: Fraudulent behaviour. Current status: open. Account has been re-opened'</span>),</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">7</span>, <span class="st">'2023-01-17 00:00:00'</span>, <span class="st">'user 7 registered in 2018. Closure reason: Fraudulent behaviour. Current status: account closed.'</span>),</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">8</span>, <span class="st">'2023-09-12 00:00:00'</span>, <span class="st">'user 8 registered in 2019. Closure reason: Fraudulent behaviour. Current status: account closed.'</span>),</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">9</span>, <span class="st">'2023-01-17 00:00:00'</span>, <span class="st">'user 9 registered in 2014. Closure reason: Duplicate account. Current status: account closed.'</span>),</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">10</span>, <span class="st">'2023-09-17 00:00:00'</span>, <span class="st">'user 10 registered in 2018. Closure reason: Requested to close. Current status: account closed.'</span>),</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">11</span>, <span class="st">'2023-01-06 00:00:00'</span>, <span class="st">'user 11 registered in 2014. Closure reason: Unsupported activity. Current status: open. Account has been re-opened'</span>),</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">12</span>, <span class="st">'2023-05-28 00:00:00'</span>, <span class="st">'user 12 registered in 2015. Closure reason: Requested to close.'</span>),</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">13</span>, <span class="st">'2023-09-09 00:00:00'</span>, <span class="st">'user 13 registered in 2015. Closure reason: Fraudulent behaviour.'</span>),</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">14</span>, <span class="st">'2023-04-08 00:00:00'</span>, <span class="st">'user 14 registered in 2015. Closure reason: Duplicate account. Current status: open.'</span>),</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">15</span>, <span class="st">'2023-03-19 00:00:00'</span>, <span class="st">'user 15 registered in 2018. Closure reason: Duplicate account.'</span>),</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">16</span>, <span class="st">'2023-10-09 00:00:00'</span>, <span class="st">'user 16 registered in 2022. Closure reason: Fraudulent behaviour. Current status: account closed.'</span>),</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">17</span>, <span class="st">'2023-05-19 00:00:00'</span>, <span class="st">'user 17 registered in 2015. Closure reason: Fraudulent behaviour. Current status: open. Account has been re-opened'</span>),</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">18</span>, <span class="st">'2023-01-22 00:00:00'</span>, <span class="st">'user 18 registered in 2016. Closure reason: Unsupported activity. Current status: account closed.'</span>),</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">19</span>, <span class="st">'2023-08-30 00:00:00'</span>, <span class="st">'user 19 registered in 2022. Closure reason: Fraudulent behaviour.'</span>),</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">20</span>, <span class="st">'2023-09-26 00:00:00'</span>, <span class="st">'user 20 registered in 2016. Closure reason: Fraudulent behaviour. Current status: account closed.'</span>),</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">21</span>, <span class="st">'2023-04-20 00:00:00'</span>, <span class="st">'user 21 registered in 2015. Closure reason: Did not provide relevant documents. Current status: account closed.'</span>),</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">22</span>, <span class="st">'2023-05-02 00:00:00'</span>, <span class="st">'user 22 registered in 2020. Closure reason: Duplicate account. Current status: account closed.'</span>),</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">23</span>, <span class="st">'2023-04-18 00:00:00'</span>, <span class="st">'user 23 registered in 2021. Closure reason: Duplicate account. Current status: account closed.'</span>),</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">24</span>, <span class="st">'2023-07-27 00:00:00'</span>, <span class="st">'user 24 registered in 2020. Closure reason: Requested to close.'</span>),</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">25</span>, <span class="st">'2023-08-25 00:00:00'</span>, <span class="st">'user 25 registered in 2020. Closure reason: Requested to close. Current status: open. Account has been re-opened'</span>),</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">26</span>, <span class="st">'2023-07-22 00:00:00'</span>, <span class="st">'user 26 registered in 2022. Closure reason: Fraudulent behaviour.'</span>),</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">27</span>, <span class="st">'2023-01-28 00:00:00'</span>, <span class="st">'user 27 registered in 2016. Closure reason: Unsupported activity. Current status: open.'</span>),</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">28</span>, <span class="st">'2023-05-20 00:00:00'</span>, <span class="st">'user 28 registered in 2017. Closure reason: Requested to close. Current status: open.'</span>),</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">29</span>, <span class="st">'2023-09-10 00:00:00'</span>, <span class="st">'user 29 registered in 2017. Closure reason: Unsupported activity.'</span>),</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">30</span>, <span class="st">'2023-05-28 00:00:00'</span>, <span class="st">'user 30 registered in 2019. Closure reason: Did not provide relevant documents. Current status: open. Account has been re-opened'</span>),</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">31</span>, <span class="st">'2023-08-27 00:00:00'</span>, <span class="st">'user 31 registered in 2018. Closure reason: Requested to close. Current status: account closed.'</span>),</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">32</span>, <span class="st">'2023-01-08 00:00:00'</span>, <span class="st">'user 32 registered in 2014. Closure reason: Fraudulent behaviour.'</span>),</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">33</span>, <span class="st">'2023-07-20 00:00:00'</span>, <span class="st">'user 33 registered in 2021. Closure reason: Unsupported activity. Current status: account closed.'</span>),</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">34</span>, <span class="st">'2023-01-31 00:00:00'</span>, <span class="st">'user 34 registered in 2016. Closure reason: Duplicate account. Current status: open.'</span>),</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">35</span>, <span class="st">'2023-07-08 00:00:00'</span>, <span class="st">'user 35 registered in 2019. Closure reason: Unsupported activity.'</span>),</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">36</span>, <span class="st">'2023-07-31 00:00:00'</span>, <span class="st">'user 36 registered in 2016. Closure reason: Requested to close. Current status: account closed.'</span>),</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">37</span>, <span class="st">'2023-02-02 00:00:00'</span>, <span class="st">'user 37 registered in 2019. Closure reason: Did not provide relevant documents. Current status: open.'</span>),</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">38</span>, <span class="st">'2023-03-07 00:00:00'</span>, <span class="st">'user 38 registered in 2016. Closure reason: Fraudulent behaviour.'</span>),</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">39</span>, <span class="st">'2023-06-11 00:00:00'</span>, <span class="st">'user 39 registered in 2017. Closure reason: Duplicate account. Current status: account closed.'</span>),</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">40</span>, <span class="st">'2023-05-21 00:00:00'</span>, <span class="st">'user 40 registered in 2014. Closure reason: Did not provide relevant documents. Current status: account closed.'</span>),</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">41</span>, <span class="st">'2023-08-12 00:00:00'</span>, <span class="st">'user 41 registered in 2020. Closure reason: Fraudulent behaviour. Current status: account closed.'</span>),</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">42</span>, <span class="st">'2023-09-09 00:00:00'</span>, <span class="st">'user 42 registered in 2018. Closure reason: Duplicate account.'</span>),</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">43</span>, <span class="st">'2023-05-26 00:00:00'</span>, <span class="st">'user 43 registered in 2014. Closure reason: Did not provide relevant documents.'</span>),</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">44</span>, <span class="st">'2023-03-06 00:00:00'</span>, <span class="st">'user 44 registered in 2016. Closure reason: Duplicate account. Current status: account closed.'</span>),</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">45</span>, <span class="st">'2023-08-07 00:00:00'</span>, <span class="st">'user 45 registered in 2016. Closure reason: Did not provide relevant documents. Current status: account closed.'</span>),</span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">46</span>, <span class="st">'2023-10-04 00:00:00'</span>, <span class="st">'user 46 registered in 2017. Closure reason: Fraudulent behaviour. Current status: account closed.'</span>),</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">47</span>, <span class="st">'2023-01-28 00:00:00'</span>, <span class="st">'user 47 registered in 2019. Closure reason: Fraudulent behaviour. Current status: open. Account has been re-opened'</span>),</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">48</span>, <span class="st">'2023-01-17 00:00:00'</span>, <span class="st">'user 48 registered in 2021. Closure reason: Did not provide relevant documents. Current status: open. Account has been re-opened'</span>),</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">49</span>, <span class="st">'2023-02-26 00:00:00'</span>, <span class="st">'user 49 registered in 2015. Closure reason: Unsupported activity. Current status: account closed.'</span>),</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">50</span>, <span class="st">'2023-06-19 00:00:00'</span>, <span class="st">'user 50 registered in 2015. Closure reason: Duplicate account.'</span>),</span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">51</span>, <span class="st">'2023-01-13 00:00:00'</span>, <span class="st">'user 51 registered in 2015. Closure reason: Duplicate account. Current status: open.'</span>),</span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">52</span>, <span class="st">'2023-03-02 00:00:00'</span>, <span class="st">'user 52 registered in 2017. Closure reason: Did not provide relevant documents.'</span>),</span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">53</span>, <span class="st">'2023-01-14 00:00:00'</span>, <span class="st">'user 53 registered in 2014. Closure reason: Fraudulent behaviour. Current status: account closed.'</span>),</span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">54</span>, <span class="st">'2023-09-13 00:00:00'</span>, <span class="st">'user 54 registered in 2018. Closure reason: Requested to close. Current status: open.'</span>),</span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">55</span>, <span class="st">'2023-07-17 00:00:00'</span>, <span class="st">'user 55 registered in 2017. Closure reason: Requested to close. Current status: open. Account has been re-opened'</span>),</span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">56</span>, <span class="st">'2023-10-12 00:00:00'</span>, <span class="st">'user 56 registered in 2018. Closure reason: Did not provide relevant documents. Current status: account closed.'</span>),</span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">57</span>, <span class="st">'2023-09-27 00:00:00'</span>, <span class="st">'user 57 registered in 2016. Closure reason: Duplicate account. Current status: open.'</span>),</span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">58</span>, <span class="st">'2023-02-15 00:00:00'</span>, <span class="st">'user 58 registered in 2017. Closure reason: Did not provide relevant documents. Current status: open.'</span>),</span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">59</span>, <span class="st">'2023-10-26 00:00:00'</span>, <span class="st">'user 59 registered in 2021. Closure reason: Duplicate account. Current status: account closed.'</span>),</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">60</span>, <span class="st">'2023-07-10 00:00:00'</span>, <span class="st">'user 60 registered in 2020. Closure reason: Unsupported activity. Current status: open.'</span>),</span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">61</span>, <span class="st">'2023-09-09 00:00:00'</span>, <span class="st">'user 61 registered in 2020. Closure reason: Fraudulent behaviour.'</span>),</span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">62</span>, <span class="st">'2023-07-12 00:00:00'</span>, <span class="st">'user 62 registered in 2017. Closure reason: Fraudulent behaviour.'</span>),</span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">63</span>, <span class="st">'2023-01-11 00:00:00'</span>, <span class="st">'user 63 registered in 2017. Closure reason: Duplicate account. Current status: open.'</span>),</span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">64</span>, <span class="st">'2023-02-27 00:00:00'</span>, <span class="st">'user 64 registered in 2020. Closure reason: Unsupported activity. Current status: open.'</span>),</span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">65</span>, <span class="st">'2023-07-12 00:00:00'</span>, <span class="st">'user 65 registered in 2021. Closure reason: Did not provide relevant documents.'</span>),</span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">66</span>, <span class="st">'2023-03-09 00:00:00'</span>, <span class="st">'user 66 registered in 2014. Closure reason: Requested to close. Current status: open. Account has been re-opened'</span>),</span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">67</span>, <span class="st">'2023-10-31 00:00:00'</span>, <span class="st">'user 67 registered in 2022. Closure reason: Duplicate account.'</span>),</span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">68</span>, <span class="st">'2023-06-26 00:00:00'</span>, <span class="st">'user 68 registered in 2018. Closure reason: Duplicate account. Current status: open.'</span>),</span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">69</span>, <span class="st">'2023-04-22 00:00:00'</span>, <span class="st">'user 69 registered in 2022. Closure reason: Did not provide relevant documents. Current status: open.'</span>),</span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">70</span>, <span class="st">'2023-09-22 00:00:00'</span>, <span class="st">'user 70 registered in 2015. Closure reason: Unsupported activity.'</span>),</span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">71</span>, <span class="st">'2023-10-04 00:00:00'</span>, <span class="st">'user 71 registered in 2016. Closure reason: Duplicate account. Current status: open.'</span>),</span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">72</span>, <span class="st">'2023-10-31 00:00:00'</span>, <span class="st">'user 72 registered in 2020. Closure reason: Unsupported activity.'</span>),</span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">73</span>, <span class="st">'2023-04-20 00:00:00'</span>, <span class="st">'user 73 registered in 2020. Closure reason: Did not provide relevant documents. Current status: open.'</span>),</span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">74</span>, <span class="st">'2023-10-15 00:00:00'</span>, <span class="st">'user 74 registered in 2017. Closure reason: Duplicate account. Current status: account closed.'</span>),</span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">75</span>, <span class="st">'2023-07-23 00:00:00'</span>, <span class="st">'user 75 registered in 2021. Closure reason: Fraudulent behaviour.'</span>),</span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">76</span>, <span class="st">'2023-03-15 00:00:00'</span>, <span class="st">'user 76 registered in 2017. Closure reason: Duplicate account.'</span>),</span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">77</span>, <span class="st">'2023-10-27 00:00:00'</span>, <span class="st">'user 77 registered in 2019. Closure reason: Requested to close. Current status: account closed.'</span>),</span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">78</span>, <span class="st">'2023-02-03 00:00:00'</span>, <span class="st">'user 78 registered in 2022. Closure reason: Requested to close. Current status: account closed.'</span>),</span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">79</span>, <span class="st">'2023-08-09 00:00:00'</span>, <span class="st">'user 79 registered in 2019. Closure reason: Duplicate account.'</span>),</span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">80</span>, <span class="st">'2023-05-19 00:00:00'</span>, <span class="st">'user 80 registered in 2021. Closure reason: Requested to close.'</span>),</span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">81</span>, <span class="st">'2023-01-02 00:00:00'</span>, <span class="st">'user 81 registered in 2020. Closure reason: Duplicate account. Current status: open. Account has been re-opened'</span>),</span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">82</span>, <span class="st">'2023-08-08 00:00:00'</span>, <span class="st">'user 82 registered in 2020. Closure reason: Duplicate account. Current status: open. Account has been re-opened'</span>),</span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">83</span>, <span class="st">'2023-04-25 00:00:00'</span>, <span class="st">'user 83 registered in 2021. Closure reason: Duplicate account.'</span>),</span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">84</span>, <span class="st">'2023-04-24 00:00:00'</span>, <span class="st">'user 84 registered in 2020. Closure reason: Duplicate account.'</span>),</span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">85</span>, <span class="st">'2023-01-15 00:00:00'</span>, <span class="st">'user 85 registered in 2021. Closure reason: Fraudulent behaviour.'</span>),</span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">86</span>, <span class="st">'2023-01-11 00:00:00'</span>, <span class="st">'user 86 registered in 2020. Closure reason: Duplicate account. Current status: account closed.'</span>),</span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">87</span>, <span class="st">'2023-08-08 00:00:00'</span>, <span class="st">'user 87 registered in 2021. Closure reason: Fraudulent behaviour. Current status: account closed.'</span>),</span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">88</span>, <span class="st">'2023-01-27 00:00:00'</span>, <span class="st">'user 88 registered in 2015. Closure reason: Unsupported activity.'</span>),</span>
+<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">89</span>, <span class="st">'2023-08-31 00:00:00'</span>, <span class="st">'user 89 registered in 2020. Closure reason: Unsupported activity. Current status: account closed.'</span>),</span>
+<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">90</span>, <span class="st">'2023-07-26 00:00:00'</span>, <span class="st">'user 90 registered in 2021. Closure reason: Duplicate account. Current status: account closed.'</span>),</span>
+<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">91</span>, <span class="st">'2023-07-10 00:00:00'</span>, <span class="st">'user 91 registered in 2014. Closure reason: Unsupported activity. Current status: account closed.'</span>),</span>
+<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">92</span>, <span class="st">'2023-07-18 00:00:00'</span>, <span class="st">'user 92 registered in 2017. Closure reason: Fraudulent behaviour. Current status: account closed.'</span>),</span>
+<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">93</span>, <span class="st">'2023-08-19 00:00:00'</span>, <span class="st">'user 93 registered in 2021. Closure reason: Did not provide relevant documents. Current status: account closed.'</span>),</span>
+<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">94</span>, <span class="st">'2023-01-26 00:00:00'</span>, <span class="st">'user 94 registered in 2015. Closure reason: Duplicate account.'</span>),</span>
+<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">95</span>, <span class="st">'2023-08-14 00:00:00'</span>, <span class="st">'user 95 registered in 2019. Closure reason: Did not provide relevant documents. Current status: account closed.'</span>),</span>
+<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">96</span>, <span class="st">'2023-05-11 00:00:00'</span>, <span class="st">'user 96 registered in 2022. Closure reason: Fraudulent behaviour.'</span>),</span>
+<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">97</span>, <span class="st">'2023-08-03 00:00:00'</span>, <span class="st">'user 97 registered in 2020. Closure reason: Duplicate account. Current status: open. Account has been re-opened'</span>),</span>
+<span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">98</span>, <span class="st">'2023-01-17 00:00:00'</span>, <span class="st">'user 98 registered in 2017. Closure reason: Unsupported activity. Current status: open.'</span>),</span>
+<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">99</span>, <span class="st">'2023-10-08 00:00:00'</span>, <span class="st">'user 99 registered in 2021. Closure reason: Did not provide relevant documents.'</span>),</span>
+<span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">100</span>, <span class="st">'2023-10-18 00:00:00'</span>, <span class="st">'user 100 registered in 2019. Closure reason: Duplicate account. Current status: open. Account has been re-opened'</span>)</span>
+<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="תשובות" class="level2">
+<h2 class="anchored" data-anchor-id="תשובות">תשובות</h2>
+<section id="סרטון-הסבר" class="level3">
+<h3 class="anchored" data-anchor-id="סרטון-הסבר">סרטון הסבר</h3>
+</section>
+<section id="תשובה-1" class="level3">
+<h3 class="anchored" data-anchor-id="תשובה-1">תשובה 1</h3>
+<details>
+<summary>
+הצג פתרון
+</summary>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span>  </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    registered_year <span class="op">=</span> SUBSTRING(LOG_TEXT, CHARINDEX(<span class="st">'registered in '</span>, LOG_TEXT) <span class="op">+</span> len(<span class="st">'registered in '</span>), <span class="dv">5</span>),</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> n</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> logs_q5</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> SUBSTRING(LOG_TEXT, CHARINDEX(<span class="st">'registered in '</span>, LOG_TEXT) <span class="op">+</span> len(<span class="st">'registered in '</span>), <span class="dv">5</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> registered_year <span class="kw">DESC</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</details>
+<div class="cell">
+<div class="knitsql-table">
+<table class="table table-sm table-striped small">
+<caption>9 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">registered_year</th>
+<th style="text-align: right;">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">2022</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2021</td>
+<td style="text-align: right;">13</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2020</td>
+<td style="text-align: right;">15</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2019</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2018</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2017</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2016</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2015</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2014</td>
+<td style="text-align: right;">8</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="תשובה-2" class="level3">
+<h3 class="anchored" data-anchor-id="תשובה-2">תשובה 2</h3>
+<details>
+<summary>
+הצג פתרון
+</summary>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> reason_extracted <span class="kw">as</span> (</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    reason <span class="op">=</span> <span class="kw">REPLACE</span>(</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        SUBSTRING(</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>            log_text,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>            CHARINDEX(<span class="st">'closure reason: '</span>, log_text) <span class="op">+</span> LEN(<span class="st">'closure reason: '</span>),</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                <span class="cf">CASE</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>                <span class="cf">WHEN</span> CHARINDEX(<span class="st">'Current status'</span>, log_text) <span class="op">=</span> <span class="dv">0</span> <span class="cf">THEN</span> LEN(log_text)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>              <span class="cf">ELSE</span> CHARINDEX(<span class="st">'Current status'</span>, log_text) <span class="op">-</span> CHARINDEX(<span class="st">'closure reason: '</span>,log_text) <span class="op">-</span> LEN(<span class="st">'closure reason: '</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>                <span class="cf">END</span>),</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">'.'</span>, <span class="st">''</span>)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> logs_q5</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> reason,</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> n</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> reason_extracted</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> reason</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> n <span class="kw">desc</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</details>
+<div class="cell">
+<div class="knitsql-table">
+<table class="table table-sm table-striped small">
+<caption>5 records</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">reason</th>
+<th style="text-align: right;">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Duplicate account</td>
+<td style="text-align: right;">30</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Fraudulent behaviour</td>
+<td style="text-align: right;">23</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Did not provide relevant documents</td>
+<td style="text-align: right;">17</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Unsupported activity</td>
+<td style="text-align: right;">17</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Requested to close</td>
+<td style="text-align: right;">13</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="AGrinson" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="קנו לי קפה" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="AmitLevinson/sql-website-comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center"><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+</body></html>
