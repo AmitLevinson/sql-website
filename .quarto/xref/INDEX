@@ -37,5 +37,8 @@
   },
   "questions/5-extract-text-from-logs/index.qmd": {
     "index.html": "099d8a59"
+  },
+  "questions/6-implementing-forumals/index.qmd": {
+    "index.html": "7ca5e99c"
   }
 }
