@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="">
-<meta name="dcterms.date" content="2023-11-21">
+<meta name="dcterms.date" content="2023-11-28">
 <meta name="description" content="תרגילי SQL משגרת העבודה של אנליסט">
 
-<title>שאילתות מהחיים - חילוץ טקסט ספציפי</title>
+<title>שאילתות מהחיים - חילוץ טקסט</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -126,14 +126,14 @@ cookieconsent.run({
 
 
 <link rel="stylesheet" href="../../styles.css">
-<meta property="og:title" content="שאילתות מהחיים - חילוץ טקסט ספציפי">
+<meta property="og:title" content="שאילתות מהחיים - חילוץ טקסט">
 <meta property="og:description" content="חילוץ חלקי טקסט מתוך לוגים">
 <meta property="og:image" content="https://sql.amitgrinson.com/questions/5-extract-text-from-logs/featured.png">
 <meta property="og:site-name" content="שאילתות מהחיים">
 <meta property="og:locale" content="he_IL">
 <meta property="og:image:height" content="630">
 <meta property="og:image:width" content="1200">
-<meta name="twitter:title" content="שאילתות מהחיים - חילוץ טקסט ספציפי">
+<meta name="twitter:title" content="שאילתות מהחיים - חילוץ טקסט">
 <meta name="twitter:description" content="חילוץ חלקי טקסט מתוך לוגים">
 <meta name="twitter:image" content="https://sql.amitgrinson.com/questions/5-extract-text-from-logs/featured.png">
 <meta name="twitter:creator" content="@Amit_Levinson">
@@ -183,7 +183,7 @@ cookieconsent.run({
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">חילוץ טקסט ספציפי</h1>
+      <h1 class="title">חילוץ טקסט</h1>
                   <div>
         <div class="description">
           <p>חילוץ חלקי טקסט מתוך לוגים</p>
@@ -202,7 +202,7 @@ cookieconsent.run({
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">November 21, 2023</p>
+        <p class="date">November 28, 2023</p>
       </div>
     </div>
     
@@ -292,7 +292,7 @@ cookieconsent.run({
 </section>
 <section id="שאלה-1" class="level2">
 <h2 class="anchored" data-anchor-id="שאלה-1">שאלה 1</h2>
-<p>מתוך כל טקסט בלוג חלצו את השנה בה נרשם היוזר וסכמו את מספר המופעים של כל שנה. סדרו את הפלט לפי מספר השנים (השנה העדכנית ביותר תופיע ראשונה וכן הלאה).</p>
+<p>מתוך כל טקסט בלוג חלצו את השנה בה נרשם היוזר וסכמו את מספר המופעים של כל שנה. סדרו את הפלט לפי שנים (השנה העדכנית ביותר תופיע ראשונה וכן הלאה).</p>
 <p>[פלט למטה]</p>
 </section>
 <section id="שאלה-2" class="level2">
@@ -425,6 +425,7 @@ cookieconsent.run({
 <h2 class="anchored" data-anchor-id="תשובות">תשובות</h2>
 <section id="סרטון-הסבר" class="level3">
 <h3 class="anchored" data-anchor-id="סרטון-הסבר">סרטון הסבר</h3>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/JxWhCX2-h0g" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 </section>
 <section id="תשובה-1" class="level3">
 <h3 class="anchored" data-anchor-id="תשובה-1">תשובה 1</h3>
@@ -434,10 +435,10 @@ cookieconsent.run({
 </summary>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span>  </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    registered_year <span class="op">=</span> SUBSTRING(LOG_TEXT, CHARINDEX(<span class="st">'registered in '</span>, LOG_TEXT) <span class="op">+</span> len(<span class="st">'registered in '</span>), <span class="dv">5</span>),</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    registered_year <span class="op">=</span> SUBSTRING(LOG_TEXT, CHARINDEX(<span class="st">'registered in '</span>, LOG_TEXT) <span class="op">+</span> len(<span class="st">'registered in.'</span>), <span class="dv">4</span>), <span class="co">-- LEN() ignores trailing spaces so a sapce is replaces with a period</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> n</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> logs_q5</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> SUBSTRING(LOG_TEXT, CHARINDEX(<span class="st">'registered in '</span>, LOG_TEXT) <span class="op">+</span> len(<span class="st">'registered in '</span>), <span class="dv">5</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> SUBSTRING(LOG_TEXT, CHARINDEX(<span class="st">'registered in '</span>, LOG_TEXT) <span class="op">+</span> len(<span class="st">'registered in.'</span>), <span class="dv">4</span>)</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> registered_year <span class="kw">DESC</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </details>
@@ -507,9 +508,9 @@ cookieconsent.run({
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        SUBSTRING(</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>            log_text,</span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>            CHARINDEX(<span class="st">'closure reason: '</span>, log_text) <span class="op">+</span> LEN(<span class="st">'closure reason: '</span>),</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                <span class="cf">CASE</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>            <span class="cf">CASE</span></span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>                <span class="cf">WHEN</span> CHARINDEX(<span class="st">'Current status'</span>, log_text) <span class="op">=</span> <span class="dv">0</span> <span class="cf">THEN</span> LEN(log_text)</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>              <span class="cf">ELSE</span> CHARINDEX(<span class="st">'Current status'</span>, log_text) <span class="op">-</span> CHARINDEX(<span class="st">'closure reason: '</span>,log_text) <span class="op">-</span> LEN(<span class="st">'closure reason: '</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>            <span class="cf">ELSE</span> CHARINDEX(<span class="st">'Current status'</span>, log_text) <span class="op">-</span> CHARINDEX(<span class="st">'closure reason: '</span>,log_text) <span class="op">-</span> LEN(<span class="st">'closure reason: '</span>)</span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>                <span class="cf">END</span>),</span>
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">'.'</span>, <span class="st">''</span>)</span>
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> logs_q5</span>
