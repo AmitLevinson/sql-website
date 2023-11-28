@@ -6,7 +6,7 @@
   </url>
   <url>
     <loc>https://sql.amitgrinson.com/index.html</loc>
-    <lastmod>2023-11-28T07:25:02.270Z</lastmod>
+    <lastmod>2023-11-28T07:28:06.578Z</lastmod>
   </url>
   <url>
     <loc>https://sql.amitgrinson.com/questions/1-consecutive-actions/index.html</loc>
@@ -27,5 +27,9 @@
   <url>
     <loc>https://sql.amitgrinson.com/questions/4-before-and-after/index.html</loc>
     <lastmod>2023-11-09T09:05:01.984Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sql.amitgrinson.com/questions/5-extract-text-from-logs/index.html</loc>
+    <lastmod>2023-11-28T07:28:05.919Z</lastmod>
   </url>
 </urlset>

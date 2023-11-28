@@ -7,7 +7,7 @@ date: "2023-11-28"
 toc: true
 categories: [בסיסי]
 image: featured.png
-draft: true
+draft: false
 ---
 
 ```{r, include = FALSE}
