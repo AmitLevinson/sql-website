@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/questions/6-implementing-formulas/index.html",
       "/questions/5-extract-text-from-logs/index.html",
       "/questions/4-before-and-after/index.html",
       "/questions/3-ranking-without-window-function/index.html",

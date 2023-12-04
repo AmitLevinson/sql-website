@@ -1,13 +1,13 @@
 ---
-title: "מימוש נוסחאות סטטיסטיות"
+title: "יישום נוסחאות בקוד"
 description: |
   תרגום נוסחה סטטיסטית לקוד SQL
 author: ""
-date: "2023-12-05"
+date: "2023-12-12"
 toc: true
 categories: [בסיסי]
 image: featured.png
-draft: true
+draft: false
 ---
 
 ```{r, include = FALSE}
@@ -188,6 +188,10 @@ VALUES
 
 ### סרטון הסבר
 
+
+{{< video https://youtu.be/E4y7uU8N-Ks >}}
+
+
 ### תשובה 1
 
 <details>
@@ -219,10 +223,10 @@ ORDER BY CV;
 <summary>הצג פתרון</summary>
 
 ```{sql connection='sqlconn', echo = TRUE, eval= FALSE}
-SELECT TOP 10 category,
+SELECT category,
 	amount,
-	(AMOUNT - MIN(AMOUNT) OVER (PARTITION BY category)) * 1.0 / 
-						(MAX(AMOUNT) OVER (PARTITION BY category) - MIN(AMOUNT) OVER (PARTITION BY category)) * 100 AS amount_normalized
+	amount_noramlized = (AMOUNT - MIN(AMOUNT) OVER (PARTITION BY category)) * 100.0 / 
+						(MAX(AMOUNT) OVER (PARTITION BY category) - MIN(AMOUNT) OVER (PARTITION BY category))
 FROM items_q6
 order by category, amount_noramlized
 
@@ -231,10 +235,10 @@ order by category, amount_noramlized
 </details>
 
 ```{sql connection='sqlconn', echo = FALSE}
-SELECT category,
+SELECT TOP 10 category,
 	amount,
-	amount_noramlized = (AMOUNT - MIN(AMOUNT) OVER (PARTITION BY category)) * 1.0 / 
-						(MAX(AMOUNT) OVER (PARTITION BY category) - MIN(AMOUNT) OVER (PARTITION BY category)) * 100
+	amount_noramlized = (AMOUNT - MIN(AMOUNT) OVER (PARTITION BY category)) * 100.0 / 
+						(MAX(AMOUNT) OVER (PARTITION BY category) - MIN(AMOUNT) OVER (PARTITION BY category))
 FROM items_q6
 order by category, amount_noramlized
 ```
