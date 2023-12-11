@@ -1,31 +1,17 @@
+select top 5 * 
+from Items_q6;
 
+-- Q1 - Calculate coefficient of variation for each category
+SELECT CATEGORY,
+	STDEV(AMOUNT) / AVG(AMOUNT) CV
+FROM items_q6
+GROUP BY CATEGORY
+ORDER BY CV
 
--- Q1 Extract year and count occurences
-SELECT SUBSTRING(LOG_TEXT, CHARINDEX('REGISTERED IN', log_text) + len('REGISTERED IN '), 5) as year_registration,
-count(*) as n
-from logs_q5
-group by SUBSTRING(LOG_TEXT, CHARINDEX('REGISTERED IN', log_text) + len('REGISTERED IN '), 5)
-order by year_registration desc
-
-
--- Q2 Extract closure reason and count occurences
-with closure_reasons as (
-	SELECT *,
-		trim(
-		REPLACE(
-		SUBSTRING(LOG_TEXT,
-			CHARINDEX('CLOSURE REASON: ', log_text) + LEN('CLOSURE REASON: '),
-			CASE WHEN CHARINDEX('CURRENT STATUS', log_text) = 0 
-				THEN LEN(LOG_TEXT)
-				ELSE CHARINDEX('CURRENT STATUS', log_text) - CHARINDEX('CLOSURE REASON: ', log_text) - LEN('CLOSURE REASON: ')
-			END
-		), '.', ''))
-		AS CLOSURE_REASON
-	FROM LOGS_Q5
-)
-
-select closure_reason,
-	count(*) n
-from closure_reasons
-group by CLOSURE_REASON
-order by n desc
+-- Q2 - Normalize values to be in the range of 0-100
+SELECT CATEGORY,
+	AMOUNT,
+	AMOUNT_NORMALIZED = (AMOUNT - MIN(AMOUNT) OVER(PARTITION BY CATEGORY))  * 100.0 /
+		(MAX(AMOUNT) OVER(PARTITION BY CATEGORY) - MIN(AMOUNT) OVER(PARTITION BY CATEGORY))
+FROM items_q6
+ORDER BY CATEGORY, AMOUNT_NORMALIZED
