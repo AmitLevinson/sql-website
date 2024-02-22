@@ -8,6 +8,11 @@ toc: true
 categories: [מתקדם]
 image: featured.png
 draft: false
+filters:
+  - interactive-sql
+databases:
+  - name: logins
+    path: "https://raw.githubusercontent.com/AmitLevinson/sql-website/main/questions/1-consecutive-actions/logins.sql"
 ---
 
 ```{r, include = FALSE}
@@ -118,6 +123,13 @@ where count_per_group >= 3
 AND rn_within_group = 3
 GROUP BY user_id
 ```
+
+## [נסו בעצמכם]{span="color: #32408F;"}
+
+```{.sql .interactive .logins}
+select * from logins;
+```
+
 
 ## יצירת הטבלה
 

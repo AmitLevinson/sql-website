@@ -12,12 +12,18 @@ body {
   font-family: 'Open Sans Hebrew', serif;
 }
 
-.knitsql-table {
+.knitsql-table, .interactive-sql {
   direction: ltr;
 }
 
 .knitsql-table caption {
   display: none;
+}
+
+.interactive-sql code {
+  background: white;
+  max-height: 450px;
+  overflow-y: scroll;
 }
 
 .me-auto {
