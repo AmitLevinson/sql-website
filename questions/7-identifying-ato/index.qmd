@@ -1,0 +1,235 @@
+---
+title: "זיהוי השתלטות על חשבון"
+description: |
+  מציאת חשבונות שפרצו להם לחשבון ומנסים לגנוב מהם כסף
+author: ""
+date: "2023-01-25"
+toc: true
+categories: [בסיסי]
+image: featured.png
+draft: true
+---
+
+```{r, include = FALSE}
+library(odbc)
+library(DBI)
+
+sqlconn <- dbConnect(odbc(),
+                      Driver = "SQL Server",
+                      Server = "localhost\\SQLEXPRESS",
+                      Database = "sql-questions")
+```
+
+ברוכים הבאים לתרגיל השביעי!
+
+## הדאטה
+
+התרגיל מורכב מטבלת התחברויות וביצוע תשלומים של יוזרים:
+
+```{sql connection='sqlconn'}
+--SELECT TOP 5 * 
+--FROM Items_q7
+```
+
+עבור כל יוזר ניתן לראות את זמן ההתחברות שלו וה-GUID ממנו התחבר או ביצע את שליחת התשלום. לצורך התרגיל ה-GUID הוא מחרוזת שמייצגת שילוב של סוג המחשב ממנו היוזר התחבר, הדפדפן שהוא השתמש, IP ודברים נוספים. ניתן למצוא עוד מידע [כאן](https://www.techtarget.com/searchwindowsserver/definition/GUID-global-unique-identifier)
+
+## שאלה 1
+
+הצג את שכיחות בין כלל החשבונות. כלומר, לכמה משתמשים יש GUID אחד ייחודי, לכמה 2, לכמה 3 וכן הלאה-GUID הייחודיים 
+
+## שאלה 2
+
+אחד הסימנים שנראה להשתלטות על חשבון הוא התחברות מ-GUID שלא נראה בימים שקודמים לשליחת התשלום. לצורך התרגיל, מיצאו את המשתמשים ששלחו תשלום מ-GUID שהופיע לראשונה עד שלושה ימים ממועד שליחת התשלום.
+
+#### דוגמא
+
+ליוזר הבא יש את היסטורית ההתחברויות והתשלומים הבאה:
+
+
+```{sql connection='sqlconn'}
+--SELECT TOP 5 * 
+--FROM Items_q7
+```
+
+  ניתן לראות כי בתאריך XXX הוא שלח תשלום מ-GUID שלא נראה עד כה ולכן נרצה להחזירו בפלט.
+
+## יצירת הטבלה
+
+```{sql, eval=  FALSE, attr.source='style="max-height: 200px;overflow: scroll;"', connection='sqlconn'}
+DROP TABLE IF EXISTS ITEMS_Q6;
+
+
+CREATE TABLE items_q6
+    ([category] varchar(6), [amount] int)
+;
+    
+INSERT INTO items_q6
+    ([category], [amount])
+VALUES
+    ('Chairs', 12),
+    ('Chairs', 10),
+    ('Chairs', 10),
+    ('Chairs', 44),
+    ('Chairs', 93),
+    ('Chairs', 93),
+    ('Chairs', 32),
+    ('Chairs', 99),
+    ('Chairs', 95),
+    ('Chairs', 98),
+    ('Chairs', 85),
+    ('Chairs', 1),
+    ('Chairs', 39),
+    ('Chairs', 95),
+    ('Chairs', 91),
+    ('Chairs', 15),
+    ('Chairs', 38),
+    ('Chairs', 47),
+    ('Chairs', 31),
+    ('Chairs', 20),
+    ('Tables', 80),
+    ('Tables', 602),
+    ('Tables', 913),
+    ('Tables', 694),
+    ('Tables', 241),
+    ('Tables', 981),
+    ('Tables', 477),
+    ('Tables', 187),
+    ('Tables', 111),
+    ('Tables', 603),
+    ('Tables', 73),
+    ('Tables', 47),
+    ('Tables', 74),
+    ('Tables', 37),
+    ('Tables', 691),
+    ('Tables', 93),
+    ('Tables', 487),
+    ('Tables', 873),
+    ('Tables', 775),
+    ('Tables', 4),
+    ('Sofas', 146),
+    ('Sofas', 431),
+    ('Sofas', 330),
+    ('Sofas', 161),
+    ('Sofas', 308),
+    ('Sofas', 437),
+    ('Sofas', 97),
+    ('Sofas', 55),
+    ('Sofas', 383),
+    ('Sofas', 422),
+    ('Sofas', 127),
+    ('Sofas', 331),
+    ('Sofas', 213),
+    ('Sofas', 29),
+    ('Sofas', 260),
+    ('Sofas', 244),
+    ('Sofas', 398),
+    ('Sofas', 497),
+    ('Sofas', 276),
+    ('Sofas', 397),
+    ('Plates', 50),
+    ('Plates', 6),
+    ('Plates', 16),
+    ('Plates', 29),
+    ('Plates', 2),
+    ('Plates', 6),
+    ('Plates', 9),
+    ('Plates', 20),
+    ('Plates', 3),
+    ('Plates', 48),
+    ('Plates', 23),
+    ('Plates', 27),
+    ('Plates', 46),
+    ('Plates', 18),
+    ('Plates', 5),
+    ('Plates', 12),
+    ('Plates', 9),
+    ('Plates', 15),
+    ('Plates', 12),
+    ('Plates', 14),
+    ('Cups', 2),
+    ('Cups', 10),
+    ('Cups', 6),
+    ('Cups', 4),
+    ('Cups', 2),
+    ('Cups', 4),
+    ('Cups', 4),
+    ('Cups', 5),
+    ('Cups', 10),
+    ('Cups', 4),
+    ('Cups', 3),
+    ('Cups', 6),
+    ('Cups', 4),
+    ('Cups', 6),
+    ('Cups', 2),
+    ('Cups', 4),
+    ('Cups', 2),
+    ('Cups', 9),
+    ('Cups', 7),
+    ('Cups', 1)
+;
+
+
+```
+
+## תשובות
+
+### סרטון הסבר
+
+
+{{< video https://youtu.be/E4y7uU8N-Ks >}}
+
+
+### תשובה 1
+
+<details>
+
+<summary>הצג פתרון</summary>
+
+```{sql connection='sqlconn', echo = TRUE, eval= FALSE}
+SELECT category,
+	STDEV(AMOUNT) / AVG(AMOUNT) AS CV
+FROM items_q6
+GROUP BY CATEGORY
+ORDER BY CV;
+```
+
+</details>
+
+```{sql connection='sqlconn', echo = FALSE}
+SELECT category,
+	STDEV(AMOUNT) / AVG(AMOUNT) AS CV
+FROM items_q6
+GROUP BY CATEGORY
+ORDER BY CV;
+```
+
+### תשובה 2
+
+<details>
+
+<summary>הצג פתרון</summary>
+
+```{sql connection='sqlconn', echo = TRUE, eval= FALSE}
+SELECT category,
+	amount,
+	amount_noramlized = (AMOUNT - MIN(AMOUNT) OVER (PARTITION BY category)) * 100.0 / 
+						(MAX(AMOUNT) OVER (PARTITION BY category) - MIN(AMOUNT) OVER (PARTITION BY category))
+FROM items_q6
+order by category, amount_noramlized
+
+```
+
+</details>
+
+```{sql connection='sqlconn', echo = FALSE}
+SELECT TOP 10 category,
+	amount,
+	amount_noramlized = (AMOUNT - MIN(AMOUNT) OVER (PARTITION BY category)) * 100.0 / 
+						(MAX(AMOUNT) OVER (PARTITION BY category) - MIN(AMOUNT) OVER (PARTITION BY category))
+FROM items_q6
+order by category, amount_noramlized
+```
+
+```{r echo = FALSE}
+dbDisconnect(sqlconn)
+```
