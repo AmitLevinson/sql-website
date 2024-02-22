@@ -1,4 +1,6 @@
 CREATE TABLE logins 
+
+
 (
     User_id	INT,
     login_date	DATE,
