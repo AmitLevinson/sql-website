@@ -206,4 +206,4 @@ INSERT INTO logins (User_id, login_date, login) VALUES ('2', '2022-10-05', 'fail
 INSERT INTO logins (User_id, login_date, login) VALUES ('3', '2022-07-24', 'fail');
 INSERT INTO logins (User_id, login_date, login) VALUES ('4', '2023-06-03', 'fail');
 INSERT INTO logins (User_id, login_date, login) VALUES ('2', '2022-11-27', 'success');
-INSERT INTO logins (User_id, login_date, login) VALUES ('1', '2023-03-15', 'success');s
+INSERT INTO logins (User_id, login_date, login) VALUES ('1', '2023-03-15', 'success');
