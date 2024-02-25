@@ -12,7 +12,7 @@ filters:
   - interactive-sql
 databases:
   - name: logs_q5
-    path: "https://raw.githubusercontent.com/AmitLevinson/sql-website/tree/main/questions/5-extract-text-from-logs/LOGS_Q5.sql"
+    path: "https://raw.githubusercontent.com/AmitLevinson/sql-website/main/questions/5-extract-text-from-logs/LOGS_Q5.sql"
 ---
 
 ```{r, include = FALSE}

@@ -2,7 +2,7 @@
 DROP TABLE IF EXISTS LOGS_Q5;
 
 CREATE TABLE LOGS_Q5
-    (user_id int, log_date datetime, log_text nvarchar(max))
+    (user_id int, log_date datetime, log_text varchar(10))
 ;
     
 INSERT INTO LOGS_Q5
