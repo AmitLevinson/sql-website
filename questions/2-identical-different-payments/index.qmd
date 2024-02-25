@@ -8,6 +8,11 @@ toc: true
 categories: [בסיסי]
 image: featured.png
 draft: false
+filters:
+  - interactive-sql
+databases:
+  - name: payments
+    path: "https://raw.githubusercontent.com/AmitLevinson/sql-website/main/questions/2-identical-different-payments/q2.sql"
 ---
 
 ```{r, include = FALSE}
@@ -41,7 +46,27 @@ FROM payments_ag_2;
 
 **בהצלחה!**
 
-## יצירת הטבלה
+
+## נסו בעצמכם
+
+### אונליין 
+
+<mark>נסו בחלון טקסט למטה (SQLite):</mark>
+
+```{.sql .interactive .payments}
+-- EDIT THIS QUERY:
+SELECT *
+FROM payments_ag_2
+LIMIT 10;
+
+```
+
+
+
+### נסו על המחשב שלכם
+
+<details>
+<summary>הצג קוד ליצירת טבלה</summary>
 
 
 ```{r, eval=  FALSE, attr.source='style="max-height: 200px;overflow: scroll;"', connection='sqlconn'}
@@ -80,7 +105,7 @@ VALUES
 
 ```
 
-
+</details>
 
 ## תשובה
 
@@ -96,9 +121,9 @@ VALUES
 ```{sql connection='sqlconn', echo = TRUE, eval = FALSE}
 SELECT USER_ID,
 	COUNT(*) AS N_PAYMENTS,
-	CASE WHEN SUM(CASE WHEN STATUS = 'LOAD' THEN 1 ELSE 0 END) = COUNT(*) THEN 1 ELSE 0 END AS ALL_LOADED,
-	CASE WHEN COUNT(CASE WHEN STATUS = 'LOAD' THEN 1 END) > COUNT(CASE WHEN STATUS = 'CANCEL' THEN 1 END) THEN 1 ELSE 0 END AS more_loaded_than_failed,
-	MAX(CASE WHEN STATUS = 'PENDING' THEN 1 ELSE 0 END) AS HAS_PENDING_PAYMENT
+	CASE WHEN SUM(CASE WHEN STATUS = 'Load' THEN 1 ELSE 0 END) = COUNT(*) THEN 1 ELSE 0 END AS ALL_LOADED,
+	CASE WHEN COUNT(CASE WHEN STATUS = 'Load' THEN 1 END) > COUNT(CASE WHEN STATUS = 'Cancel' THEN 1 END) THEN 1 ELSE 0 END AS more_loaded_than_failed,
+	MAX(CASE WHEN STATUS = 'Pending' THEN 1 ELSE 0 END) AS HAS_PENDING_PAYMENT
 FROM payments_ag_2
 GROUP BY USER_ID
 ```

@@ -79,6 +79,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/quarto-contrib/interactive-sql-1.0.0/interactive-sql.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -123,6 +124,9 @@ cookieconsent.run({
 });
 </script> 
   
+<script src="https://unpkg.com/@antonz/sqlite@3.40.0/dist/sqlite3.js"></script>
+<script src="https://unpkg.com/sqlime@0.1.3/dist/sqlime-db.js"></script>
+<script src="https://unpkg.com/sqlime@0.1.3/dist/sqlime-examples.js"></script>
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -220,7 +224,11 @@ cookieconsent.run({
   <ul>
   <li><a href="#הדאטה" id="toc-הדאטה" class="nav-link active" data-scroll-target="#הדאטה">הדאטה</a></li>
   <li><a href="#שאלה" id="toc-שאלה" class="nav-link" data-scroll-target="#שאלה">שאלה</a></li>
-  <li><a href="#יצירת-הטבלה" id="toc-יצירת-הטבלה" class="nav-link" data-scroll-target="#יצירת-הטבלה">יצירת הטבלה</a></li>
+  <li><a href="#נסו-בעצמכם" id="toc-נסו-בעצמכם" class="nav-link" data-scroll-target="#נסו-בעצמכם">נסו בעצמכם</a>
+  <ul class="collapse">
+  <li><a href="#אונליין" id="toc-אונליין" class="nav-link" data-scroll-target="#אונליין">אונליין</a></li>
+  <li><a href="#נסו-על-המחשב-שלכם" id="toc-נסו-על-המחשב-שלכם" class="nav-link" data-scroll-target="#נסו-על-המחשב-שלכם">נסו על המחשב שלכם</a></li>
+  </ul></li>
   <li><a href="#תשובה" id="toc-תשובה" class="nav-link" data-scroll-target="#תשובה">תשובה</a>
   <ul class="collapse">
   <li><a href="#סרטון-הסבר" id="toc-סרטון-הסבר" class="nav-link" data-scroll-target="#סרטון-הסבר">סרטון הסבר</a></li>
@@ -324,41 +332,59 @@ cookieconsent.run({
 <p>עבור כל יוזר החזר טבלה עם מספר התשלומים שהוא קיבל, עמודה המציינת האם כל התשלומים שהוא קיבל הם עם סטטוס ‘Load’ (1 כל התשלומים עם הסטטוס הזה, 0 לא), האם מספר התשלומים שנטענו היה גדול ממספר התשלומים שבוטלו (1 כן, 0 לא) והאם יש לו <em>לפחות תשלום אחד</em> שהוא ‘Pending’ (1 כן, 0 לא)</p>
 <p><strong>בהצלחה!</strong></p>
 </section>
-<section id="יצירת-הטבלה" class="level2">
-<h2 class="anchored" data-anchor-id="יצירת-הטבלה">יצירת הטבלה</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2" style="max-height: 200px;overflow: scroll;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>DROP table <span class="cf">if</span> exists payments_ag_2;</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>CREATE TABLE payments_ag_2</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    ([user_id] int, [date] date, [status] <span class="fu">varchar</span>(<span class="dv">7</span>), [amount] int)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>;</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>INSERT INTO payments_ag_2</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    ([user_id], [date], [status], [amount])</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>VALUES</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="st">'2023-06-01'</span>, <span class="st">'Load'</span>, <span class="dv">234</span>),</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="st">'2023-06-14'</span>, <span class="st">'Cancel'</span>, <span class="dv">42</span>),</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="st">'2023-06-16'</span>, <span class="st">'Load'</span>, <span class="dv">52</span>),</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="st">'2023-06-22'</span>, <span class="st">'Load'</span>, <span class="dv">6</span>),</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="st">'2023-06-23'</span>, <span class="st">'Load'</span>, <span class="dv">36</span>),</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="st">'2023-06-24'</span>, <span class="st">'Pending'</span>, <span class="dv">74</span>),</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2</span>, <span class="st">'2023-06-03'</span>, <span class="st">'Load'</span>, <span class="dv">58</span>),</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2</span>, <span class="st">'2023-06-05'</span>, <span class="st">'Load'</span>, <span class="dv">33</span>),</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2</span>, <span class="st">'2023-06-09'</span>, <span class="st">'Load'</span>, <span class="dv">65</span>),</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2</span>, <span class="st">'2023-06-10'</span>, <span class="st">'Load'</span>, <span class="dv">74</span>),</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2</span>, <span class="st">'2023-06-14'</span>, <span class="st">'Load'</span>, <span class="dv">98</span>),</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2</span>, <span class="st">'2023-06-18'</span>, <span class="st">'Load'</span>, <span class="dv">14</span>),</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3</span>, <span class="st">'2023-06-01'</span>, <span class="st">'Cancel'</span>, <span class="dv">52</span>),</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3</span>, <span class="st">'2023-06-04'</span>, <span class="st">'Cancel'</span>, <span class="dv">5</span>),</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3</span>, <span class="st">'2023-06-07'</span>, <span class="st">'Pending'</span>, <span class="dv">99</span>),</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">4</span>, <span class="st">'2023-06-09'</span>, <span class="st">'Load'</span>, <span class="dv">100</span>),</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">4</span>, <span class="st">'2023-06-10'</span>, <span class="st">'Cancel'</span>, <span class="dv">15</span>),</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">5</span>, <span class="st">'2023-06-15'</span>, <span class="st">'Load'</span>, <span class="dv">20</span>),</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">6</span>, <span class="st">'2023-06-16'</span>, <span class="st">'Pending'</span>, <span class="dv">21</span>),</span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">6</span>, <span class="st">'2023-06-16'</span>, <span class="st">'Load'</span>, <span class="dv">42</span>)</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="נסו-בעצמכם" class="level2">
+<h2 class="anchored" data-anchor-id="נסו-בעצמכם">נסו בעצמכם</h2>
+<section id="אונליין" class="level3">
+<h3 class="anchored" data-anchor-id="אונליין">אונליין</h3>
+<p><mark>נסו בחלון טקסט למטה (SQLite):</mark></p>
+<div class="interactive-sql">
+<div class="sourceCode" id="cb2"><pre class="sourceCode sql interactive payments code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- EDIT THIS QUERY:</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> payments_ag_2</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">10</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="נסו-על-המחשב-שלכם" class="level3">
+<h3 class="anchored" data-anchor-id="נסו-על-המחשב-שלכם">נסו על המחשב שלכם</h3>
+<details>
+<summary>
+הצג קוד ליצירת טבלה
+</summary>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3" style="max-height: 200px;overflow: scroll;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>DROP table <span class="cf">if</span> exists payments_ag_2;</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>CREATE TABLE payments_ag_2</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    ([user_id] int, [date] date, [status] <span class="fu">varchar</span>(<span class="dv">7</span>), [amount] int)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>;</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>INSERT INTO payments_ag_2</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    ([user_id], [date], [status], [amount])</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>VALUES</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="st">'2023-06-01'</span>, <span class="st">'Load'</span>, <span class="dv">234</span>),</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="st">'2023-06-14'</span>, <span class="st">'Cancel'</span>, <span class="dv">42</span>),</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="st">'2023-06-16'</span>, <span class="st">'Load'</span>, <span class="dv">52</span>),</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="st">'2023-06-22'</span>, <span class="st">'Load'</span>, <span class="dv">6</span>),</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="st">'2023-06-23'</span>, <span class="st">'Load'</span>, <span class="dv">36</span>),</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="st">'2023-06-24'</span>, <span class="st">'Pending'</span>, <span class="dv">74</span>),</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2</span>, <span class="st">'2023-06-03'</span>, <span class="st">'Load'</span>, <span class="dv">58</span>),</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2</span>, <span class="st">'2023-06-05'</span>, <span class="st">'Load'</span>, <span class="dv">33</span>),</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2</span>, <span class="st">'2023-06-09'</span>, <span class="st">'Load'</span>, <span class="dv">65</span>),</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2</span>, <span class="st">'2023-06-10'</span>, <span class="st">'Load'</span>, <span class="dv">74</span>),</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2</span>, <span class="st">'2023-06-14'</span>, <span class="st">'Load'</span>, <span class="dv">98</span>),</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2</span>, <span class="st">'2023-06-18'</span>, <span class="st">'Load'</span>, <span class="dv">14</span>),</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3</span>, <span class="st">'2023-06-01'</span>, <span class="st">'Cancel'</span>, <span class="dv">52</span>),</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3</span>, <span class="st">'2023-06-04'</span>, <span class="st">'Cancel'</span>, <span class="dv">5</span>),</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3</span>, <span class="st">'2023-06-07'</span>, <span class="st">'Pending'</span>, <span class="dv">99</span>),</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">4</span>, <span class="st">'2023-06-09'</span>, <span class="st">'Load'</span>, <span class="dv">100</span>),</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">4</span>, <span class="st">'2023-06-10'</span>, <span class="st">'Cancel'</span>, <span class="dv">15</span>),</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">5</span>, <span class="st">'2023-06-15'</span>, <span class="st">'Load'</span>, <span class="dv">20</span>),</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">6</span>, <span class="st">'2023-06-16'</span>, <span class="st">'Pending'</span>, <span class="dv">21</span>),</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">6</span>, <span class="st">'2023-06-16'</span>, <span class="st">'Load'</span>, <span class="dv">42</span>)</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</details>
+</section>
 </section>
 <section id="תשובה" class="level2">
 <h2 class="anchored" data-anchor-id="תשובה">תשובה</h2>
@@ -373,13 +399,13 @@ cookieconsent.run({
 הצג קוד
 </summary>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> USER_ID,</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> N_PAYMENTS,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">CASE</span> <span class="cf">WHEN</span> <span class="fu">SUM</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> STATUS <span class="op">=</span> <span class="st">'LOAD'</span> <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">ELSE</span> <span class="dv">0</span> <span class="cf">END</span>) <span class="op">=</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">ELSE</span> <span class="dv">0</span> <span class="cf">END</span> <span class="kw">AS</span> ALL_LOADED,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">CASE</span> <span class="cf">WHEN</span> <span class="fu">COUNT</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> STATUS <span class="op">=</span> <span class="st">'LOAD'</span> <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">END</span>) <span class="op">&gt;</span> <span class="fu">COUNT</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> STATUS <span class="op">=</span> <span class="st">'CANCEL'</span> <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">END</span>) <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">ELSE</span> <span class="dv">0</span> <span class="cf">END</span> <span class="kw">AS</span> more_loaded_than_failed,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">MAX</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> STATUS <span class="op">=</span> <span class="st">'PENDING'</span> <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">ELSE</span> <span class="dv">0</span> <span class="cf">END</span>) <span class="kw">AS</span> HAS_PENDING_PAYMENT</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> payments_ag_2</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> USER_ID</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> USER_ID,</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> N_PAYMENTS,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">CASE</span> <span class="cf">WHEN</span> <span class="fu">SUM</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> STATUS <span class="op">=</span> <span class="st">'Load'</span> <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">ELSE</span> <span class="dv">0</span> <span class="cf">END</span>) <span class="op">=</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">ELSE</span> <span class="dv">0</span> <span class="cf">END</span> <span class="kw">AS</span> ALL_LOADED,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">CASE</span> <span class="cf">WHEN</span> <span class="fu">COUNT</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> STATUS <span class="op">=</span> <span class="st">'Load'</span> <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">END</span>) <span class="op">&gt;</span> <span class="fu">COUNT</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> STATUS <span class="op">=</span> <span class="st">'Cancel'</span> <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">END</span>) <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">ELSE</span> <span class="dv">0</span> <span class="cf">END</span> <span class="kw">AS</span> more_loaded_than_failed,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">MAX</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> STATUS <span class="op">=</span> <span class="st">'Pending'</span> <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">ELSE</span> <span class="dv">0</span> <span class="cf">END</span>) <span class="kw">AS</span> HAS_PENDING_PAYMENT</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> payments_ag_2</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> USER_ID</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </details>
 <div class="cell">
@@ -451,6 +477,8 @@ cookieconsent.run({
 </div>
 
 
+<sqlime-db name="payments" path="https://raw.githubusercontent.com/AmitLevinson/sql-website/main/questions/2-identical-different-payments/q2.sql"></sqlime-db>
+<sqlime-examples db="payments" selector="div.interactive-sql pre.payments code" editable=""></sqlime-examples>
 </section>
 </section>
 
@@ -706,4 +734,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
+<script src="../../site_libs/quarto-contrib/interactive-sql-1.0.0/interactive-sql.js"></script>
 </body></html>

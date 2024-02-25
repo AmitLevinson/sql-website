@@ -128,9 +128,10 @@ GROUP BY user_id
 
 ### אונליין 
 
-נסו בחלון טקסט למטה (SQLite):
+<mark>נסו בחלון טקסט למטה (SQLite):</mark>
 
 ```{.sql .interactive .logins}
+-- EDIT THIS QUERY:
 SELECT *
 from logins
 LIMIT 10;
