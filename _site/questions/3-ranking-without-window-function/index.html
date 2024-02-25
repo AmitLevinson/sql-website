@@ -79,6 +79,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/quarto-contrib/interactive-sql-1.0.0/interactive-sql.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -123,6 +124,9 @@ cookieconsent.run({
 });
 </script> 
   
+<script src="https://unpkg.com/@antonz/sqlite@3.40.0/dist/sqlite3.js"></script>
+<script src="https://unpkg.com/sqlime@0.1.3/dist/sqlime-db.js"></script>
+<script src="https://unpkg.com/sqlime@0.1.3/dist/sqlime-examples.js"></script>
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -219,7 +223,11 @@ cookieconsent.run({
    
   <ul>
   <li><a href="#שאלה" id="toc-שאלה" class="nav-link active" data-scroll-target="#שאלה">שאלה</a></li>
-  <li><a href="#יצירת-הטבלה" id="toc-יצירת-הטבלה" class="nav-link" data-scroll-target="#יצירת-הטבלה">יצירת הטבלה</a></li>
+  <li><a href="#נסו-בעצמכם" id="toc-נסו-בעצמכם" class="nav-link" data-scroll-target="#נסו-בעצמכם">נסו בעצמכם</a>
+  <ul class="collapse">
+  <li><a href="#אונליין" id="toc-אונליין" class="nav-link" data-scroll-target="#אונליין">אונליין</a></li>
+  <li><a href="#נסו-על-המחשב-שלכם" id="toc-נסו-על-המחשב-שלכם" class="nav-link" data-scroll-target="#נסו-על-המחשב-שלכם">נסו על המחשב שלכם</a></li>
+  </ul></li>
   <li><a href="#תשובה" id="toc-תשובה" class="nav-link" data-scroll-target="#תשובה">תשובה</a>
   <ul class="collapse">
   <li><a href="#סרטון-הסבר" id="toc-סרטון-הסבר" class="nav-link" data-scroll-target="#סרטון-הסבר">סרטון הסבר</a></li>
@@ -241,29 +249,47 @@ cookieconsent.run({
 <p><em>ללא שימוש בשום פונקצית חלון</em>, צרו עמודה חדשה שמדרגת את השורות לפי מכירות (amount) באותה שנה (sale_year), בדומה לפונקצית <a href="https://learn.microsoft.com/en-us/sql/t-sql/functions/dense-rank-transact-sql?view=sql-server-ver16"><code>DESNE_RANK()</code></a>. כלומר, בהינתן תיקו בהיררכיה, ערכים זהים יקבלו את אותו דירוג ואילו הערכים הבאים בסדר יקבלו דירוג אחד מעל הערך הקודם שהיה בתיקו.</p>
 <p><strong>בהצלחה!</strong></p>
 </section>
-<section id="יצירת-הטבלה" class="level2">
-<h2 class="anchored" data-anchor-id="יצירת-הטבלה">יצירת הטבלה</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1" style="max-height: 200px;overflow: scroll;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>DROP TABLE IF EXISTS Sales_ag;</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>CREATE TABLE <span class="fu">sales_ag</span> (</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    year INT,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    category <span class="fu">varchar</span>(<span class="dv">15</span>),</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    amount INT</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>INSERT into <span class="fu">Sales_ag</span> (year, category, amount) <span class="fu">values</span> (<span class="dv">2000</span>, <span class="st">'Automotive'</span>, <span class="dv">89</span>);</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>insert into <span class="fu">Sales_ag</span> (year, category, amount) <span class="fu">values</span> (<span class="dv">2000</span>, <span class="st">'Computers'</span>, <span class="dv">59</span>);</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>insert into <span class="fu">Sales_ag</span> (year, category, amount) <span class="fu">values</span> (<span class="dv">2000</span>, <span class="st">'Books'</span>, <span class="dv">19</span>);</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>insert into <span class="fu">Sales_ag</span> (year, category, amount) <span class="fu">values</span> (<span class="dv">2000</span>, <span class="st">'Movies'</span>, <span class="dv">74</span>);</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>insert into <span class="fu">Sales_ag</span> (year, category, amount) <span class="fu">values</span> (<span class="dv">2000</span>, <span class="st">'Garden'</span>, <span class="dv">74</span>);</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>insert into <span class="fu">Sales_ag</span> (year, category, amount) <span class="fu">values</span> (<span class="dv">2001</span>, <span class="st">'Clothing'</span>, <span class="dv">49</span>);</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>insert into <span class="fu">Sales_ag</span> (year, category, amount) <span class="fu">values</span> (<span class="dv">2001</span>, <span class="st">'Computers'</span>, <span class="dv">53</span>);</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>insert into <span class="fu">Sales_ag</span> (year, category, amount) <span class="fu">values</span> (<span class="dv">2001</span>, <span class="st">'Automotive'</span>, <span class="dv">65</span>);</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>insert into <span class="fu">Sales_ag</span> (year, category, amount) <span class="fu">values</span> (<span class="dv">2001</span>, <span class="st">'Garden'</span>, <span class="dv">24</span>);</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>insert into <span class="fu">Sales_ag</span> (year, category, amount) <span class="fu">values</span> (<span class="dv">2001</span>, <span class="st">'Movies'</span>, <span class="dv">39</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="נסו-בעצמכם" class="level2">
+<h2 class="anchored" data-anchor-id="נסו-בעצמכם">נסו בעצמכם</h2>
+<section id="אונליין" class="level3">
+<h3 class="anchored" data-anchor-id="אונליין">אונליין</h3>
+<p><mark>נסו בחלון טקסט למטה (SQLite):</mark></p>
+<div class="interactive-sql">
+<div class="sourceCode" id="cb1"><pre class="sourceCode sql interactive sales_ag code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- EDIT THIS QUERY:</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> sales_ag</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">10</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="נסו-על-המחשב-שלכם" class="level3">
+<h3 class="anchored" data-anchor-id="נסו-על-המחשב-שלכם">נסו על המחשב שלכם</h3>
+<details>
+<summary>
+הצג קוד ליצירת טבלה
+</summary>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2" style="max-height: 200px;overflow: scroll;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>DROP TABLE IF EXISTS Sales_ag;</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>CREATE TABLE <span class="fu">sales_ag</span> (</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    year INT,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    category <span class="fu">varchar</span>(<span class="dv">15</span>),</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    amount INT</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>INSERT into <span class="fu">Sales_ag</span> (year, category, amount) <span class="fu">values</span> (<span class="dv">2000</span>, <span class="st">'Automotive'</span>, <span class="dv">89</span>);</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>insert into <span class="fu">Sales_ag</span> (year, category, amount) <span class="fu">values</span> (<span class="dv">2000</span>, <span class="st">'Computers'</span>, <span class="dv">59</span>);</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>insert into <span class="fu">Sales_ag</span> (year, category, amount) <span class="fu">values</span> (<span class="dv">2000</span>, <span class="st">'Books'</span>, <span class="dv">19</span>);</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>insert into <span class="fu">Sales_ag</span> (year, category, amount) <span class="fu">values</span> (<span class="dv">2000</span>, <span class="st">'Movies'</span>, <span class="dv">74</span>);</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>insert into <span class="fu">Sales_ag</span> (year, category, amount) <span class="fu">values</span> (<span class="dv">2000</span>, <span class="st">'Garden'</span>, <span class="dv">74</span>);</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>insert into <span class="fu">Sales_ag</span> (year, category, amount) <span class="fu">values</span> (<span class="dv">2001</span>, <span class="st">'Clothing'</span>, <span class="dv">49</span>);</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>insert into <span class="fu">Sales_ag</span> (year, category, amount) <span class="fu">values</span> (<span class="dv">2001</span>, <span class="st">'Computers'</span>, <span class="dv">53</span>);</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>insert into <span class="fu">Sales_ag</span> (year, category, amount) <span class="fu">values</span> (<span class="dv">2001</span>, <span class="st">'Automotive'</span>, <span class="dv">65</span>);</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>insert into <span class="fu">Sales_ag</span> (year, category, amount) <span class="fu">values</span> (<span class="dv">2001</span>, <span class="st">'Garden'</span>, <span class="dv">24</span>);</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>insert into <span class="fu">Sales_ag</span> (year, category, amount) <span class="fu">values</span> (<span class="dv">2001</span>, <span class="st">'Movies'</span>, <span class="dv">39</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</details>
+</section>
 </section>
 <section id="תשובה" class="level2">
 <h2 class="anchored" data-anchor-id="תשובה">תשובה</h2>
@@ -275,24 +301,24 @@ cookieconsent.run({
 הצג פתרון
 </summary>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span>,</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    (<span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> SalesInner.amount) <span class="kw">as</span> rn</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> sales_ag SalesInner</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span> SalesInner.<span class="dt">year</span> <span class="op">=</span> SalesOuter.<span class="dt">year</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">AND</span> SalesInner.amount <span class="op">&gt;=</span> SalesOuter.amount)  <span class="kw">AS</span> custom_dense_rank</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> sales_ag SalesOuter</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> <span class="dt">year</span>, custom_dense_rank</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span>,</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    (<span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> SalesInner.amount) <span class="kw">as</span> rn</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> sales_ag SalesInner</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span> SalesInner.<span class="dt">year</span> <span class="op">=</span> SalesOuter.<span class="dt">year</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">AND</span> SalesInner.amount <span class="op">&gt;=</span> SalesOuter.amount)  <span class="kw">AS</span> custom_dense_rank</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> sales_ag SalesOuter</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> <span class="dt">year</span>, custom_dense_rank</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </details>
 <div class="cell">
 <div class="cell-output-display">
 
-<div id="qasfxjjbli" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="xnhgfrmczs" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#qasfxjjbli .gt_table {
+#xnhgfrmczs .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -317,7 +343,7 @@ cookieconsent.run({
   border-left-color: #D3D3D3;
 }
 
-#qasfxjjbli .gt_heading {
+#xnhgfrmczs .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -329,7 +355,7 @@ cookieconsent.run({
   border-right-color: #D3D3D3;
 }
 
-#qasfxjjbli .gt_title {
+#xnhgfrmczs .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -341,7 +367,7 @@ cookieconsent.run({
   border-bottom-width: 0;
 }
 
-#qasfxjjbli .gt_subtitle {
+#xnhgfrmczs .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -353,13 +379,13 @@ cookieconsent.run({
   border-top-width: 0;
 }
 
-#qasfxjjbli .gt_bottom_border {
+#xnhgfrmczs .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#qasfxjjbli .gt_col_headings {
+#xnhgfrmczs .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -374,7 +400,7 @@ cookieconsent.run({
   border-right-color: #D3D3D3;
 }
 
-#qasfxjjbli .gt_col_heading {
+#xnhgfrmczs .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -394,7 +420,7 @@ cookieconsent.run({
   overflow-x: hidden;
 }
 
-#qasfxjjbli .gt_column_spanner_outer {
+#xnhgfrmczs .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -406,15 +432,15 @@ cookieconsent.run({
   padding-right: 4px;
 }
 
-#qasfxjjbli .gt_column_spanner_outer:first-child {
+#xnhgfrmczs .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#qasfxjjbli .gt_column_spanner_outer:last-child {
+#xnhgfrmczs .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#qasfxjjbli .gt_column_spanner {
+#xnhgfrmczs .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -426,7 +452,7 @@ cookieconsent.run({
   width: 100%;
 }
 
-#qasfxjjbli .gt_group_heading {
+#xnhgfrmczs .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -451,7 +477,7 @@ cookieconsent.run({
   vertical-align: middle;
 }
 
-#qasfxjjbli .gt_empty_group_heading {
+#xnhgfrmczs .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -466,15 +492,15 @@ cookieconsent.run({
   vertical-align: middle;
 }
 
-#qasfxjjbli .gt_from_md > :first-child {
+#xnhgfrmczs .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#qasfxjjbli .gt_from_md > :last-child {
+#xnhgfrmczs .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#qasfxjjbli .gt_row {
+#xnhgfrmczs .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -493,7 +519,7 @@ cookieconsent.run({
   overflow-x: hidden;
 }
 
-#qasfxjjbli .gt_stub {
+#xnhgfrmczs .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -506,7 +532,7 @@ cookieconsent.run({
   padding-right: 5px;
 }
 
-#qasfxjjbli .gt_stub_row_group {
+#xnhgfrmczs .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -520,11 +546,11 @@ cookieconsent.run({
   vertical-align: top;
 }
 
-#qasfxjjbli .gt_row_group_first td {
+#xnhgfrmczs .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#qasfxjjbli .gt_summary_row {
+#xnhgfrmczs .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -534,16 +560,16 @@ cookieconsent.run({
   padding-right: 5px;
 }
 
-#qasfxjjbli .gt_first_summary_row {
+#xnhgfrmczs .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#qasfxjjbli .gt_first_summary_row.thick {
+#xnhgfrmczs .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#qasfxjjbli .gt_last_summary_row {
+#xnhgfrmczs .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -553,7 +579,7 @@ cookieconsent.run({
   border-bottom-color: #D3D3D3;
 }
 
-#qasfxjjbli .gt_grand_summary_row {
+#xnhgfrmczs .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -563,7 +589,7 @@ cookieconsent.run({
   padding-right: 5px;
 }
 
-#qasfxjjbli .gt_first_grand_summary_row {
+#xnhgfrmczs .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -573,11 +599,11 @@ cookieconsent.run({
   border-top-color: #D3D3D3;
 }
 
-#qasfxjjbli .gt_striped {
+#xnhgfrmczs .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#qasfxjjbli .gt_table_body {
+#xnhgfrmczs .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -586,7 +612,7 @@ cookieconsent.run({
   border-bottom-color: #D3D3D3;
 }
 
-#qasfxjjbli .gt_footnotes {
+#xnhgfrmczs .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -600,7 +626,7 @@ cookieconsent.run({
   border-right-color: #D3D3D3;
 }
 
-#qasfxjjbli .gt_footnote {
+#xnhgfrmczs .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -609,7 +635,7 @@ cookieconsent.run({
   padding-right: 5px;
 }
 
-#qasfxjjbli .gt_sourcenotes {
+#xnhgfrmczs .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -623,7 +649,7 @@ cookieconsent.run({
   border-right-color: #D3D3D3;
 }
 
-#qasfxjjbli .gt_sourcenote {
+#xnhgfrmczs .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -631,36 +657,36 @@ cookieconsent.run({
   padding-right: 5px;
 }
 
-#qasfxjjbli .gt_left {
+#xnhgfrmczs .gt_left {
   text-align: left;
 }
 
-#qasfxjjbli .gt_center {
+#xnhgfrmczs .gt_center {
   text-align: center;
 }
 
-#qasfxjjbli .gt_right {
+#xnhgfrmczs .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#qasfxjjbli .gt_font_normal {
+#xnhgfrmczs .gt_font_normal {
   font-weight: normal;
 }
 
-#qasfxjjbli .gt_font_bold {
+#xnhgfrmczs .gt_font_bold {
   font-weight: bold;
 }
 
-#qasfxjjbli .gt_font_italic {
+#xnhgfrmczs .gt_font_italic {
   font-style: italic;
 }
 
-#qasfxjjbli .gt_super {
+#xnhgfrmczs .gt_super {
   font-size: 65%;
 }
 
-#qasfxjjbli .gt_two_val_uncert {
+#xnhgfrmczs .gt_two_val_uncert {
   display: inline-block;
   line-height: 1em;
   text-align: right;
@@ -669,31 +695,31 @@ cookieconsent.run({
   margin-left: 0.1em;
 }
 
-#qasfxjjbli .gt_footnote_marks {
+#xnhgfrmczs .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#qasfxjjbli .gt_asterisk {
+#xnhgfrmczs .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#qasfxjjbli .gt_slash_mark {
+#xnhgfrmczs .gt_slash_mark {
   font-size: 0.7em;
   line-height: 0.7em;
   vertical-align: 0.15em;
 }
 
-#qasfxjjbli .gt_fraction_numerator {
+#xnhgfrmczs .gt_fraction_numerator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: 0.45em;
 }
 
-#qasfxjjbli .gt_fraction_denominator {
+#xnhgfrmczs .gt_fraction_denominator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: -0.05em;
@@ -778,6 +804,8 @@ cookieconsent.run({
 </div>
 
 
+<sqlime-db name="sales_ag" path="https://raw.githubusercontent.com/AmitLevinson/sql-website/main/questions/3-ranking-without-window-function/sales_ag.sql"></sqlime-db>
+<sqlime-examples db="sales_ag" selector="div.interactive-sql pre.sales_ag code" editable=""></sqlime-examples>
 </section>
 </section>
 
@@ -1033,4 +1061,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
+<script src="../../site_libs/quarto-contrib/interactive-sql-1.0.0/interactive-sql.js"></script>
 </body></html>

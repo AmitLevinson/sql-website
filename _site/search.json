@@ -264,5 +264,12 @@
     "title": "אפיון תשלומים זהים או שונים",
     "section": "נסו בעצמכם",
     "text": "נסו בעצמכם\n\nאונליין\nנסו בחלון טקסט למטה (SQLite):\n\n-- EDIT THIS QUERY:\nSELECT *\nFROM payments_ag_2\nLIMIT 10;\n\n\n\nנסו על המחשב שלכם\n\n\nהצג קוד ליצירת טבלה\n\n\nDROP table if exists payments_ag_2;\n\n\nCREATE TABLE payments_ag_2\n    ([user_id] int, [date] date, [status] varchar(7), [amount] int)\n;\n    \nINSERT INTO payments_ag_2\n    ([user_id], [date], [status], [amount])\nVALUES\n    (1, '2023-06-01', 'Load', 234),\n    (1, '2023-06-14', 'Cancel', 42),\n    (1, '2023-06-16', 'Load', 52),\n    (1, '2023-06-22', 'Load', 6),\n    (1, '2023-06-23', 'Load', 36),\n    (1, '2023-06-24', 'Pending', 74),\n    (2, '2023-06-03', 'Load', 58),\n    (2, '2023-06-05', 'Load', 33),\n    (2, '2023-06-09', 'Load', 65),\n    (2, '2023-06-10', 'Load', 74),\n    (2, '2023-06-14', 'Load', 98),\n    (2, '2023-06-18', 'Load', 14),\n    (3, '2023-06-01', 'Cancel', 52),\n    (3, '2023-06-04', 'Cancel', 5),\n    (3, '2023-06-07', 'Pending', 99),\n    (4, '2023-06-09', 'Load', 100),\n    (4, '2023-06-10', 'Cancel', 15),\n    (5, '2023-06-15', 'Load', 20),\n    (6, '2023-06-16', 'Pending', 21),\n    (6, '2023-06-16', 'Load', 42)\n;"
+  },
+  {
+    "objectID": "questions/3-ranking-without-window-function/index.html#נסו-בעצמכם",
+    "href": "questions/3-ranking-without-window-function/index.html#נסו-בעצמכם",
+    "title": "דירוג שורות בלי פונקצית חלון",
+    "section": "נסו בעצמכם",
+    "text": "נסו בעצמכם\n\nאונליין\nנסו בחלון טקסט למטה (SQLite):\n\n-- EDIT THIS QUERY:\nSELECT *\nFROM sales_ag\nLIMIT 10;\n\n\n\nנסו על המחשב שלכם\n\n\nהצג קוד ליצירת טבלה\n\n\nDROP TABLE IF EXISTS Sales_ag;\n\nCREATE TABLE sales_ag (\n    year INT,\n    category varchar(15),\n    amount INT\n)\n\n\nINSERT into Sales_ag (year, category, amount) values (2000, 'Automotive', 89);\ninsert into Sales_ag (year, category, amount) values (2000, 'Computers', 59);\ninsert into Sales_ag (year, category, amount) values (2000, 'Books', 19);\ninsert into Sales_ag (year, category, amount) values (2000, 'Movies', 74);\ninsert into Sales_ag (year, category, amount) values (2000, 'Garden', 74);\ninsert into Sales_ag (year, category, amount) values (2001, 'Clothing', 49);\ninsert into Sales_ag (year, category, amount) values (2001, 'Computers', 53);\ninsert into Sales_ag (year, category, amount) values (2001, 'Automotive', 65);\ninsert into Sales_ag (year, category, amount) values (2001, 'Garden', 24);\ninsert into Sales_ag (year, category, amount) values (2001, 'Movies', 39);"
   }
 ]

@@ -8,6 +8,11 @@ toc: true
 categories: [מתקדם]
 image: featured.png
 draft: false
+filters:
+  - interactive-sql
+databases:
+  - name: sales_ag
+    path: "https://raw.githubusercontent.com/AmitLevinson/sql-website/main/questions/3-ranking-without-window-function/sales_ag.sql"
 ---
 
 ```{r, include = FALSE}
@@ -36,7 +41,25 @@ sqlconn <- dbConnect(odbc(),
 
 **בהצלחה!**
 
-## יצירת הטבלה
+
+## נסו בעצמכם
+
+### אונליין 
+
+<mark>נסו בחלון טקסט למטה (SQLite):</mark>
+
+```{.sql .interactive .sales_ag}
+-- EDIT THIS QUERY:
+SELECT *
+FROM sales_ag
+LIMIT 10;
+
+```
+
+### נסו על המחשב שלכם
+
+<details>
+<summary>הצג קוד ליצירת טבלה</summary>
 
 ```{r, eval=  FALSE, attr.source='style="max-height: 200px;overflow: scroll;"', connection='sqlconn'}
 
@@ -61,6 +84,8 @@ insert into Sales_ag (year, category, amount) values (2001, 'Garden', 24);
 insert into Sales_ag (year, category, amount) values (2001, 'Movies', 39);
 ```
 
+
+</details>
 
 ## תשובה
 
