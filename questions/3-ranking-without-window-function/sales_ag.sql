@@ -1,6 +1,4 @@
 
-DROP TABLE IF EXISTS Sales_ag;
-
 CREATE TABLE sales_ag (
 	year INT,
 	category varchar(15),
