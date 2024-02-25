@@ -79,6 +79,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/quarto-contrib/interactive-sql-1.0.0/interactive-sql.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -123,6 +124,9 @@ cookieconsent.run({
 });
 </script> 
   
+<script src="https://unpkg.com/@antonz/sqlite@3.40.0/dist/sqlite3.js"></script>
+<script src="https://unpkg.com/sqlime@0.1.3/dist/sqlime-db.js"></script>
+<script src="https://unpkg.com/sqlime@0.1.3/dist/sqlime-examples.js"></script>
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -221,7 +225,11 @@ cookieconsent.run({
   <li><a href="#הדאטה" id="toc-הדאטה" class="nav-link active" data-scroll-target="#הדאטה">הדאטה</a></li>
   <li><a href="#שאלה-1" id="toc-שאלה-1" class="nav-link" data-scroll-target="#שאלה-1">שאלה 1</a></li>
   <li><a href="#שאלה-2" id="toc-שאלה-2" class="nav-link" data-scroll-target="#שאלה-2">שאלה 2</a></li>
-  <li><a href="#יצירת-הטבלה" id="toc-יצירת-הטבלה" class="nav-link" data-scroll-target="#יצירת-הטבלה">יצירת הטבלה</a></li>
+  <li><a href="#נסו-בעצמכם" id="toc-נסו-בעצמכם" class="nav-link" data-scroll-target="#נסו-בעצמכם">נסו בעצמכם</a>
+  <ul class="collapse">
+  <li><a href="#אונליין" id="toc-אונליין" class="nav-link" data-scroll-target="#אונליין">אונליין</a></li>
+  <li><a href="#נסו-על-המחשב-שלכם" id="toc-נסו-על-המחשב-שלכם" class="nav-link" data-scroll-target="#נסו-על-המחשב-שלכם">נסו על המחשב שלכם</a></li>
+  </ul></li>
   <li><a href="#תשובות" id="toc-תשובות" class="nav-link" data-scroll-target="#תשובות">תשובות</a>
   <ul class="collapse">
   <li><a href="#סרטון-הסבר" id="toc-סרטון-הסבר" class="nav-link" data-scroll-target="#סרטון-הסבר">סרטון הסבר</a></li>
@@ -305,121 +313,139 @@ cookieconsent.run({
 <p>שימו לב למבנה של הלוג — מה מופיע לפני הסיבה? מה יכול להופיע אחרי הסיבה? איך אפשר להיעזר בזה כדי לחלץ את מה שאנחנו צריכים?</p>
 </details>
 </section>
-<section id="יצירת-הטבלה" class="level2">
-<h2 class="anchored" data-anchor-id="יצירת-הטבלה">יצירת הטבלה</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2" style="max-height: 200px;overflow: scroll;"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> LOGS_Q5;</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> LOGS_Q5</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    (user_id <span class="dt">int</span>, log_date datetime, log_text <span class="dt">varchar</span>(<span class="dv">128</span>))</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>;</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> LOGS_Q5</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    (user_id, log_date, log_text)</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="st">'2023-09-20 00:00:00'</span>, <span class="st">'user 1 registered in 2018. Closure reason: Duplicate account.'</span>),</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2</span>, <span class="st">'2023-04-01 00:00:00'</span>, <span class="st">'user 2 registered in 2022. Closure reason: Fraudulent behaviour.'</span>),</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3</span>, <span class="st">'2023-06-26 00:00:00'</span>, <span class="st">'user 3 registered in 2016. Closure reason: Unsupported activity. Current status: open. Account has been re-opened'</span>),</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">4</span>, <span class="st">'2023-06-21 00:00:00'</span>, <span class="st">'user 4 registered in 2016. Closure reason: Did not provide relevant documents. Current status: open. Account has been re-opened'</span>),</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">5</span>, <span class="st">'2023-02-04 00:00:00'</span>, <span class="st">'user 5 registered in 2017. Closure reason: Unsupported activity.'</span>),</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">6</span>, <span class="st">'2023-03-09 00:00:00'</span>, <span class="st">'user 6 registered in 2022. Closure reason: Fraudulent behaviour. Current status: open. Account has been re-opened'</span>),</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">7</span>, <span class="st">'2023-01-17 00:00:00'</span>, <span class="st">'user 7 registered in 2018. Closure reason: Fraudulent behaviour. Current status: account closed.'</span>),</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">8</span>, <span class="st">'2023-09-12 00:00:00'</span>, <span class="st">'user 8 registered in 2019. Closure reason: Fraudulent behaviour. Current status: account closed.'</span>),</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">9</span>, <span class="st">'2023-01-17 00:00:00'</span>, <span class="st">'user 9 registered in 2014. Closure reason: Duplicate account. Current status: account closed.'</span>),</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">10</span>, <span class="st">'2023-09-17 00:00:00'</span>, <span class="st">'user 10 registered in 2018. Closure reason: Requested to close. Current status: account closed.'</span>),</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">11</span>, <span class="st">'2023-01-06 00:00:00'</span>, <span class="st">'user 11 registered in 2014. Closure reason: Unsupported activity. Current status: open. Account has been re-opened'</span>),</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">12</span>, <span class="st">'2023-05-28 00:00:00'</span>, <span class="st">'user 12 registered in 2015. Closure reason: Requested to close.'</span>),</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">13</span>, <span class="st">'2023-09-09 00:00:00'</span>, <span class="st">'user 13 registered in 2015. Closure reason: Fraudulent behaviour.'</span>),</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">14</span>, <span class="st">'2023-04-08 00:00:00'</span>, <span class="st">'user 14 registered in 2015. Closure reason: Duplicate account. Current status: open.'</span>),</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">15</span>, <span class="st">'2023-03-19 00:00:00'</span>, <span class="st">'user 15 registered in 2018. Closure reason: Duplicate account.'</span>),</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">16</span>, <span class="st">'2023-10-09 00:00:00'</span>, <span class="st">'user 16 registered in 2022. Closure reason: Fraudulent behaviour. Current status: account closed.'</span>),</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">17</span>, <span class="st">'2023-05-19 00:00:00'</span>, <span class="st">'user 17 registered in 2015. Closure reason: Fraudulent behaviour. Current status: open. Account has been re-opened'</span>),</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">18</span>, <span class="st">'2023-01-22 00:00:00'</span>, <span class="st">'user 18 registered in 2016. Closure reason: Unsupported activity. Current status: account closed.'</span>),</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">19</span>, <span class="st">'2023-08-30 00:00:00'</span>, <span class="st">'user 19 registered in 2022. Closure reason: Fraudulent behaviour.'</span>),</span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">20</span>, <span class="st">'2023-09-26 00:00:00'</span>, <span class="st">'user 20 registered in 2016. Closure reason: Fraudulent behaviour. Current status: account closed.'</span>),</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">21</span>, <span class="st">'2023-04-20 00:00:00'</span>, <span class="st">'user 21 registered in 2015. Closure reason: Did not provide relevant documents. Current status: account closed.'</span>),</span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">22</span>, <span class="st">'2023-05-02 00:00:00'</span>, <span class="st">'user 22 registered in 2020. Closure reason: Duplicate account. Current status: account closed.'</span>),</span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">23</span>, <span class="st">'2023-04-18 00:00:00'</span>, <span class="st">'user 23 registered in 2021. Closure reason: Duplicate account. Current status: account closed.'</span>),</span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">24</span>, <span class="st">'2023-07-27 00:00:00'</span>, <span class="st">'user 24 registered in 2020. Closure reason: Requested to close.'</span>),</span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">25</span>, <span class="st">'2023-08-25 00:00:00'</span>, <span class="st">'user 25 registered in 2020. Closure reason: Requested to close. Current status: open. Account has been re-opened'</span>),</span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">26</span>, <span class="st">'2023-07-22 00:00:00'</span>, <span class="st">'user 26 registered in 2022. Closure reason: Fraudulent behaviour.'</span>),</span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">27</span>, <span class="st">'2023-01-28 00:00:00'</span>, <span class="st">'user 27 registered in 2016. Closure reason: Unsupported activity. Current status: open.'</span>),</span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">28</span>, <span class="st">'2023-05-20 00:00:00'</span>, <span class="st">'user 28 registered in 2017. Closure reason: Requested to close. Current status: open.'</span>),</span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">29</span>, <span class="st">'2023-09-10 00:00:00'</span>, <span class="st">'user 29 registered in 2017. Closure reason: Unsupported activity.'</span>),</span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">30</span>, <span class="st">'2023-05-28 00:00:00'</span>, <span class="st">'user 30 registered in 2019. Closure reason: Did not provide relevant documents. Current status: open. Account has been re-opened'</span>),</span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">31</span>, <span class="st">'2023-08-27 00:00:00'</span>, <span class="st">'user 31 registered in 2018. Closure reason: Requested to close. Current status: account closed.'</span>),</span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">32</span>, <span class="st">'2023-01-08 00:00:00'</span>, <span class="st">'user 32 registered in 2014. Closure reason: Fraudulent behaviour.'</span>),</span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">33</span>, <span class="st">'2023-07-20 00:00:00'</span>, <span class="st">'user 33 registered in 2021. Closure reason: Unsupported activity. Current status: account closed.'</span>),</span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">34</span>, <span class="st">'2023-01-31 00:00:00'</span>, <span class="st">'user 34 registered in 2016. Closure reason: Duplicate account. Current status: open.'</span>),</span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">35</span>, <span class="st">'2023-07-08 00:00:00'</span>, <span class="st">'user 35 registered in 2019. Closure reason: Unsupported activity.'</span>),</span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">36</span>, <span class="st">'2023-07-31 00:00:00'</span>, <span class="st">'user 36 registered in 2016. Closure reason: Requested to close. Current status: account closed.'</span>),</span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">37</span>, <span class="st">'2023-02-02 00:00:00'</span>, <span class="st">'user 37 registered in 2019. Closure reason: Did not provide relevant documents. Current status: open.'</span>),</span>
-<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">38</span>, <span class="st">'2023-03-07 00:00:00'</span>, <span class="st">'user 38 registered in 2016. Closure reason: Fraudulent behaviour.'</span>),</span>
-<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">39</span>, <span class="st">'2023-06-11 00:00:00'</span>, <span class="st">'user 39 registered in 2017. Closure reason: Duplicate account. Current status: account closed.'</span>),</span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">40</span>, <span class="st">'2023-05-21 00:00:00'</span>, <span class="st">'user 40 registered in 2014. Closure reason: Did not provide relevant documents. Current status: account closed.'</span>),</span>
-<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">41</span>, <span class="st">'2023-08-12 00:00:00'</span>, <span class="st">'user 41 registered in 2020. Closure reason: Fraudulent behaviour. Current status: account closed.'</span>),</span>
-<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">42</span>, <span class="st">'2023-09-09 00:00:00'</span>, <span class="st">'user 42 registered in 2018. Closure reason: Duplicate account.'</span>),</span>
-<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">43</span>, <span class="st">'2023-05-26 00:00:00'</span>, <span class="st">'user 43 registered in 2014. Closure reason: Did not provide relevant documents.'</span>),</span>
-<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">44</span>, <span class="st">'2023-03-06 00:00:00'</span>, <span class="st">'user 44 registered in 2016. Closure reason: Duplicate account. Current status: account closed.'</span>),</span>
-<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">45</span>, <span class="st">'2023-08-07 00:00:00'</span>, <span class="st">'user 45 registered in 2016. Closure reason: Did not provide relevant documents. Current status: account closed.'</span>),</span>
-<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">46</span>, <span class="st">'2023-10-04 00:00:00'</span>, <span class="st">'user 46 registered in 2017. Closure reason: Fraudulent behaviour. Current status: account closed.'</span>),</span>
-<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">47</span>, <span class="st">'2023-01-28 00:00:00'</span>, <span class="st">'user 47 registered in 2019. Closure reason: Fraudulent behaviour. Current status: open. Account has been re-opened'</span>),</span>
-<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">48</span>, <span class="st">'2023-01-17 00:00:00'</span>, <span class="st">'user 48 registered in 2021. Closure reason: Did not provide relevant documents. Current status: open. Account has been re-opened'</span>),</span>
-<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">49</span>, <span class="st">'2023-02-26 00:00:00'</span>, <span class="st">'user 49 registered in 2015. Closure reason: Unsupported activity. Current status: account closed.'</span>),</span>
-<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">50</span>, <span class="st">'2023-06-19 00:00:00'</span>, <span class="st">'user 50 registered in 2015. Closure reason: Duplicate account.'</span>),</span>
-<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">51</span>, <span class="st">'2023-01-13 00:00:00'</span>, <span class="st">'user 51 registered in 2015. Closure reason: Duplicate account. Current status: open.'</span>),</span>
-<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">52</span>, <span class="st">'2023-03-02 00:00:00'</span>, <span class="st">'user 52 registered in 2017. Closure reason: Did not provide relevant documents.'</span>),</span>
-<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">53</span>, <span class="st">'2023-01-14 00:00:00'</span>, <span class="st">'user 53 registered in 2014. Closure reason: Fraudulent behaviour. Current status: account closed.'</span>),</span>
-<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">54</span>, <span class="st">'2023-09-13 00:00:00'</span>, <span class="st">'user 54 registered in 2018. Closure reason: Requested to close. Current status: open.'</span>),</span>
-<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">55</span>, <span class="st">'2023-07-17 00:00:00'</span>, <span class="st">'user 55 registered in 2017. Closure reason: Requested to close. Current status: open. Account has been re-opened'</span>),</span>
-<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">56</span>, <span class="st">'2023-10-12 00:00:00'</span>, <span class="st">'user 56 registered in 2018. Closure reason: Did not provide relevant documents. Current status: account closed.'</span>),</span>
-<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">57</span>, <span class="st">'2023-09-27 00:00:00'</span>, <span class="st">'user 57 registered in 2016. Closure reason: Duplicate account. Current status: open.'</span>),</span>
-<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">58</span>, <span class="st">'2023-02-15 00:00:00'</span>, <span class="st">'user 58 registered in 2017. Closure reason: Did not provide relevant documents. Current status: open.'</span>),</span>
-<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">59</span>, <span class="st">'2023-10-26 00:00:00'</span>, <span class="st">'user 59 registered in 2021. Closure reason: Duplicate account. Current status: account closed.'</span>),</span>
-<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">60</span>, <span class="st">'2023-07-10 00:00:00'</span>, <span class="st">'user 60 registered in 2020. Closure reason: Unsupported activity. Current status: open.'</span>),</span>
-<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">61</span>, <span class="st">'2023-09-09 00:00:00'</span>, <span class="st">'user 61 registered in 2020. Closure reason: Fraudulent behaviour.'</span>),</span>
-<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">62</span>, <span class="st">'2023-07-12 00:00:00'</span>, <span class="st">'user 62 registered in 2017. Closure reason: Fraudulent behaviour.'</span>),</span>
-<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">63</span>, <span class="st">'2023-01-11 00:00:00'</span>, <span class="st">'user 63 registered in 2017. Closure reason: Duplicate account. Current status: open.'</span>),</span>
-<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">64</span>, <span class="st">'2023-02-27 00:00:00'</span>, <span class="st">'user 64 registered in 2020. Closure reason: Unsupported activity. Current status: open.'</span>),</span>
-<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">65</span>, <span class="st">'2023-07-12 00:00:00'</span>, <span class="st">'user 65 registered in 2021. Closure reason: Did not provide relevant documents.'</span>),</span>
-<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">66</span>, <span class="st">'2023-03-09 00:00:00'</span>, <span class="st">'user 66 registered in 2014. Closure reason: Requested to close. Current status: open. Account has been re-opened'</span>),</span>
-<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">67</span>, <span class="st">'2023-10-31 00:00:00'</span>, <span class="st">'user 67 registered in 2022. Closure reason: Duplicate account.'</span>),</span>
-<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">68</span>, <span class="st">'2023-06-26 00:00:00'</span>, <span class="st">'user 68 registered in 2018. Closure reason: Duplicate account. Current status: open.'</span>),</span>
-<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">69</span>, <span class="st">'2023-04-22 00:00:00'</span>, <span class="st">'user 69 registered in 2022. Closure reason: Did not provide relevant documents. Current status: open.'</span>),</span>
-<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">70</span>, <span class="st">'2023-09-22 00:00:00'</span>, <span class="st">'user 70 registered in 2015. Closure reason: Unsupported activity.'</span>),</span>
-<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">71</span>, <span class="st">'2023-10-04 00:00:00'</span>, <span class="st">'user 71 registered in 2016. Closure reason: Duplicate account. Current status: open.'</span>),</span>
-<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">72</span>, <span class="st">'2023-10-31 00:00:00'</span>, <span class="st">'user 72 registered in 2020. Closure reason: Unsupported activity.'</span>),</span>
-<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">73</span>, <span class="st">'2023-04-20 00:00:00'</span>, <span class="st">'user 73 registered in 2020. Closure reason: Did not provide relevant documents. Current status: open.'</span>),</span>
-<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">74</span>, <span class="st">'2023-10-15 00:00:00'</span>, <span class="st">'user 74 registered in 2017. Closure reason: Duplicate account. Current status: account closed.'</span>),</span>
-<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">75</span>, <span class="st">'2023-07-23 00:00:00'</span>, <span class="st">'user 75 registered in 2021. Closure reason: Fraudulent behaviour.'</span>),</span>
-<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">76</span>, <span class="st">'2023-03-15 00:00:00'</span>, <span class="st">'user 76 registered in 2017. Closure reason: Duplicate account.'</span>),</span>
-<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">77</span>, <span class="st">'2023-10-27 00:00:00'</span>, <span class="st">'user 77 registered in 2019. Closure reason: Requested to close. Current status: account closed.'</span>),</span>
-<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">78</span>, <span class="st">'2023-02-03 00:00:00'</span>, <span class="st">'user 78 registered in 2022. Closure reason: Requested to close. Current status: account closed.'</span>),</span>
-<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">79</span>, <span class="st">'2023-08-09 00:00:00'</span>, <span class="st">'user 79 registered in 2019. Closure reason: Duplicate account.'</span>),</span>
-<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">80</span>, <span class="st">'2023-05-19 00:00:00'</span>, <span class="st">'user 80 registered in 2021. Closure reason: Requested to close.'</span>),</span>
-<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">81</span>, <span class="st">'2023-01-02 00:00:00'</span>, <span class="st">'user 81 registered in 2020. Closure reason: Duplicate account. Current status: open. Account has been re-opened'</span>),</span>
-<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">82</span>, <span class="st">'2023-08-08 00:00:00'</span>, <span class="st">'user 82 registered in 2020. Closure reason: Duplicate account. Current status: open. Account has been re-opened'</span>),</span>
-<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">83</span>, <span class="st">'2023-04-25 00:00:00'</span>, <span class="st">'user 83 registered in 2021. Closure reason: Duplicate account.'</span>),</span>
-<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">84</span>, <span class="st">'2023-04-24 00:00:00'</span>, <span class="st">'user 84 registered in 2020. Closure reason: Duplicate account.'</span>),</span>
-<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">85</span>, <span class="st">'2023-01-15 00:00:00'</span>, <span class="st">'user 85 registered in 2021. Closure reason: Fraudulent behaviour.'</span>),</span>
-<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">86</span>, <span class="st">'2023-01-11 00:00:00'</span>, <span class="st">'user 86 registered in 2020. Closure reason: Duplicate account. Current status: account closed.'</span>),</span>
-<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">87</span>, <span class="st">'2023-08-08 00:00:00'</span>, <span class="st">'user 87 registered in 2021. Closure reason: Fraudulent behaviour. Current status: account closed.'</span>),</span>
-<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">88</span>, <span class="st">'2023-01-27 00:00:00'</span>, <span class="st">'user 88 registered in 2015. Closure reason: Unsupported activity.'</span>),</span>
-<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">89</span>, <span class="st">'2023-08-31 00:00:00'</span>, <span class="st">'user 89 registered in 2020. Closure reason: Unsupported activity. Current status: account closed.'</span>),</span>
-<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">90</span>, <span class="st">'2023-07-26 00:00:00'</span>, <span class="st">'user 90 registered in 2021. Closure reason: Duplicate account. Current status: account closed.'</span>),</span>
-<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">91</span>, <span class="st">'2023-07-10 00:00:00'</span>, <span class="st">'user 91 registered in 2014. Closure reason: Unsupported activity. Current status: account closed.'</span>),</span>
-<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">92</span>, <span class="st">'2023-07-18 00:00:00'</span>, <span class="st">'user 92 registered in 2017. Closure reason: Fraudulent behaviour. Current status: account closed.'</span>),</span>
-<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">93</span>, <span class="st">'2023-08-19 00:00:00'</span>, <span class="st">'user 93 registered in 2021. Closure reason: Did not provide relevant documents. Current status: account closed.'</span>),</span>
-<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">94</span>, <span class="st">'2023-01-26 00:00:00'</span>, <span class="st">'user 94 registered in 2015. Closure reason: Duplicate account.'</span>),</span>
-<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">95</span>, <span class="st">'2023-08-14 00:00:00'</span>, <span class="st">'user 95 registered in 2019. Closure reason: Did not provide relevant documents. Current status: account closed.'</span>),</span>
-<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">96</span>, <span class="st">'2023-05-11 00:00:00'</span>, <span class="st">'user 96 registered in 2022. Closure reason: Fraudulent behaviour.'</span>),</span>
-<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">97</span>, <span class="st">'2023-08-03 00:00:00'</span>, <span class="st">'user 97 registered in 2020. Closure reason: Duplicate account. Current status: open. Account has been re-opened'</span>),</span>
-<span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">98</span>, <span class="st">'2023-01-17 00:00:00'</span>, <span class="st">'user 98 registered in 2017. Closure reason: Unsupported activity. Current status: open.'</span>),</span>
-<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">99</span>, <span class="st">'2023-10-08 00:00:00'</span>, <span class="st">'user 99 registered in 2021. Closure reason: Did not provide relevant documents.'</span>),</span>
-<span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">100</span>, <span class="st">'2023-10-18 00:00:00'</span>, <span class="st">'user 100 registered in 2019. Closure reason: Duplicate account. Current status: open. Account has been re-opened'</span>)</span>
-<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="נסו-בעצמכם" class="level2">
+<h2 class="anchored" data-anchor-id="נסו-בעצמכם">נסו בעצמכם</h2>
+<section id="אונליין" class="level3">
+<h3 class="anchored" data-anchor-id="אונליין">אונליין</h3>
+<p><mark>נסו בחלון טקסט למטה (SQLite):</mark></p>
+<div class="interactive-sql">
+<div class="sourceCode" id="cb2"><pre class="sourceCode sql interactive logs_q5 code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- EDIT THIS QUERY:</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> LOGS_Q5</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">10</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="נסו-על-המחשב-שלכם" class="level3">
+<h3 class="anchored" data-anchor-id="נסו-על-המחשב-שלכם">נסו על המחשב שלכם</h3>
+<details>
+<summary>
+הצג קוד ליצירת טבלה
+</summary>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3" style="max-height: 200px;overflow: scroll;"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">DROP</span> <span class="kw">TABLE</span> <span class="cf">IF</span> <span class="kw">EXISTS</span> LOGS_Q5;</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> LOGS_Q5</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    (user_id <span class="dt">int</span>, log_date datetime, log_text <span class="dt">varchar</span>(<span class="dv">128</span>))</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>;</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> LOGS_Q5</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    (user_id, log_date, log_text)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="kw">VALUES</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="st">'2023-09-20 00:00:00'</span>, <span class="st">'user 1 registered in 2018. Closure reason: Duplicate account.'</span>),</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2</span>, <span class="st">'2023-04-01 00:00:00'</span>, <span class="st">'user 2 registered in 2022. Closure reason: Fraudulent behaviour.'</span>),</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3</span>, <span class="st">'2023-06-26 00:00:00'</span>, <span class="st">'user 3 registered in 2016. Closure reason: Unsupported activity. Current status: open. Account has been re-opened'</span>),</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">4</span>, <span class="st">'2023-06-21 00:00:00'</span>, <span class="st">'user 4 registered in 2016. Closure reason: Did not provide relevant documents. Current status: open. Account has been re-opened'</span>),</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">5</span>, <span class="st">'2023-02-04 00:00:00'</span>, <span class="st">'user 5 registered in 2017. Closure reason: Unsupported activity.'</span>),</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">6</span>, <span class="st">'2023-03-09 00:00:00'</span>, <span class="st">'user 6 registered in 2022. Closure reason: Fraudulent behaviour. Current status: open. Account has been re-opened'</span>),</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">7</span>, <span class="st">'2023-01-17 00:00:00'</span>, <span class="st">'user 7 registered in 2018. Closure reason: Fraudulent behaviour. Current status: account closed.'</span>),</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">8</span>, <span class="st">'2023-09-12 00:00:00'</span>, <span class="st">'user 8 registered in 2019. Closure reason: Fraudulent behaviour. Current status: account closed.'</span>),</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">9</span>, <span class="st">'2023-01-17 00:00:00'</span>, <span class="st">'user 9 registered in 2014. Closure reason: Duplicate account. Current status: account closed.'</span>),</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">10</span>, <span class="st">'2023-09-17 00:00:00'</span>, <span class="st">'user 10 registered in 2018. Closure reason: Requested to close. Current status: account closed.'</span>),</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">11</span>, <span class="st">'2023-01-06 00:00:00'</span>, <span class="st">'user 11 registered in 2014. Closure reason: Unsupported activity. Current status: open. Account has been re-opened'</span>),</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">12</span>, <span class="st">'2023-05-28 00:00:00'</span>, <span class="st">'user 12 registered in 2015. Closure reason: Requested to close.'</span>),</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">13</span>, <span class="st">'2023-09-09 00:00:00'</span>, <span class="st">'user 13 registered in 2015. Closure reason: Fraudulent behaviour.'</span>),</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">14</span>, <span class="st">'2023-04-08 00:00:00'</span>, <span class="st">'user 14 registered in 2015. Closure reason: Duplicate account. Current status: open.'</span>),</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">15</span>, <span class="st">'2023-03-19 00:00:00'</span>, <span class="st">'user 15 registered in 2018. Closure reason: Duplicate account.'</span>),</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">16</span>, <span class="st">'2023-10-09 00:00:00'</span>, <span class="st">'user 16 registered in 2022. Closure reason: Fraudulent behaviour. Current status: account closed.'</span>),</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">17</span>, <span class="st">'2023-05-19 00:00:00'</span>, <span class="st">'user 17 registered in 2015. Closure reason: Fraudulent behaviour. Current status: open. Account has been re-opened'</span>),</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">18</span>, <span class="st">'2023-01-22 00:00:00'</span>, <span class="st">'user 18 registered in 2016. Closure reason: Unsupported activity. Current status: account closed.'</span>),</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">19</span>, <span class="st">'2023-08-30 00:00:00'</span>, <span class="st">'user 19 registered in 2022. Closure reason: Fraudulent behaviour.'</span>),</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">20</span>, <span class="st">'2023-09-26 00:00:00'</span>, <span class="st">'user 20 registered in 2016. Closure reason: Fraudulent behaviour. Current status: account closed.'</span>),</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">21</span>, <span class="st">'2023-04-20 00:00:00'</span>, <span class="st">'user 21 registered in 2015. Closure reason: Did not provide relevant documents. Current status: account closed.'</span>),</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">22</span>, <span class="st">'2023-05-02 00:00:00'</span>, <span class="st">'user 22 registered in 2020. Closure reason: Duplicate account. Current status: account closed.'</span>),</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">23</span>, <span class="st">'2023-04-18 00:00:00'</span>, <span class="st">'user 23 registered in 2021. Closure reason: Duplicate account. Current status: account closed.'</span>),</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">24</span>, <span class="st">'2023-07-27 00:00:00'</span>, <span class="st">'user 24 registered in 2020. Closure reason: Requested to close.'</span>),</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">25</span>, <span class="st">'2023-08-25 00:00:00'</span>, <span class="st">'user 25 registered in 2020. Closure reason: Requested to close. Current status: open. Account has been re-opened'</span>),</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">26</span>, <span class="st">'2023-07-22 00:00:00'</span>, <span class="st">'user 26 registered in 2022. Closure reason: Fraudulent behaviour.'</span>),</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">27</span>, <span class="st">'2023-01-28 00:00:00'</span>, <span class="st">'user 27 registered in 2016. Closure reason: Unsupported activity. Current status: open.'</span>),</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">28</span>, <span class="st">'2023-05-20 00:00:00'</span>, <span class="st">'user 28 registered in 2017. Closure reason: Requested to close. Current status: open.'</span>),</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">29</span>, <span class="st">'2023-09-10 00:00:00'</span>, <span class="st">'user 29 registered in 2017. Closure reason: Unsupported activity.'</span>),</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">30</span>, <span class="st">'2023-05-28 00:00:00'</span>, <span class="st">'user 30 registered in 2019. Closure reason: Did not provide relevant documents. Current status: open. Account has been re-opened'</span>),</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">31</span>, <span class="st">'2023-08-27 00:00:00'</span>, <span class="st">'user 31 registered in 2018. Closure reason: Requested to close. Current status: account closed.'</span>),</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">32</span>, <span class="st">'2023-01-08 00:00:00'</span>, <span class="st">'user 32 registered in 2014. Closure reason: Fraudulent behaviour.'</span>),</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">33</span>, <span class="st">'2023-07-20 00:00:00'</span>, <span class="st">'user 33 registered in 2021. Closure reason: Unsupported activity. Current status: account closed.'</span>),</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">34</span>, <span class="st">'2023-01-31 00:00:00'</span>, <span class="st">'user 34 registered in 2016. Closure reason: Duplicate account. Current status: open.'</span>),</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">35</span>, <span class="st">'2023-07-08 00:00:00'</span>, <span class="st">'user 35 registered in 2019. Closure reason: Unsupported activity.'</span>),</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">36</span>, <span class="st">'2023-07-31 00:00:00'</span>, <span class="st">'user 36 registered in 2016. Closure reason: Requested to close. Current status: account closed.'</span>),</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">37</span>, <span class="st">'2023-02-02 00:00:00'</span>, <span class="st">'user 37 registered in 2019. Closure reason: Did not provide relevant documents. Current status: open.'</span>),</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">38</span>, <span class="st">'2023-03-07 00:00:00'</span>, <span class="st">'user 38 registered in 2016. Closure reason: Fraudulent behaviour.'</span>),</span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">39</span>, <span class="st">'2023-06-11 00:00:00'</span>, <span class="st">'user 39 registered in 2017. Closure reason: Duplicate account. Current status: account closed.'</span>),</span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">40</span>, <span class="st">'2023-05-21 00:00:00'</span>, <span class="st">'user 40 registered in 2014. Closure reason: Did not provide relevant documents. Current status: account closed.'</span>),</span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">41</span>, <span class="st">'2023-08-12 00:00:00'</span>, <span class="st">'user 41 registered in 2020. Closure reason: Fraudulent behaviour. Current status: account closed.'</span>),</span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">42</span>, <span class="st">'2023-09-09 00:00:00'</span>, <span class="st">'user 42 registered in 2018. Closure reason: Duplicate account.'</span>),</span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">43</span>, <span class="st">'2023-05-26 00:00:00'</span>, <span class="st">'user 43 registered in 2014. Closure reason: Did not provide relevant documents.'</span>),</span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">44</span>, <span class="st">'2023-03-06 00:00:00'</span>, <span class="st">'user 44 registered in 2016. Closure reason: Duplicate account. Current status: account closed.'</span>),</span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">45</span>, <span class="st">'2023-08-07 00:00:00'</span>, <span class="st">'user 45 registered in 2016. Closure reason: Did not provide relevant documents. Current status: account closed.'</span>),</span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">46</span>, <span class="st">'2023-10-04 00:00:00'</span>, <span class="st">'user 46 registered in 2017. Closure reason: Fraudulent behaviour. Current status: account closed.'</span>),</span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">47</span>, <span class="st">'2023-01-28 00:00:00'</span>, <span class="st">'user 47 registered in 2019. Closure reason: Fraudulent behaviour. Current status: open. Account has been re-opened'</span>),</span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">48</span>, <span class="st">'2023-01-17 00:00:00'</span>, <span class="st">'user 48 registered in 2021. Closure reason: Did not provide relevant documents. Current status: open. Account has been re-opened'</span>),</span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">49</span>, <span class="st">'2023-02-26 00:00:00'</span>, <span class="st">'user 49 registered in 2015. Closure reason: Unsupported activity. Current status: account closed.'</span>),</span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">50</span>, <span class="st">'2023-06-19 00:00:00'</span>, <span class="st">'user 50 registered in 2015. Closure reason: Duplicate account.'</span>),</span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">51</span>, <span class="st">'2023-01-13 00:00:00'</span>, <span class="st">'user 51 registered in 2015. Closure reason: Duplicate account. Current status: open.'</span>),</span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">52</span>, <span class="st">'2023-03-02 00:00:00'</span>, <span class="st">'user 52 registered in 2017. Closure reason: Did not provide relevant documents.'</span>),</span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">53</span>, <span class="st">'2023-01-14 00:00:00'</span>, <span class="st">'user 53 registered in 2014. Closure reason: Fraudulent behaviour. Current status: account closed.'</span>),</span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">54</span>, <span class="st">'2023-09-13 00:00:00'</span>, <span class="st">'user 54 registered in 2018. Closure reason: Requested to close. Current status: open.'</span>),</span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">55</span>, <span class="st">'2023-07-17 00:00:00'</span>, <span class="st">'user 55 registered in 2017. Closure reason: Requested to close. Current status: open. Account has been re-opened'</span>),</span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">56</span>, <span class="st">'2023-10-12 00:00:00'</span>, <span class="st">'user 56 registered in 2018. Closure reason: Did not provide relevant documents. Current status: account closed.'</span>),</span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">57</span>, <span class="st">'2023-09-27 00:00:00'</span>, <span class="st">'user 57 registered in 2016. Closure reason: Duplicate account. Current status: open.'</span>),</span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">58</span>, <span class="st">'2023-02-15 00:00:00'</span>, <span class="st">'user 58 registered in 2017. Closure reason: Did not provide relevant documents. Current status: open.'</span>),</span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">59</span>, <span class="st">'2023-10-26 00:00:00'</span>, <span class="st">'user 59 registered in 2021. Closure reason: Duplicate account. Current status: account closed.'</span>),</span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">60</span>, <span class="st">'2023-07-10 00:00:00'</span>, <span class="st">'user 60 registered in 2020. Closure reason: Unsupported activity. Current status: open.'</span>),</span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">61</span>, <span class="st">'2023-09-09 00:00:00'</span>, <span class="st">'user 61 registered in 2020. Closure reason: Fraudulent behaviour.'</span>),</span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">62</span>, <span class="st">'2023-07-12 00:00:00'</span>, <span class="st">'user 62 registered in 2017. Closure reason: Fraudulent behaviour.'</span>),</span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">63</span>, <span class="st">'2023-01-11 00:00:00'</span>, <span class="st">'user 63 registered in 2017. Closure reason: Duplicate account. Current status: open.'</span>),</span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">64</span>, <span class="st">'2023-02-27 00:00:00'</span>, <span class="st">'user 64 registered in 2020. Closure reason: Unsupported activity. Current status: open.'</span>),</span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">65</span>, <span class="st">'2023-07-12 00:00:00'</span>, <span class="st">'user 65 registered in 2021. Closure reason: Did not provide relevant documents.'</span>),</span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">66</span>, <span class="st">'2023-03-09 00:00:00'</span>, <span class="st">'user 66 registered in 2014. Closure reason: Requested to close. Current status: open. Account has been re-opened'</span>),</span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">67</span>, <span class="st">'2023-10-31 00:00:00'</span>, <span class="st">'user 67 registered in 2022. Closure reason: Duplicate account.'</span>),</span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">68</span>, <span class="st">'2023-06-26 00:00:00'</span>, <span class="st">'user 68 registered in 2018. Closure reason: Duplicate account. Current status: open.'</span>),</span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">69</span>, <span class="st">'2023-04-22 00:00:00'</span>, <span class="st">'user 69 registered in 2022. Closure reason: Did not provide relevant documents. Current status: open.'</span>),</span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">70</span>, <span class="st">'2023-09-22 00:00:00'</span>, <span class="st">'user 70 registered in 2015. Closure reason: Unsupported activity.'</span>),</span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">71</span>, <span class="st">'2023-10-04 00:00:00'</span>, <span class="st">'user 71 registered in 2016. Closure reason: Duplicate account. Current status: open.'</span>),</span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">72</span>, <span class="st">'2023-10-31 00:00:00'</span>, <span class="st">'user 72 registered in 2020. Closure reason: Unsupported activity.'</span>),</span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">73</span>, <span class="st">'2023-04-20 00:00:00'</span>, <span class="st">'user 73 registered in 2020. Closure reason: Did not provide relevant documents. Current status: open.'</span>),</span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">74</span>, <span class="st">'2023-10-15 00:00:00'</span>, <span class="st">'user 74 registered in 2017. Closure reason: Duplicate account. Current status: account closed.'</span>),</span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">75</span>, <span class="st">'2023-07-23 00:00:00'</span>, <span class="st">'user 75 registered in 2021. Closure reason: Fraudulent behaviour.'</span>),</span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">76</span>, <span class="st">'2023-03-15 00:00:00'</span>, <span class="st">'user 76 registered in 2017. Closure reason: Duplicate account.'</span>),</span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">77</span>, <span class="st">'2023-10-27 00:00:00'</span>, <span class="st">'user 77 registered in 2019. Closure reason: Requested to close. Current status: account closed.'</span>),</span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">78</span>, <span class="st">'2023-02-03 00:00:00'</span>, <span class="st">'user 78 registered in 2022. Closure reason: Requested to close. Current status: account closed.'</span>),</span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">79</span>, <span class="st">'2023-08-09 00:00:00'</span>, <span class="st">'user 79 registered in 2019. Closure reason: Duplicate account.'</span>),</span>
+<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">80</span>, <span class="st">'2023-05-19 00:00:00'</span>, <span class="st">'user 80 registered in 2021. Closure reason: Requested to close.'</span>),</span>
+<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">81</span>, <span class="st">'2023-01-02 00:00:00'</span>, <span class="st">'user 81 registered in 2020. Closure reason: Duplicate account. Current status: open. Account has been re-opened'</span>),</span>
+<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">82</span>, <span class="st">'2023-08-08 00:00:00'</span>, <span class="st">'user 82 registered in 2020. Closure reason: Duplicate account. Current status: open. Account has been re-opened'</span>),</span>
+<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">83</span>, <span class="st">'2023-04-25 00:00:00'</span>, <span class="st">'user 83 registered in 2021. Closure reason: Duplicate account.'</span>),</span>
+<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">84</span>, <span class="st">'2023-04-24 00:00:00'</span>, <span class="st">'user 84 registered in 2020. Closure reason: Duplicate account.'</span>),</span>
+<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">85</span>, <span class="st">'2023-01-15 00:00:00'</span>, <span class="st">'user 85 registered in 2021. Closure reason: Fraudulent behaviour.'</span>),</span>
+<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">86</span>, <span class="st">'2023-01-11 00:00:00'</span>, <span class="st">'user 86 registered in 2020. Closure reason: Duplicate account. Current status: account closed.'</span>),</span>
+<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">87</span>, <span class="st">'2023-08-08 00:00:00'</span>, <span class="st">'user 87 registered in 2021. Closure reason: Fraudulent behaviour. Current status: account closed.'</span>),</span>
+<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">88</span>, <span class="st">'2023-01-27 00:00:00'</span>, <span class="st">'user 88 registered in 2015. Closure reason: Unsupported activity.'</span>),</span>
+<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">89</span>, <span class="st">'2023-08-31 00:00:00'</span>, <span class="st">'user 89 registered in 2020. Closure reason: Unsupported activity. Current status: account closed.'</span>),</span>
+<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">90</span>, <span class="st">'2023-07-26 00:00:00'</span>, <span class="st">'user 90 registered in 2021. Closure reason: Duplicate account. Current status: account closed.'</span>),</span>
+<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">91</span>, <span class="st">'2023-07-10 00:00:00'</span>, <span class="st">'user 91 registered in 2014. Closure reason: Unsupported activity. Current status: account closed.'</span>),</span>
+<span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">92</span>, <span class="st">'2023-07-18 00:00:00'</span>, <span class="st">'user 92 registered in 2017. Closure reason: Fraudulent behaviour. Current status: account closed.'</span>),</span>
+<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">93</span>, <span class="st">'2023-08-19 00:00:00'</span>, <span class="st">'user 93 registered in 2021. Closure reason: Did not provide relevant documents. Current status: account closed.'</span>),</span>
+<span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">94</span>, <span class="st">'2023-01-26 00:00:00'</span>, <span class="st">'user 94 registered in 2015. Closure reason: Duplicate account.'</span>),</span>
+<span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">95</span>, <span class="st">'2023-08-14 00:00:00'</span>, <span class="st">'user 95 registered in 2019. Closure reason: Did not provide relevant documents. Current status: account closed.'</span>),</span>
+<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">96</span>, <span class="st">'2023-05-11 00:00:00'</span>, <span class="st">'user 96 registered in 2022. Closure reason: Fraudulent behaviour.'</span>),</span>
+<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">97</span>, <span class="st">'2023-08-03 00:00:00'</span>, <span class="st">'user 97 registered in 2020. Closure reason: Duplicate account. Current status: open. Account has been re-opened'</span>),</span>
+<span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">98</span>, <span class="st">'2023-01-17 00:00:00'</span>, <span class="st">'user 98 registered in 2017. Closure reason: Unsupported activity. Current status: open.'</span>),</span>
+<span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">99</span>, <span class="st">'2023-10-08 00:00:00'</span>, <span class="st">'user 99 registered in 2021. Closure reason: Did not provide relevant documents.'</span>),</span>
+<span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">100</span>, <span class="st">'2023-10-18 00:00:00'</span>, <span class="st">'user 100 registered in 2019. Closure reason: Duplicate account. Current status: open. Account has been re-opened'</span>)</span>
+<span id="cb3-111"><a href="#cb3-111" aria-hidden="true" tabindex="-1"></a>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</details>
+</section>
 </section>
 <section id="תשובות" class="level2">
 <h2 class="anchored" data-anchor-id="תשובות">תשובות</h2>
@@ -434,12 +460,12 @@ cookieconsent.run({
 הצג פתרון
 </summary>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span>  </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    registered_year <span class="op">=</span> SUBSTRING(LOG_TEXT, CHARINDEX(<span class="st">'registered in '</span>, LOG_TEXT) <span class="op">+</span> len(<span class="st">'registered in.'</span>), <span class="dv">4</span>), <span class="co">-- LEN() ignores trailing spaces so a sapce is replaces with a period</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> n</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> logs_q5</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> SUBSTRING(LOG_TEXT, CHARINDEX(<span class="st">'registered in '</span>, LOG_TEXT) <span class="op">+</span> len(<span class="st">'registered in.'</span>), <span class="dv">4</span>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> registered_year <span class="kw">DESC</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span>  </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    registered_year <span class="op">=</span> SUBSTRING(LOG_TEXT, CHARINDEX(<span class="st">'registered in '</span>, LOG_TEXT) <span class="op">+</span> len(<span class="st">'registered in.'</span>), <span class="dv">4</span>), <span class="co">-- LEN() ignores trailing spaces so a sapce is replaces with a period</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> n</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> logs_q5</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> SUBSTRING(LOG_TEXT, CHARINDEX(<span class="st">'registered in '</span>, LOG_TEXT) <span class="op">+</span> len(<span class="st">'registered in.'</span>), <span class="dv">4</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> registered_year <span class="kw">DESC</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </details>
 <div class="cell">
@@ -501,26 +527,26 @@ cookieconsent.run({
 הצג פתרון
 </summary>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> reason_extracted <span class="kw">as</span> (</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    reason <span class="op">=</span> <span class="kw">REPLACE</span>(</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        SUBSTRING(</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>            log_text,</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>            CHARINDEX(<span class="st">'closure reason: '</span>, log_text) <span class="op">+</span> LEN(<span class="st">'closure reason: '</span>),</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>            <span class="cf">CASE</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>                <span class="cf">WHEN</span> CHARINDEX(<span class="st">'Current status'</span>, log_text) <span class="op">=</span> <span class="dv">0</span> <span class="cf">THEN</span> LEN(log_text)</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>            <span class="cf">ELSE</span> CHARINDEX(<span class="st">'Current status'</span>, log_text) <span class="op">-</span> CHARINDEX(<span class="st">'closure reason: '</span>,log_text) <span class="op">-</span> LEN(<span class="st">'closure reason: '</span>)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>                <span class="cf">END</span>),</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">'.'</span>, <span class="st">''</span>)</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> logs_q5</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> reason,</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> n</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> reason_extracted</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> reason</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> n <span class="kw">desc</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> reason_extracted <span class="kw">as</span> (</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    reason <span class="op">=</span> <span class="kw">REPLACE</span>(</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        SUBSTRING(</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>            log_text,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>            CHARINDEX(<span class="st">'closure reason: '</span>, log_text) <span class="op">+</span> LEN(<span class="st">'closure reason: '</span>),</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>            <span class="cf">CASE</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                <span class="cf">WHEN</span> CHARINDEX(<span class="st">'Current status'</span>, log_text) <span class="op">=</span> <span class="dv">0</span> <span class="cf">THEN</span> LEN(log_text)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>            <span class="cf">ELSE</span> CHARINDEX(<span class="st">'Current status'</span>, log_text) <span class="op">-</span> CHARINDEX(<span class="st">'closure reason: '</span>,log_text) <span class="op">-</span> LEN(<span class="st">'closure reason: '</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>                <span class="cf">END</span>),</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">'.'</span>, <span class="st">''</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> logs_q5</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> reason,</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> n</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> reason_extracted</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> reason</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> n <span class="kw">desc</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </details>
 <div class="cell">
@@ -560,6 +586,8 @@ cookieconsent.run({
 </div>
 
 
+<sqlime-db name="logs_q5" path="https://github.com/AmitLevinson/sql-website/tree/main/questions/5-extract-text-from-logs/LOGS_Q5.sql"></sqlime-db>
+<sqlime-examples db="logs_q5" selector="div.interactive-sql pre.logs_q5 code" editable=""></sqlime-examples>
 </section>
 </section>
 
@@ -815,4 +843,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
+<script src="../../site_libs/quarto-contrib/interactive-sql-1.0.0/interactive-sql.js"></script>
 </body></html>
