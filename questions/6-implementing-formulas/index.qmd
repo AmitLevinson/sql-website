@@ -8,6 +8,11 @@ toc: true
 categories: [בסיסי]
 image: featured.png
 draft: false
+filters:
+  - interactive-sql
+databases:
+  - name: items_q6
+    path: "https://raw.githubusercontent.com/AmitLevinson/sql-website/main/questions/6-implementing-formulas/q6.sql"
 ---
 
 ```{r, include = FALSE}
@@ -66,7 +71,26 @@ $$
 
 
 
-## יצירת הטבלה
+
+## נסו בעצמכם
+
+### אונליין 
+
+<mark>נסו בחלון טקסט למטה (SQLite):</mark>
+
+```{.sql .interactive .logs_q5}
+-- EDIT THIS QUERY:
+SELECT *
+FROM Items_q6
+LIMIT 10;
+
+```
+
+
+### נסו על המחשב שלכם
+
+<details>
+<summary>הצג קוד ליצירת טבלה</summary>
 
 ```{sql, eval=  FALSE, attr.source='style="max-height: 200px;overflow: scroll;"', connection='sqlconn'}
 DROP TABLE IF EXISTS ITEMS_Q6;
@@ -183,6 +207,8 @@ VALUES
 
 
 ```
+
+</details>
 
 ## תשובות
 
