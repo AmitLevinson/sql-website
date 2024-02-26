@@ -78,7 +78,7 @@ $$
 
 <mark>נסו בחלון טקסט למטה (SQLite):</mark>
 
-```{.sql .interactive .logs_q5}
+```{.sql .interactive .items_q6}
 -- EDIT THIS QUERY:
 SELECT *
 FROM Items_q6
@@ -223,6 +223,8 @@ VALUES
 <details>
 
 <summary>הצג פתרון</summary>
+
+שימו לב כי הפתרון מותאם ל-T-SQL ולא יעבוד כמו שהוא בתיבת SQL למעלה.
 
 ```{sql connection='sqlconn', echo = TRUE, eval= FALSE}
 SELECT category,
