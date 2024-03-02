@@ -38,7 +38,7 @@ sqlconn <- dbConnect(odbc(),
 
 
 אתם והמנהל חושדים שיש קבוצת בוטים שהצליחה לעקוף את המנגנונים שלכם ונרשמה יחד עם יוזרים רגילים. נסו למצוא את הקבוצה מתוך סך הנרשמים לחודש ינואר.
-את הפלט הציגו באמצעות אגרגציה יומית של עמודה הסוכמת את מספר הבוטים שזיהיתם ועמודה שמראה את היוזרים האחרים.
+את הפלט הציגו באמצעות אגרגציה יומית של עמודה הסוכמת את מספר הבוטים שזיהיתם ועמודה שמראה את היוזרים 'שאינם בוטים'.
 
 
 <details>
@@ -1100,6 +1100,8 @@ INSERT INTO registrations_7 (first_name, last_name, email, registration_date) VA
 ### סרטון הסבר
 
 
+{{< video https://youtu.be/5Z8SACOqJD4 >}}
+
 
 
 ### תשובה
@@ -1107,6 +1109,20 @@ INSERT INTO registrations_7 (first_name, last_name, email, registration_date) VA
 <details>
 
 <summary>הצג פתרון</summary>
+
+
+#### SQLite
+
+```{sql, echo = TRUE, eval= FALSE}
+SELECT registration_date,
+  SUM(CASE WHEN email LIKE SUBSTR(first_name, 1 ,1 ) || last_name || '__@%' THEN 1 END) as fraud_group,
+  COUNT(*) - SUM(CASE WHEN email LIKE SUBSTR(first_name, 1 ,1 ) || last_name || '__@%' THEN 1 END) as Not_Group
+FROM registrations_7
+GROUP BY registration_date
+ORDER BY registration_date
+```
+
+#### T-SQL
 
 ```{sql connection='sqlconn', echo = TRUE, eval= FALSE}
 SELECT registration_date,

@@ -249,7 +249,7 @@ cookieconsent.run({
 <h2 class="anchored" data-anchor-id="שאלה">שאלה</h2>
 <p>קיבלתם מייל מהמנהל שלכם עם תהייה לגבי קפיצה בהרשמות אצל לקוח מסוים שאתם עובדים איתו. הוא צירף למייל את הגרף הבא:</p>
 <p><img src="reg_count_plot.png" class="img-fluid"></p>
-<p>אתם והמנהל חושדים שיש קבוצת בוטים שהצליחה לעקוף את המנגנונים שלכם ונרשמה יחד עם יוזרים רגילים. נסו למצוא את הקבוצה מתוך סך הנרשמים לחודש ינואר. את הפלט הציגו באמצעות אגרגציה יומית של עמודה הסוכמת את מספר הבוטים שזיהיתם ועמודה שמראה את היוזרים האחרים.</p>
+<p>אתם והמנהל חושדים שיש קבוצת בוטים שהצליחה לעקוף את המנגנונים שלכם ונרשמה יחד עם יוזרים רגילים. נסו למצוא את הקבוצה מתוך סך הנרשמים לחודש ינואר. את הפלט הציגו באמצעות אגרגציה יומית של עמודה הסוכמת את מספר הבוטים שזיהיתם ועמודה שמראה את היוזרים ‘שאינם בוטים’.</p>
 <details>
 <summary>
 רמז
@@ -1347,6 +1347,7 @@ cookieconsent.run({
 <h2 class="anchored" data-anchor-id="תשובות">תשובות</h2>
 <section id="סרטון-הסבר" class="level3">
 <h3 class="anchored" data-anchor-id="סרטון-הסבר">סרטון הסבר</h3>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/5Z8SACOqJD4" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 </section>
 <section id="תשובה" class="level3">
 <h3 class="anchored" data-anchor-id="תשובה">תשובה</h3>
@@ -1354,15 +1355,28 @@ cookieconsent.run({
 <summary>
 הצג פתרון
 </summary>
+<section id="sqlite" class="level4">
+<h4 class="anchored" data-anchor-id="sqlite">SQLite</h4>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> registration_date,</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">SUM</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> email <span class="kw">LIKE</span> <span class="kw">LEFT</span>(first_name, <span class="dv">1</span>) <span class="op">+</span> last_name<span class="op">+</span><span class="st">'__@%'</span> <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">END</span>) <span class="kw">as</span> fraud_group,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="op">-</span> <span class="fu">SUM</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> email <span class="kw">LIKE</span> <span class="kw">LEFT</span>(first_name, <span class="dv">1</span>) <span class="op">+</span> last_name<span class="op">+</span><span class="st">'__@%'</span> <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">END</span>) <span class="kw">as</span> Not_Group</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">SUM</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> email <span class="kw">LIKE</span> <span class="fu">SUBSTR</span>(first_name, <span class="dv">1</span> ,<span class="dv">1</span> ) <span class="op">||</span> last_name <span class="op">||</span> <span class="st">'__@%'</span> <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">END</span>) <span class="kw">as</span> fraud_group,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="op">-</span> <span class="fu">SUM</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> email <span class="kw">LIKE</span> <span class="fu">SUBSTR</span>(first_name, <span class="dv">1</span> ,<span class="dv">1</span> ) <span class="op">||</span> last_name <span class="op">||</span> <span class="st">'__@%'</span> <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">END</span>) <span class="kw">as</span> Not_Group</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> registrations_7</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> registration_date</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> registration_date</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</details>
+</section>
+<section id="t-sql" class="level4">
+<h4 class="anchored" data-anchor-id="t-sql">T-SQL</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> registration_date,</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">SUM</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> email <span class="kw">LIKE</span> <span class="kw">LEFT</span>(first_name, <span class="dv">1</span>) <span class="op">+</span> last_name<span class="op">+</span><span class="st">'__@%'</span> <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">END</span>) <span class="kw">as</span> fraud_group,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="op">-</span> <span class="fu">SUM</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> email <span class="kw">LIKE</span> <span class="kw">LEFT</span>(first_name, <span class="dv">1</span>) <span class="op">+</span> last_name<span class="op">+</span><span class="st">'__@%'</span> <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">END</span>) <span class="kw">as</span> Not_Group</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> registrations_7</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> registration_date</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> registration_date</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section></details>
 <div class="cell">
 <div class="knitsql-table">
 <table class="table table-sm table-striped small">
@@ -1435,6 +1449,7 @@ cookieconsent.run({
 <sqlime-examples db="bots_q7" selector="div.interactive-sql pre.bots_q7 code" editable=""></sqlime-examples>
 </section>
 </section>
+
 
 </main> <!-- /main -->
 <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="AGrinson" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="קנו לי קפה" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
