@@ -7,7 +7,7 @@ date: "2023-02-29"
 toc: true
 categories: [בסיסי]
 image: featured.png
-draft: false
+draft: true
 filters:
   - interactive-sql
 databases:
