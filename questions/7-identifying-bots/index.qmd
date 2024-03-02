@@ -3,7 +3,7 @@ title: "זיהוי קבוצת בוטים"
 description: |
   מציאת דפוס הרשמה זהה בין משתמשים
 author: ""
-date: "2023-02-29"
+date: "2023-03-05"
 toc: true
 categories: [בסיסי]
 image: featured.png
@@ -28,18 +28,14 @@ sqlconn <- dbConnect(odbc(),
 
 ברוכים הבאים לתרגיל השביעי!
 
-## הדאטה
-
-התרגיל מורכב מפירוט הרשמות של יוזרים באתר לחודש ינואר:
-
-```{sql connection='sqlconn'}
-SELECT TOP 5 * 
-FROM registrations_7
-```
-
 ## שאלה
 
-עליכם למצוא את קבוצת הבוטים שנרשמה יחד עם יוזרים רגילים.
+קיבלתם מייל מהמנהל שלכם עם תהייה לגבי קפיצה בהרשמות אצל לקוח מסוים שאתם עובדים איתו. הוא צירף למייל את הגרף הבא:
+
+![](reg_count_plot.png)
+
+
+אתם והמנהל חושדים שיש קבוצת בוטים שהצליחה לעקוף את המנגנונים שלכם ונרשמה יחד עם יוזרים רגילים. נסו למצוא את הקבוצה מתוך סך הנרשמים לחודש ינואר.
 את הפלט הציגו באמצעות אגרגציה יומית של עמודה הסוכמת את מספר הבוטים שזיהיתם ועמודה שמראה את היוזרים האחרים.
 
 
@@ -47,6 +43,17 @@ FROM registrations_7
 <summary>רמז</summary>
 נסו לחפש דפוס בפרטים של היוזרים שתוכלו ליישם כלוגקיה לזהות קבוצה של יוזרים.
 </details>
+
+
+
+## הדאטה
+
+התרגיל מורכב ממדגם הרשמות של יוזרים באתר לחודש ינואר:
+
+```{sql connection='sqlconn'}
+SELECT TOP 5 * 
+FROM registrations_7
+```
 
 
 ## נסו בעצמכם
@@ -1098,8 +1105,6 @@ INSERT INTO registrations_7 (first_name, last_name, email, registration_date) VA
 <details>
 
 <summary>הצג פתרון</summary>
-
-שימו לב כי הפתרון מותאם ל-T-SQL ולא יעבוד כמו שהוא בתיבת SQL למעלה.
 
 ```{sql connection='sqlconn', echo = TRUE, eval= FALSE}
 SELECT registration_date,
