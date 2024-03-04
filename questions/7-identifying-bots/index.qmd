@@ -3,11 +3,11 @@ title: "זיהוי קבוצת בוטים"
 description: |
   מציאת דפוס הרשמה זהה בין משתמשים
 author: ""
-date: "2023-03-05"
+date: "2023-03-04"
 toc: true
 categories: [בסיסי]
 image: featured.png
-draft: true
+draft: false
 filters:
   - interactive-sql
 databases:
@@ -28,7 +28,7 @@ sqlconn <- dbConnect(odbc(),
 
 ברוכים הבאים לתרגיל השביעי!  
 
-התרגיל נלקח מתוך הרצאה שהעברתי על מה זה להיות דאטה אנליסט בתחום ההונאות. מוזמנים להתנסות בעצמכם בקצת ממה שאני עושה ביום-יום :)
+התרגיל נלקח מתוך הרצאה שהעברתי על מה זה להיות דאטה אנליסט בתחום ההונאות :)
 
 ## שאלה
 
@@ -1115,8 +1115,8 @@ INSERT INTO registrations_7 (first_name, last_name, email, registration_date) VA
 
 ```{sql, echo = TRUE, eval= FALSE}
 SELECT registration_date,
-  SUM(CASE WHEN email LIKE SUBSTR(first_name, 1 ,1 ) || last_name || '__@%' THEN 1 END) as fraud_group,
-  COUNT(*) - SUM(CASE WHEN email LIKE SUBSTR(first_name, 1 ,1 ) || last_name || '__@%' THEN 1 END) as Not_Group
+  SUM(CASE WHEN email LIKE SUBSTR(first_name, 1 ,1 ) || last_name || '__@%' THEN 1 ELSE 0 END) as fraud_group,
+  COUNT(*) - SUM(CASE WHEN email LIKE SUBSTR(first_name, 1 ,1 ) || last_name || '__@%' THEN 1 ELSE 0 END) as Not_Group
 FROM registrations_7
 GROUP BY registration_date
 ORDER BY registration_date
