@@ -3,7 +3,7 @@ title: "זיהוי קבוצת בוטים"
 description: |
   מציאת דפוס הרשמה זהה בין משתמשים
 author: ""
-date: "2023-03-04"
+date: "2024-03-04"
 toc: true
 categories: [בסיסי]
 image: featured.png
