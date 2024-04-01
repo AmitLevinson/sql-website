@@ -111,5 +111,4 @@ INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VA
 INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('102', '7241', '7687', '226', '2023-03-02');
 INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('103', '6914', '7687', '202', '2023-03-02');
 INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('104', '6816', '1867', '291', '2023-03-02');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('105', '1721', 'NA', '190', '2023-03-02');
 INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('106', '7498', '1657', '221', '2023-03-02');
