@@ -12,7 +12,7 @@ filters:
   - interactive-sql
 databases:
   - name: money_laundering_q8
-    path: "https://raw.githubusercontent.com/AmitLevinson/sql-website/main/questions/7-identifying-bots/q8.sql"
+    path: "https://raw.githubusercontent.com/AmitLevinson/sql-website/main/questions/8-tracking-money-layering/q8.sql"
     
 ---
 
@@ -64,10 +64,10 @@ FROM registrations_7
 
 <mark>נסו בחלון טקסט למטה (SQLite):</mark>
 
-```{.sql .interactive .bots_q7}
+```{.sql .interactive .money_laundering_q8}
 -- EDIT THIS QUERY:
 SELECT *
-FROM registrations_7
+FROM ml_payments
 LIMIT 10;
 
 ```
