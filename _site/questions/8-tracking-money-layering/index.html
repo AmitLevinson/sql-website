@@ -456,90 +456,40 @@ cookieconsent.run({
 <summary>
 הצג פתרון
 </summary>
-<section id="sqlite" class="level4">
-<h4 class="anchored" data-anchor-id="sqlite">SQLite</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> registration_date,</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">SUM</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> email <span class="kw">LIKE</span> <span class="fu">SUBSTR</span>(first_name, <span class="dv">1</span> ,<span class="dv">1</span> ) <span class="op">||</span> last_name <span class="op">||</span> <span class="st">'__@%'</span> <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">ELSE</span> <span class="dv">0</span> <span class="cf">END</span>) <span class="kw">as</span> fraud_group,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="op">-</span> <span class="fu">SUM</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> email <span class="kw">LIKE</span> <span class="fu">SUBSTR</span>(first_name, <span class="dv">1</span> ,<span class="dv">1</span> ) <span class="op">||</span> last_name <span class="op">||</span> <span class="st">'__@%'</span> <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">ELSE</span> <span class="dv">0</span> <span class="cf">END</span>) <span class="kw">as</span> Not_Group</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> registrations_7</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> registration_date</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> registration_date</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> recursive_payments  <span class="kw">as</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> from_user <span class="kw">as</span> origin,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    to_user <span class="kw">as</span> receiver,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span> <span class="kw">as</span> Iteration</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> payments_8</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> from_user <span class="op">=</span> <span class="dv">7804</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="kw">UNION</span> <span class="kw">ALL</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> from_user,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    to_user,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    Iteration <span class="op">+</span> <span class="dv">1</span> <span class="kw">as</span> Iteration</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> recursive_payments rp</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> payments_8 ml <span class="kw">on</span> ml.from_user <span class="op">=</span> rp.receiver</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="kw">where</span> Iteration <span class="op">&lt;=</span> <span class="dv">25</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> </span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> recursive_payments</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="t-sql" class="level4">
-<h4 class="anchored" data-anchor-id="t-sql">T-SQL</h4>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> registration_date,</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">SUM</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> email <span class="kw">LIKE</span> <span class="kw">LEFT</span>(first_name, <span class="dv">1</span>) <span class="op">+</span> last_name<span class="op">+</span><span class="st">'__@%'</span> <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">END</span>) <span class="kw">as</span> fraud_group,</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="op">-</span> <span class="fu">SUM</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> email <span class="kw">LIKE</span> <span class="kw">LEFT</span>(first_name, <span class="dv">1</span>) <span class="op">+</span> last_name<span class="op">+</span><span class="st">'__@%'</span> <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">END</span>) <span class="kw">as</span> Not_Group</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> registrations_7</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> registration_date</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> registration_date</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section></details>
+</details>
 <div class="cell">
 <div class="knitsql-table">
-<table class="table table-sm table-striped small">
-<caption>Displaying records 1 - 10</caption>
+<table>
+<caption>0 records</caption>
 <thead>
 <tr class="header">
-<th style="text-align: left;">registration_date</th>
-<th style="text-align: right;">fraud_group</th>
-<th style="text-align: right;">Not_Group</th>
+<th style="text-align: right;">origin</th>
+<th style="text-align: right;">receiver</th>
+<th style="text-align: right;">Iteration</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td style="text-align: left;">2024-01-01</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">16</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">2024-01-02</td>
-<td style="text-align: right;">55</td>
-<td style="text-align: right;">20</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">2024-01-03</td>
-<td style="text-align: right;">23</td>
-<td style="text-align: right;">14</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">2024-01-04</td>
-<td style="text-align: right;">27</td>
-<td style="text-align: right;">18</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">2024-01-05</td>
-<td style="text-align: right;">28</td>
-<td style="text-align: right;">20</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">2024-01-06</td>
-<td style="text-align: right;">34</td>
-<td style="text-align: right;">12</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">2024-01-07</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">15</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">2024-01-08</td>
-<td style="text-align: right;">29</td>
-<td style="text-align: right;">17</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">2024-01-09</td>
-<td style="text-align: right;">31</td>
-<td style="text-align: right;">17</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">2024-01-10</td>
-<td style="text-align: right;">31</td>
-<td style="text-align: right;">19</td>
-</tr>
 </tbody>
 </table>
 </div>
@@ -550,7 +500,6 @@ cookieconsent.run({
 <sqlime-examples db="money_laundering_q8" selector="div.interactive-sql pre.money_laundering_q8 code" editable=""></sqlime-examples>
 </section>
 </section>
-
 
 </main> <!-- /main -->
 <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="AGrinson" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="קנו לי קפה" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>

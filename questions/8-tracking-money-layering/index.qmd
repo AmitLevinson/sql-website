@@ -205,37 +205,52 @@ INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VA
 <summary>הצג פתרון</summary>
 
 
-#### SQLite
-
-```{sql, echo = TRUE, eval= FALSE}
-SELECT registration_date,
-  SUM(CASE WHEN email LIKE SUBSTR(first_name, 1 ,1 ) || last_name || '__@%' THEN 1 ELSE 0 END) as fraud_group,
-  COUNT(*) - SUM(CASE WHEN email LIKE SUBSTR(first_name, 1 ,1 ) || last_name || '__@%' THEN 1 ELSE 0 END) as Not_Group
-FROM registrations_7
-GROUP BY registration_date
-ORDER BY registration_date
-```
-
-#### T-SQL
-
 ```{sql connection='sqlconn', echo = TRUE, eval= FALSE}
-SELECT registration_date,
-  SUM(CASE WHEN email LIKE LEFT(first_name, 1) + last_name+'__@%' THEN 1 END) as fraud_group,
-  COUNT(*) - SUM(CASE WHEN email LIKE LEFT(first_name, 1) + last_name+'__@%' THEN 1 END) as Not_Group
-FROM registrations_7
-GROUP BY registration_date
-ORDER BY registration_date
+
+WITH recursive_payments  as 
+(
+SELECT from_user as origin,
+	to_user as receiver,
+	1 as Iteration
+FROM payments_8
+WHERE from_user = 7804
+UNION ALL
+SELECT from_user,
+	to_user,
+	Iteration + 1 as Iteration
+FROM recursive_payments rp
+JOIN payments_8 ml on ml.from_user = rp.receiver
+where Iteration <= 20
+)
+
+SELECT * 
+FROM recursive_payments
+
 ```
 
 </details>
 
 ```{sql connection='sqlconn', echo = FALSE}
-SELECT registration_date,
-  SUM(CASE WHEN email LIKE LEFT(first_name, 1) + last_name+'__@%' THEN 1 ELSE 0 END) as fraud_group,
-  COUNT(*) - SUM(CASE WHEN email LIKE LEFT(first_name, 1) + last_name+'__@%' THEN 1 ELSE 0 END) as Not_Group
-FROM registrations_7
-GROUP BY registration_date
-ORDER BY registration_date
+WITH recursive_payments  as 
+(
+SELECT from_user as origin,
+	to_user as receiver,
+	1 as Iteration
+FROM payments_8
+WHERE from_user = 7804
+UNION ALL
+SELECT from_user,
+	to_user,
+	Iteration + 1 as Iteration
+FROM recursive_payments rp
+JOIN payments_8 ml on ml.from_user = rp.receiver
+where Iteration <= 20
+)
+
+SELECT * 
+FROM recursive_payments
+WHERE ITERATION <= 5
+AND ITERATION BETWEEN 15 AND 19
 ```
 
 
