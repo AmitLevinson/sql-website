@@ -44,7 +44,7 @@ sqlconn <- dbConnect(odbc(),
 
 ```{sql connection='sqlconn'}
 SELECT TOP 5 * 
-FROM payments;
+FROM payments_8;
 ```
 
 בנוסף למשתמש שמעניין אותנו (7804) יש מספר רב של תשלומים לגיטימיים שלא רלוונטים לרשת שאנחנו מחפשים.
@@ -58,7 +58,7 @@ FROM payments;
 ```{.sql .interactive .money_laundering_q8}
 -- EDIT THIS QUERY:
 SELECT *
-FROM payments
+FROM payments_8
 LIMIT 10;
 
 ```
@@ -195,7 +195,6 @@ INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VA
 ### סרטון הסבר
 
 
-{{< video  >}}
 
 
 
