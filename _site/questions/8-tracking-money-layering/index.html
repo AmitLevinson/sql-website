@@ -10,7 +10,7 @@
 <meta name="dcterms.date" content="2024-04-08">
 <meta name="description" content="תרגילי SQL משגרת העבודה של אנליסט">
 
-<title>שאילתות מהחיים - זיהוי קבוצת בוטים</title>
+<title>שאילתות מהחיים - מיפוי תהליך הריבוד בהלבנת כספים</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -130,13 +130,13 @@ cookieconsent.run({
 
 
 <link rel="stylesheet" href="../../styles.css">
-<meta property="og:title" content="שאילתות מהחיים - זיהוי קבוצת בוטים">
-<meta property="og:description" content="מציאת דפוס הרשמה זהה בין משתמשים">
+<meta property="og:title" content="שאילתות מהחיים - מיפוי תהליך הריבוד בהלבנת כספים">
+<meta property="og:description" content="מעקב אחר כסף שמועבר בין משמתמשים החשודים בהלבנת הון">
 <meta property="og:image" content="https://sql.amitgrinson.com/questions/8-tracking-money-layering/featured.png">
 <meta property="og:site-name" content="שאילתות מהחיים">
 <meta property="og:locale" content="he_IL">
-<meta name="twitter:title" content="שאילתות מהחיים - זיהוי קבוצת בוטים">
-<meta name="twitter:description" content="מציאת דפוס הרשמה זהה בין משתמשים">
+<meta name="twitter:title" content="שאילתות מהחיים - מיפוי תהליך הריבוד בהלבנת כספים">
+<meta name="twitter:description" content="מעקב אחר כסף שמועבר בין משמתמשים החשודים בהלבנת הון">
 <meta name="twitter:image" content="https://sql.amitgrinson.com/questions/8-tracking-money-layering/featured.png">
 <meta name="twitter:creator" content="@Amit_Levinson">
 <meta name="twitter:card" content="summary">
@@ -183,10 +183,10 @@ cookieconsent.run({
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">זיהוי קבוצת בוטים</h1>
+      <h1 class="title">מיפוי תהליך הריבוד בהלבנת כספים</h1>
                   <div>
         <div class="description">
-          <p>מציאת דפוס הרשמה זהה בין משתמשים</p>
+          <p>מעקב אחר כסף שמועבר בין משמתמשים החשודים בהלבנת הון</p>
         </div>
       </div>
                           <div class="quarto-categories">
@@ -239,23 +239,23 @@ cookieconsent.run({
 
 
 
-<p>ברוכים הבאים לתרגיל השביעי!</p>
-<p>התרגיל נלקח מתוך הרצאה שהעברתי על מה זה להיות דאטה אנליסט בתחום ההונאות :)</p>
+<p>ברוכים הבאים לתרגיל השמיני!</p>
+<p>גם התרגיל הזה (בדומה לקודם) נלקח מתוך הרצאה שהעברתי על מה זה להיות דאטה אנליסט בתחום ההונאות :)</p>
 <section id="שאלה" class="level2">
 <h2 class="anchored" data-anchor-id="שאלה">שאלה</h2>
-<p>קיבלתם מייל מהמנהל שלכם עם תהייה לגבי קפיצה בהרשמות אצל לקוח מסוים שאתם עובדים איתו. הוא צירף למייל את הגרף הבא:</p>
-<p><img src="reg_count_plot.png" class="img-fluid"></p>
-<p>אתם והמנהל חושדים שיש קבוצת בוטים שהצליחה לעקוף את המנגנונים שלכם ונרשמה יחד עם יוזרים רגילים. נסו למצוא את הקבוצה מתוך סך הנרשמים לחודש ינואר. את הפלט הציגו באמצעות אגרגציה יומית של עמודה הסוכמת את מספר הבוטים שזיהיתם ועמודה שמראה את היוזרים ‘שאינם בוטים’.</p>
+<p>אתם דאטה אנליסטים בתחום ההונאות ומצאתם משתמש שחשוד בהלבנת כספים: 7804.</p>
+<p>הלבנת כספים כוללת שלושה שלבים: <a href="https://fsctop.com/2019/03/%D7%9E%D7%94%D7%99-%D7%94%D7%9C%D7%91%D7%A0%D7%AA-%D7%94%D7%95%D7%9F-%D7%A8%D7%A7%D7%A2-%D7%95%D7%9E%D7%95%D7%A9%D7%92%D7%99-%D7%99%D7%A1%D7%95%D7%93-%D7%98%D7%A7%D7%98%D7%99%D7%A7%D7%95/">השמה, ריבוד והטמעה</a>. המשתמש כבר הכניס את הכסף למערכת ועכשיו אתם רוצים לחקות אחריו ולמפות את הרשת שלוקחת חלק בתהליך ה<em>הטמעה</em>.</p>
+<p>כלומר, בהינתן שהתשלום הראשון התרחש ממשתמש 7804, מי היה היוזר האחרון שקיבל את הסכום משרשרת ההעברות? במילים אחרות, משתמש 7804 שלח את הכסף למשתמש אחר שהעביר למשתמש אחר וכן הלאה, מי המשתמש האחרון שקיבל את הכסף הזה ולא העביר אותו הלאה?</p>
 <details>
 <summary>
 רמז
 </summary>
-נסו לחפש דפוס בפרטים של היוזרים שתוכלו ליישם כלוגקיה לזהות קבוצה של יוזרים.
+<p>יכולות להיות פה כמה קפיצות ארוכות, נסו לחשוב על דרך לפתור את זה בלי לבצע <code>JOINS</code> חוזרים ונשנים.</p>
 </details>
 </section>
 <section id="הדאטה" class="level2">
 <h2 class="anchored" data-anchor-id="הדאטה">הדאטה</h2>
-<p>התרגיל מורכב ממדגם הרשמות של יוזרים באתר לחודש ינואר:</p>
+<p>התרגיל מורכב מתשלומים בין יוזרים שונים:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> TOP <span class="dv">5</span> <span class="op">*</span> </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> registrations_7</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -305,6 +305,7 @@ cookieconsent.run({
 </table>
 </div>
 </div>
+<p>בנוסף למשתמש שמעניין אותנו (7804) יש מספר רב של תשלומים לגיטימיים שלא רלוונטים לרשת שאנחנו מחפשים.</p>
 </section>
 <section id="נסו-בעצמכם" class="level2">
 <h2 class="anchored" data-anchor-id="נסו-בעצמכם">נסו בעצמכם</h2>
@@ -314,7 +315,7 @@ cookieconsent.run({
 <div class="interactive-sql">
 <div class="sourceCode" id="cb2"><pre class="sourceCode sql interactive money_laundering_q8 code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- EDIT THIS QUERY:</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> ml_payments</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> payments</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">10</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
