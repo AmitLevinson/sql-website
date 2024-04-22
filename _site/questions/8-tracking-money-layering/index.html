@@ -10,7 +10,7 @@
 <meta name="dcterms.date" content="2024-04-08">
 <meta name="description" content="תרגילי SQL משגרת העבודה של אנליסט">
 
-<title>שאילתות מהחיים - מיפוי תהליך הריבוד בהלבנת כספים</title>
+<title>שאילתות מהחיים - לעקוב אחרי הכסף</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -130,12 +130,12 @@ cookieconsent.run({
 
 
 <link rel="stylesheet" href="../../styles.css">
-<meta property="og:title" content="שאילתות מהחיים - מיפוי תהליך הריבוד בהלבנת כספים">
+<meta property="og:title" content="שאילתות מהחיים - לעקוב אחרי הכסף">
 <meta property="og:description" content="מעקב אחר כסף שמועבר בין משמתמשים החשודים בהלבנת הון">
 <meta property="og:image" content="https://sql.amitgrinson.com/questions/8-tracking-money-layering/featured.png">
 <meta property="og:site-name" content="שאילתות מהחיים">
 <meta property="og:locale" content="he_IL">
-<meta name="twitter:title" content="שאילתות מהחיים - מיפוי תהליך הריבוד בהלבנת כספים">
+<meta name="twitter:title" content="שאילתות מהחיים - לעקוב אחרי הכסף">
 <meta name="twitter:description" content="מעקב אחר כסף שמועבר בין משמתמשים החשודים בהלבנת הון">
 <meta name="twitter:image" content="https://sql.amitgrinson.com/questions/8-tracking-money-layering/featured.png">
 <meta name="twitter:creator" content="@Amit_Levinson">
@@ -183,14 +183,14 @@ cookieconsent.run({
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">מיפוי תהליך הריבוד בהלבנת כספים</h1>
+      <h1 class="title">לעקוב אחרי הכסף</h1>
                   <div>
         <div class="description">
           <p>מעקב אחר כסף שמועבר בין משמתמשים החשודים בהלבנת הון</p>
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">בסיסי</div>
+                <div class="quarto-category">מתקדם</div>
               </div>
                   </div>
   </div>
@@ -243,9 +243,10 @@ cookieconsent.run({
 <p>גם התרגיל הזה (בדומה לקודם) נלקח מתוך הרצאה שהעברתי על מה זה להיות דאטה אנליסט בתחום ההונאות :)</p>
 <section id="שאלה" class="level2">
 <h2 class="anchored" data-anchor-id="שאלה">שאלה</h2>
-<p>אתם דאטה אנליסטים בתחום ההונאות ומצאתם משתמש שחשוד בהלבנת כספים: 7804.</p>
+<p>אתם דאטה אנליסטים בתחום ההונאות ומצאתם משתמש שחשוד בהלבנת כספים, משתמש מספר 7804.</p>
 <p>הלבנת כספים כוללת שלושה שלבים: <a href="https://fsctop.com/2019/03/%D7%9E%D7%94%D7%99-%D7%94%D7%9C%D7%91%D7%A0%D7%AA-%D7%94%D7%95%D7%9F-%D7%A8%D7%A7%D7%A2-%D7%95%D7%9E%D7%95%D7%A9%D7%92%D7%99-%D7%99%D7%A1%D7%95%D7%93-%D7%98%D7%A7%D7%98%D7%99%D7%A7%D7%95/">השמה, ריבוד והטמעה</a>. המשתמש כבר הכניס את הכסף למערכת ועכשיו אתם רוצים לחקות אחריו ולמפות את הרשת שלוקחת חלק בתהליך ה<em>הטמעה</em>.</p>
-<p>כלומר, בהינתן שהתשלום הראשון ברשת שמעניינת אותנו התרחש ממשתמש 7804, מי היה היוזר האחרון שקיבל את הסכום משרשרת ההעברות? במילים אחרות, משתמש 7804 שלח את הכסף למשתמש אחר שהעביר למשתמש אחר וכן הלאה, מי המשתמש האחרון שקיבל את הכסף הזה ולא העביר אותו הלאה?</p>
+<p>כלומר, בהינתן שהתשלום הראשון ברשת שמעניינת אותנו התרחש ממשתמש 7804, ואת זה הוא שלח למישהו ששלח למישהו וכן הלאה, מי היה היוזר האחרון שקיבל את הסכום משרשרת ההעברות?</p>
+<p>צרו פלט שמראה את שרשרת ההעברות מהיוזר הראשון החשוד, 7804, ועד היוזר האחרון שקיבל את הכסף ולא שלח הלאה.</p>
 </section>
 <section id="הדאטה" class="level2">
 <h2 class="anchored" data-anchor-id="הדאטה">הדאטה</h2>
@@ -456,6 +457,7 @@ cookieconsent.run({
 <summary>
 הצג פתרון
 </summary>
+<p>(מראה רק את ה-10 שורות הראשונות)</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> recursive_payments  <span class="kw">as</span> </span>
@@ -471,17 +473,16 @@ cookieconsent.run({
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    Iteration <span class="op">+</span> <span class="dv">1</span> <span class="kw">as</span> Iteration</span>
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> recursive_payments rp</span>
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> payments_8 ml <span class="kw">on</span> ml.from_user <span class="op">=</span> rp.receiver</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="kw">where</span> Iteration <span class="op">&lt;=</span> <span class="dv">25</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="kw">where</span> Iteration <span class="op">&lt;=</span> <span class="dv">20</span></span>
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> </span>
 <span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> recursive_payments</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</details>
 <div class="cell">
 <div class="knitsql-table">
-<table>
-<caption>0 records</caption>
+<table class="table table-sm table-striped small">
+<caption>Displaying records 1 - 10</caption>
 <thead>
 <tr class="header">
 <th style="text-align: right;">origin</th>
@@ -490,10 +491,61 @@ cookieconsent.run({
 </tr>
 </thead>
 <tbody>
+<tr class="odd">
+<td style="text-align: right;">7804</td>
+<td style="text-align: right;">4360</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4360</td>
+<td style="text-align: right;">7503</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7503</td>
+<td style="text-align: right;">6491</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6491</td>
+<td style="text-align: right;">3037</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3037</td>
+<td style="text-align: right;">9484</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">9484</td>
+<td style="text-align: right;">2885</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2885</td>
+<td style="text-align: right;">1841</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1841</td>
+<td style="text-align: right;">7627</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7627</td>
+<td style="text-align: right;">5923</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5923</td>
+<td style="text-align: right;">9464</td>
+<td style="text-align: right;">10</td>
+</tr>
 </tbody>
 </table>
 </div>
 </div>
+</details>
 
 
 <sqlime-db name="money_laundering_q8" path="https://raw.githubusercontent.com/AmitLevinson/sql-website/main/questions/8-tracking-money-layering/q8.sql"></sqlime-db>

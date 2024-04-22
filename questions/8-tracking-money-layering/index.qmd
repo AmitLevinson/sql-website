@@ -1,11 +1,11 @@
 ---
-title: "מיפוי תהליך הריבוד בהלבנת כספים"
+title: "לעקוב אחרי הכסף"
 description: |
   מעקב אחר כסף שמועבר בין משמתמשים החשודים בהלבנת הון
 author: ""
 date: "2024-04-08"
 toc: true
-categories: [בסיסי]
+categories: [מתקדם]
 image: featured.png
 draft: true
 filters:
@@ -24,6 +24,7 @@ sqlconn <- dbConnect(odbc(),
                       Driver = "SQL Server",
                       Server = "localhost\\SQLEXPRESS",
                       Database = "sql-questions")
+
 ```
 
 ברוכים הבאים לתרגיל השמיני!  
@@ -32,11 +33,14 @@ sqlconn <- dbConnect(odbc(),
 
 ## שאלה
 
-אתם דאטה אנליסטים בתחום ההונאות ומצאתם משתמש שחשוד בהלבנת כספים: 7804.
+אתם דאטה אנליסטים בתחום ההונאות ומצאתם משתמש שחשוד בהלבנת כספים, משתמש מספר 7804.
 
 הלבנת כספים כוללת שלושה שלבים: [השמה, ריבוד והטמעה](https://fsctop.com/2019/03/%D7%9E%D7%94%D7%99-%D7%94%D7%9C%D7%91%D7%A0%D7%AA-%D7%94%D7%95%D7%9F-%D7%A8%D7%A7%D7%A2-%D7%95%D7%9E%D7%95%D7%A9%D7%92%D7%99-%D7%99%D7%A1%D7%95%D7%93-%D7%98%D7%A7%D7%98%D7%99%D7%A7%D7%95/). המשתמש כבר הכניס את הכסף למערכת ועכשיו אתם רוצים לחקות אחריו ולמפות את הרשת שלוקחת חלק בתהליך ה*הטמעה*.
 
-כלומר, בהינתן שהתשלום הראשון ברשת שמעניינת אותנו התרחש ממשתמש 7804, מי היה היוזר האחרון שקיבל את הסכום משרשרת ההעברות? במילים אחרות, משתמש 7804 שלח את הכסף למשתמש אחר שהעביר למשתמש אחר וכן הלאה, מי המשתמש האחרון שקיבל את הכסף הזה ולא העביר אותו הלאה?
+כלומר, בהינתן שהתשלום הראשון ברשת שמעניינת אותנו התרחש ממשתמש 7804, ואת זה הוא שלח למישהו ששלח למישהו וכן הלאה, מי היה היוזר האחרון שקיבל את הסכום משרשרת ההעברות? 
+
+צרו פלט שמראה את שרשרת ההעברות מהיוזר הראשון החשוד, 7804, ועד היוזר האחרון שקיבל את הכסף ולא שלח הלאה.
+
 
 ## הדאטה
 
@@ -204,6 +208,7 @@ INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VA
 
 <summary>הצג פתרון</summary>
 
+(מראה רק את ה-10 שורות הראשונות)
 
 ```{sql connection='sqlconn', echo = TRUE, eval= FALSE}
 
@@ -228,7 +233,6 @@ FROM recursive_payments
 
 ```
 
-</details>
 
 ```{sql connection='sqlconn', echo = FALSE}
 WITH recursive_payments  as 
@@ -249,11 +253,10 @@ where Iteration <= 20
 
 SELECT * 
 FROM recursive_payments
-WHERE ITERATION <= 5
-AND ITERATION BETWEEN 15 AND 19
 ```
 
 
+</details>
 
 ```{r echo = FALSE}
 dbDisconnect(sqlconn)
