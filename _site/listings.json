@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/questions/8-tracking-money-layering/index.html",
       "/questions/7-identifying-bots/index.html",
       "/questions/6-implementing-formulas/index.html",
       "/questions/5-extract-text-from-logs/index.html",

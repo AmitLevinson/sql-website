@@ -1,13 +1,13 @@
 ---
 title: "לעקוב אחרי הכסף"
 description: |
-  מעקב אחר כסף שמועבר בין משמתמשים החשודים בהלבנת הון
+  מעקב אחרי כסף שמועבר בין משתמשים החשודים בהלבנת הון
 author: ""
-date: "2024-04-08"
+date: "2024-05-05"
 toc: true
 categories: [מתקדם]
 image: featured.png
-draft: true
+draft: false
 filters:
   - interactive-sql
 databases:
@@ -29,7 +29,7 @@ sqlconn <- dbConnect(odbc(),
 
 ברוכים הבאים לתרגיל השמיני!  
 
-גם התרגיל הזה (בדומה לקודם) נלקח מתוך הרצאה שהעברתי על מה זה להיות דאטה אנליסט בתחום ההונאות :)
+גם התרגיל הזה (בדומה לקודם) נלקח מתוך הרצאה שהעברתי על [מה זה להיות דאטה אנליסט בתחום ההונאות](https://youtu.be/0gFKZ594iBQ?si=XGWTNayyVhTbJcJL) :)
 
 ## שאלה
 
@@ -39,7 +39,7 @@ sqlconn <- dbConnect(odbc(),
 
 כלומר, בהינתן שהתשלום הראשון ברשת שמעניינת אותנו התרחש ממשתמש 7804, ואת זה הוא שלח למישהו ששלח למישהו וכן הלאה, מי היה היוזר האחרון שקיבל את הסכום משרשרת ההעברות? 
 
-צרו פלט שמראה את שרשרת ההעברות מהיוזר הראשון החשוד, 7804, ועד היוזר האחרון שקיבל את הכסף ולא שלח הלאה.
+צרו פלט שמראה את *כל שרשרת ההעברות* מהיוזר הראשון החשוד, 7804, ועד היוזר האחרון שקיבל את הכסף.
 
 
 ## הדאטה
@@ -199,7 +199,7 @@ INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VA
 ### סרטון הסבר
 
 
-
+{{< video https://youtu.be/grncXOd5fhE >}}
 
 
 ### תשובה
@@ -211,20 +211,21 @@ INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VA
 (מראה רק את ה-10 שורות הראשונות)
 
 ```{sql connection='sqlconn', echo = TRUE, eval= FALSE}
-
 WITH recursive_payments  as 
 (
-SELECT from_user as origin,
-	to_user as receiver,
+SELECT from_user,
+	to_user,
+	amount,
 	1 as Iteration
 FROM payments_8
 WHERE from_user = 7804
 UNION ALL
-SELECT from_user,
-	to_user,
+SELECT ml.from_user,
+	ml.to_user,
+	ml.amount,
 	Iteration + 1 as Iteration
 FROM recursive_payments rp
-JOIN payments_8 ml on ml.from_user = rp.receiver
+JOIN payments_8 ml on ml.from_user = rp.to_user
 where Iteration <= 20
 )
 
@@ -237,17 +238,19 @@ FROM recursive_payments
 ```{sql connection='sqlconn', echo = FALSE}
 WITH recursive_payments  as 
 (
-SELECT from_user as origin,
-	to_user as receiver,
+SELECT from_user,
+	to_user,
+	amount,
 	1 as Iteration
 FROM payments_8
 WHERE from_user = 7804
 UNION ALL
-SELECT from_user,
-	to_user,
+SELECT ml.from_user,
+	ml.to_user,
+	ml.amount,
 	Iteration + 1 as Iteration
 FROM recursive_payments rp
-JOIN payments_8 ml on ml.from_user = rp.receiver
+JOIN payments_8 ml on ml.from_user = rp.to_user
 where Iteration <= 20
 )
 
