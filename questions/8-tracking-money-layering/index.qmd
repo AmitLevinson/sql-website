@@ -3,7 +3,7 @@ title: "לעקוב אחרי הכסף"
 description: |
   מעקב אחרי כסף שמועבר בין משתמשים החשודים בהלבנת הון
 author: ""
-date: "2024-05-05"
+date: "2024-05-04"
 toc: true
 categories: [מתקדם]
 image: featured.png
