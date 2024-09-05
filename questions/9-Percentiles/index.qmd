@@ -1,0 +1,160 @@
+---
+title: "מציאת מאונים"
+description: |
+  שימוש במאונים למציאת מיקומי ערכים
+author: ""
+date: "2024-05-04"
+toc: true
+categories: [בסיסי]
+image: featured.png
+draft: true
+filters:
+  - interactive-sql
+databases:
+  - name: percentiles_q9
+    path: "https://raw.githubusercontent.com/AmitLevinson/sql-website/main/questions/8-tracking-money-layering/q9.sql"
+    
+---
+
+```{r, include = FALSE}
+library(odbc)
+library(DBI)
+
+sqlconn <- dbConnect(odbc(),
+                      Driver = "SQL Server",
+                      Server = "localhost\\SQLEXPRESS",
+                      Database = "sql-questions")
+
+```
+
+ברוכים הבאים לתרגיל התשיעי!  
+
+בתרגיל(ים) הבאים נתרגל קצת חישוב מאונים. למי שלא מכיר/משתמש, שווה להכניס לארגז הכלים כמדדים נוספים לבחינה של פיזור הדאטה, בייחוד כשיש ערכים קיצוניים.
+
+## הדאטה
+
+טבלה ראשונה מכילה אינדיקציה האם הלקוח תשלום או לא:
+
+```{sql connection='sqlconn'}
+SELECT TOP 5 * 
+FROM users_9;
+```
+
+טבלה שניה מכילה תשלומים של היוזרים השונים:
+
+```{sql connection='sqlconn'}
+SELECT TOP 5 * 
+FROM payments_9;
+```
+
+
+## 1 שאלה
+
+מצאו את התשלום החציוני של 2 הקבוצות המשתמשים השונות -- אלה החסומים ואלה שאינם.
+
+שאלת בונוס: מה הממוצע של כל קבוצה? מתוך שני המדדים האלה, איך נניח שנראית התפלגות הסכומים של כל אחת מהקבוצות?
+
+## שאלה 2
+
+צרו טבלת עשירונים שתציג את הערך הגבוה ביותר בכל עשירון.
+
+שאלת בונוס: איך תפרשו את הערכים? מה זה אומר המאון ה-30%?
+
+
+## נסו בעצמכם
+
+### אונליין 
+
+<mark>נסו בחלון טקסט למטה (SQLite):</mark>
+
+```{.sql .interactive percentiles_q9}
+-- EDIT THIS QUERY:
+SELECT *
+FROM users_9 usr
+LEFT JOIN Payments_9 on pmnt on usr.User_id = pmnt.User_id
+LIMIT 10;
+```
+
+
+### נסו על המחשב שלכם
+
+<details>
+<summary>הצג קוד ליצירת טבלה</summary>
+
+```{sql, eval=  FALSE, attr.source='style="max-height: 250px;overflow: scroll;"', connection='sqlconn'}
+
+
+```
+
+</details>
+
+## תשובות
+
+### סרטון הסבר
+
+
+{{< video https://youtu.be/grncXOd5fhE >}}
+
+
+### תשובה
+
+<details>
+
+<summary>הצג פתרון</summary>
+
+(מראה רק את ה-10 שורות הראשונות)
+
+```{sql connection='sqlconn', echo = TRUE, eval= FALSE}
+WITH recursive_payments  as 
+(
+SELECT from_user,
+	to_user,
+	amount,
+	1 as Iteration
+FROM payments_8
+WHERE from_user = 7804
+UNION ALL
+SELECT ml.from_user,
+	ml.to_user,
+	ml.amount,
+	Iteration + 1 as Iteration
+FROM recursive_payments rp
+JOIN payments_8 ml on ml.from_user = rp.to_user
+where Iteration <= 20
+)
+
+SELECT * 
+FROM recursive_payments
+
+```
+
+
+```{sql connection='sqlconn', echo = FALSE}
+WITH recursive_payments  as 
+(
+SELECT from_user,
+	to_user,
+	amount,
+	1 as Iteration
+FROM payments_8
+WHERE from_user = 7804
+UNION ALL
+SELECT ml.from_user,
+	ml.to_user,
+	ml.amount,
+	Iteration + 1 as Iteration
+FROM recursive_payments rp
+JOIN payments_8 ml on ml.from_user = rp.to_user
+where Iteration <= 20
+)
+
+SELECT * 
+FROM recursive_payments
+```
+
+
+</details>
+
+```{r echo = FALSE}
+dbDisconnect(sqlconn)
+```
