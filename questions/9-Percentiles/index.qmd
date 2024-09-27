@@ -1,7 +1,7 @@
 ---
 title: "מציאת מאונים"
 description: |
-  שימוש במאונים למציאת מיקומי ערכים
+  שימוש במאונים להבנת פיזור הנתונים
 author: ""
 date: "2024-05-04"
 toc: true
@@ -12,7 +12,7 @@ filters:
   - interactive-sql
 databases:
   - name: percentiles_q9
-    path: "https://raw.githubusercontent.com/AmitLevinson/sql-website/main/questions/8-tracking-money-layering/q9.sql"
+    path: "https://raw.githubusercontent.com/AmitLevinson/sql-website/main/questions/9-Percentiles/q9.sql"
     
 ---
 

@@ -1,114 +1,296 @@
-CREATE TABLE payments_8 
-(
-    payment_id	INT,
-    from_user	INT,
-    to_user	INT,
-    amount	INT,
-    payment_date	DATE
+CREATE TABLE [Users] (
+    [user_id]	INT,
+    [closed]	VARCHAR(512)
 );
 
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('1', '7804', '4360', '200', '2023-02-28');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('2', '1237', '5790', '242', '2023-02-28');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('3', '5363', '7800', '241', '2023-02-28');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('4', '6382', '5619', '224', '2023-02-28');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('5', '7962', '2729', '184', '2023-02-28');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('6', '6165', '5363', '170', '2023-02-28');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('7', '2165', '2502', '198', '2023-02-28');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('8', '5867', '8562', '285', '2023-02-28');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('9', '2021', '4386', '253', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('10', '1378', '6818', '264', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('11', '4360', '7503', '199', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('12', '4192', '6165', '223', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('13', '7764', '7226', '226', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('14', '5517', '7962', '294', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('15', '1150', '2021', '297', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('16', '2502', '6816', '262', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('17', '9990', '2625', '177', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('18', '7503', '6491', '198', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('19', '547', '7800', '283', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('20', '355', '976', '212', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('21', '3113', '928', '172', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('22', '4056', '7498', '155', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('23', '2508', '5867', '286', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('24', '2135', '672', '280', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('25', '4241', '4386', '245', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('26', '2587', '5517', '184', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('27', '6491', '3037', '198', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('28', '9003', '3113', '169', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('29', '6675', '3440', '279', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('30', '8193', '976', '189', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('31', '4463', '1657', '279', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('32', '1416', '8562', '181', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('33', '3037', '9484', '198', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('34', '5669', '6286', '267', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('35', '8889', '928', '153', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('36', '4915', '3113', '284', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('37', '8319', '9249', '240', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('38', '4400', '9990', '204', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('39', '9492', '9816', '265', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('40', '9484', '2885', '197', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('41', '870', '9207', '259', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('42', '5948', '4896', '260', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('43', '6818', '7949', '150', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('44', '6765', '547', '216', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('45', '2885', '1841', '196', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('46', '392', '6862', '287', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('47', '5067', '7869', '253', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('48', '2729', '5948', '244', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('49', '9249', '6382', '208', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('50', '258', '4241', '274', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('51', '1841', '7627', '196', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('52', '1408', '7520', '281', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('53', '9725', '8889', '221', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('54', '3900', '1101', '178', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('55', '657', '2587', '150', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('56', '6862', '4463', '278', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('57', '7627', '5923', '196', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('58', '2700', '9207', '150', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('59', '7687', '1408', '295', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('60', '4719', '1733', '272', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('61', '5923', '9464', '195', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('62', '1101', '5517', '259', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('63', '4478', '6286', '172', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('64', '6313', '9098', '186', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('65', '4426', '1867', '275', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('66', '7226', '4386', '255', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('67', '9464', '781', '194', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('68', '2625', '500', '162', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('69', '2318', '4937', '213', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('70', '781', '7364', '194', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('71', '9962', '2165', '212', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('72', '1867', '9098', '200', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('73', '2381', '4426', '233', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('74', '4200', '2021', '211', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('75', '954', '3440', '274', '2023-03-01');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('76', '7364', '191', '194', '2023-03-02');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('77', '672', '2165', '236', '2023-03-02');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('78', '191', '1577', '193', '2023-03-02');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('79', '1094', '3113', '251', '2023-03-02');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('80', '1133', '1416', '203', '2023-03-02');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('81', '500', '3669', '242', '2023-03-02');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('82', '8074', '3302', '180', '2023-03-02');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('83', '163', '2502', '286', '2023-03-02');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('84', '1577', '2921', '192', '2023-03-02');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('85', '7558', '2502', '187', '2023-03-02');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('86', '180', '7241', '168', '2023-03-02');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('87', '2921', '6093', '192', '2023-03-02');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('88', '5790', '9003', '231', '2023-03-02');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('89', '4247', '552', '216', '2023-03-02');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('90', '7449', '2165', '171', '2023-03-02');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('91', '7869', '4400', '258', '2023-03-02');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('92', '4111', '8474', '176', '2023-03-02');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('93', '6093', '3423', '192', '2023-03-02');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('94', '5013', '1733', '176', '2023-03-02');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('95', '592', '8319', '225', '2023-03-02');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('96', '4386', '4192', '254', '2023-03-02');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('97', '4937', '258', '209', '2023-03-02');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('98', '8647', '1657', '194', '2023-03-02');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('99', '3423', '5649', '191', '2023-03-02');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('100', '928', '7791', '169', '2023-03-02');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('101', '5649', '1721', '190', '2023-03-02');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('102', '7241', '7687', '226', '2023-03-02');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('103', '6914', '7687', '202', '2023-03-02');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('104', '6816', '1867', '291', '2023-03-02');
-INSERT INTO payments_8 (payment_id, from_user, to_user, amount, payment_date) VALUES ('106', '7498', '1657', '221', '2023-03-02');
+INSERT INTO [Users] ([user_id], [closed]) VALUES
+	('1', '0'),
+	('2', '0'),
+	('3', '0'),
+	('4', '0'),
+	('5', '0'),
+	('6', '0'),
+	('7', '0'),
+	('8', '0'),
+	('9', '1'),
+	('10', '0'),
+	('11', '1'),
+	('12', '0'),
+	('13', '1'),
+	('14', '1'),
+	('15', '0'),
+	('16', '0'),
+	('17', '0'),
+	('18', '0'),
+	('19', '1'),
+	('20', '0'),
+	('21', '0'),
+	('22', '1'),
+	('23', '0'),
+	('24', '1'),
+	('25', '0'),
+	('26', '0'),
+	('27', '0'),
+	('28', '0'),
+	('29', '0'),
+	('30', '0'),
+	('31', '0'),
+	('32', '0'),
+	('33', '1'),
+	('34', '0'),
+	('35', '0'),
+	('36', '0'),
+	('37', '0'),
+	('38', '0'),
+	('39', '1'),
+	('40', '0');
+	
+	
+-- Payments table
+CREATE TABLE [tableName] (
+    [user_id]	INT,
+    [amount]	INT
+);
+
+INSERT INTO [tableName] ([user_id], [amount]) VALUES
+	('15', '122'),
+	('22', '76'),
+	('24', '20'),
+	('18', '285'),
+	('15', '64'),
+	('17', '72'),
+	('15', '57'),
+	('34', '14'),
+	('31', '180'),
+	('10', '25'),
+	('38', '38'),
+	('5', '69'),
+	('18', '64'),
+	('40', '172'),
+	('27', '218'),
+	('28', '22'),
+	('17', '18'),
+	('22', '191'),
+	('40', '61'),
+	('13', '4'),
+	('31', '3'),
+	('20', '14'),
+	('12', '33'),
+	('38', '5'),
+	('7', '108'),
+	('38', '30'),
+	('7', '37'),
+	('25', '26'),
+	('5', '75'),
+	('5', '214'),
+	('1', '55'),
+	('37', '72'),
+	('8', '14'),
+	('32', '14'),
+	('27', '30'),
+	('12', '58'),
+	('36', '66'),
+	('1', '14'),
+	('1', '122'),
+	('24', '275'),
+	('37', '214'),
+	('27', '64'),
+	('10', '75'),
+	('13', '78'),
+	('3', '30'),
+	('33', '281'),
+	('5', '76'),
+	('30', '62'),
+	('32', '122'),
+	('13', '30'),
+	('37', '56'),
+	('16', '66'),
+	('6', '76'),
+	('39', '16'),
+	('20', '214'),
+	('14', '233'),
+	('16', '256'),
+	('31', '122'),
+	('2', '3'),
+	('20', '139'),
+	('35', '122'),
+	('19', '80'),
+	('23', '49'),
+	('26', '218'),
+	('18', '33'),
+	('28', '219'),
+	('14', '208'),
+	('1', '46'),
+	('25', '281'),
+	('28', '13'),
+	('27', '56'),
+	('36', '72'),
+	('4', '78'),
+	('30', '64'),
+	('17', '64'),
+	('26', '288'),
+	('27', '22'),
+	('14', '55'),
+	('14', '172'),
+	('26', '210'),
+	('40', '57'),
+	('37', '27'),
+	('36', '46'),
+	('23', '75'),
+	('2', '64'),
+	('20', '38'),
+	('17', '275'),
+	('18', '61'),
+	('7', '208'),
+	('30', '256'),
+	('15', '105'),
+	('10', '256'),
+	('11', '38'),
+	('11', '5'),
+	('30', '219'),
+	('38', '219'),
+	('13', '56'),
+	('37', '262'),
+	('32', '45'),
+	('25', '14'),
+	('20', '105'),
+	('17', '38'),
+	('5', '55'),
+	('20', '26'),
+	('4', '4'),
+	('25', '18'),
+	('26', '122'),
+	('21', '72'),
+	('11', '23'),
+	('4', '288'),
+	('34', '33'),
+	('18', '22'),
+	('10', '22'),
+	('17', '61'),
+	('28', '56'),
+	('12', '122'),
+	('8', '4'),
+	('26', '13'),
+	('7', '16'),
+	('30', '219'),
+	('15', '131'),
+	('22', '83'),
+	('24', '28'),
+	('18', '287'),
+	('15', '73'),
+	('17', '72'),
+	('15', '65'),
+	('34', '17'),
+	('31', '187'),
+	('10', '28'),
+	('38', '42'),
+	('5', '75'),
+	('18', '65'),
+	('40', '173'),
+	('27', '219'),
+	('28', '27'),
+	('17', '25'),
+	('22', '199'),
+	('40', '67'),
+	('13', '9'),
+	('31', '8'),
+	('20', '18'),
+	('12', '33'),
+	('38', '10'),
+	('7', '112'),
+	('38', '38'),
+	('7', '37'),
+	('25', '27'),
+	('5', '78'),
+	('5', '223'),
+	('1', '63'),
+	('37', '80'),
+	('8', '21'),
+	('32', '20'),
+	('27', '33'),
+	('12', '59'),
+	('36', '68'),
+	('1', '19'),
+	('1', '130'),
+	('24', '284'),
+	('37', '219'),
+	('27', '71'),
+	('10', '77'),
+	('13', '78'),
+	('3', '37'),
+	('33', '284'),
+	('5', '84'),
+	('30', '71'),
+	('32', '130'),
+	('13', '38'),
+	('37', '61'),
+	('16', '70'),
+	('6', '81'),
+	('39', '19'),
+	('20', '215'),
+	('14', '241'),
+	('16', '263'),
+	('31', '128'),
+	('2', '11'),
+	('20', '141'),
+	('35', '131'),
+	('19', '81'),
+	('23', '51'),
+	('26', '218'),
+	('18', '38'),
+	('28', '220'),
+	('14', '217'),
+	('1', '47'),
+	('25', '281'),
+	('28', '15'),
+	('27', '57'),
+	('36', '75'),
+	('4', '81'),
+	('30', '66'),
+	('17', '67'),
+	('26', '288'),
+	('27', '22'),
+	('14', '59'),
+	('14', '174'),
+	('26', '219'),
+	('40', '59'),
+	('37', '35'),
+	('36', '54'),
+	('23', '76'),
+	('2', '65'),
+	('20', '44'),
+	('17', '282'),
+	('18', '61'),
+	('7', '211'),
+	('30', '264'),
+	('15', '109'),
+	('10', '263'),
+	('11', '40'),
+	('11', '6'),
+	('30', '224'),
+	('38', '226'),
+	('13', '61'),
+	('37', '270'),
+	('32', '47'),
+	('25', '23'),
+	('20', '112'),
+	('17', '43'),
+	('5', '63'),
+	('20', '32'),
+	('4', '5'),
+	('25', '21'),
+	('26', '129'),
+	('21', '73'),
+	('11', '29'),
+	('4', '297'),
+	('34', '42'),
+	('18', '26'),
+	('10', '23'),
+	('17', '68'),
+	('28', '58'),
+	('12', '124'),
+	('8', '11'),
+	('26', '17'),
+	('7', '23'),
+	('30', '228');
+	
