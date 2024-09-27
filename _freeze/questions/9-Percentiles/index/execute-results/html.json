@@ -1,0 +1,14 @@
+{
+  "hash": "91651578967a20b8ef164d8878e12845",
+  "result": {
+    "markdown": "---\ntitle: \"מציאת מאונים\"\ndescription: |\n  שימוש במאונים להבנת פיזור הנתונים\nauthor: \"\"\ndate: \"2024-05-04\"\ntoc: true\ncategories: [בסיסי]\nimage: featured.png\ndraft: true\nfilters:\n  - interactive-sql\ndatabases:\n  - name: percentiles_q9\n    path: \"https://raw.githubusercontent.com/AmitLevinson/sql-website/main/questions/9-Percentiles/q9.sql\"\n    \n---\n\n\n\n\nברוכים הבאים לתרגיל התשיעי!  \n\nבתרגיל(ים) הבאים נתרגל קצת חישוב מאונים. למי שלא מכיר/משתמש, שווה להכניס לארגז הכלים כמדדים נוספים לבחינה של פיזור הדאטה, בייחוד כשיש ערכים קיצוניים.\n\n## הדאטה\n\nטבלה ראשונה מכילה אינדיקציה האם הלקוח תשלום או לא:\n\n\n::: {.cell}\n\n```{.sql .cell-code}\nSELECT TOP 5 * \nFROM users;\n```\n\n\n<div class=\"knitsql-table\">\n\n\nTable: 5 records\n\n|user_id |closed |\n|:-------|:------|\n|1       |0      |\n|2       |0      |\n|3       |0      |\n|4       |0      |\n|5       |0      |\n\n</div>\n:::\n\n\nטבלה שניה מכילה תשלומים של היוזרים השונים:\n\n\n::: {.cell}\n\n```{.sql .cell-code}\nSELECT TOP 5 * \nFROM payments;\n```\n\n\n<div class=\"knitsql-table\">\n\n\nTable: 5 records\n\n| user_id| amount|\n|-------:|------:|\n|      15|    122|\n|      22|     76|\n|      24|     20|\n|      18|    285|\n|      15|     64|\n\n</div>\n:::\n\n\n\n## 1 שאלה\n\nמצאו את התשלום החציוני של 2 הקבוצות המשתמשים השונות -- אלה החסומים ואלה שאינם.\n\nשאלת בונוס: מה הממוצע של כל קבוצה? מתוך שני המדדים האלה, איך נניח שנראית התפלגות הסכומים של כל אחת מהקבוצות?\n\n## שאלה 2\n\nצרו טבלת עשירונים שתציג את הערך הגבוה ביותר בכל עשירון.\n\nשאלת בונוס: איך תפרשו את הערכים? מה זה אומר המאון ה-30%?\n\n\n## נסו בעצמכם\n\n### אונליין \n\n<mark>נסו בחלון טקסט למטה (SQLite):</mark>\n\n```{.sql .interactive .percentiles_q9}\n-- EDIT THIS QUERY:\nSELECT *\nFROM LOGS_Q5\nLIMIT 10;\n\n```\n\n\n### נסו על המחשב שלכם\n\n<details>\n<summary>הצג קוד ליצירת טבלה</summary>\n\n\n::: {.cell}\n\n```{.sql .cell-code style=\"max-height: 250px;overflow: scroll;\"}\n\n```\n:::\n\n\n</details>\n\n## תשובות\n\n### סרטון הסבר\n\n\n\n{{< video https://youtu.be/grncXOd5fhE >}}\n\n\n\n\n### תשובה 1\n\n<details>\n\n<summary>הצג פתרון</summary>\n\n(מראה רק את ה-10 שורות הראשונות)\n\n\n::: {.cell}\n\n```{.sql .cell-code}\n\n```\n:::\n\n\n</details>\n\n\n### תשובה 2\n\n<details>\n\n<summary>הצג פתרון</summary>\n\n(מראה רק את ה-10 שורות הראשונות)\n\n\n::: {.cell}\n\n```{.sql .cell-code}\n\n```\n:::\n\n\n</details>\n\n\n::: {.cell}\n\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

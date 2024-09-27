@@ -47,12 +47,12 @@ INSERT INTO [Users] ([user_id], [closed]) VALUES
 	
 	
 -- Payments table
-CREATE TABLE [tableName] (
+CREATE TABLE [Payments] (
     [user_id]	INT,
     [amount]	INT
 );
 
-INSERT INTO [tableName] ([user_id], [amount]) VALUES
+INSERT INTO [Payments] ([user_id], [amount]) VALUES
 	('15', '122'),
 	('22', '76'),
 	('24', '20'),
@@ -293,4 +293,3 @@ INSERT INTO [tableName] ([user_id], [amount]) VALUES
 	('26', '17'),
 	('7', '23'),
 	('30', '228');
-	

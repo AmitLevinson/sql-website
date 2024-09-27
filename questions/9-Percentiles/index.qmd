@@ -23,7 +23,7 @@ library(DBI)
 sqlconn <- dbConnect(odbc(),
                       Driver = "SQL Server",
                       Server = "localhost\\SQLEXPRESS",
-                      Database = "sql-questions")
+                      Database = "q-9")
 
 ```
 
@@ -33,22 +33,22 @@ sqlconn <- dbConnect(odbc(),
 
 ## הדאטה
 
-טבלה ראשונה מכילה אינדיקציה האם הלקוח תשלום או לא:
+טבלה ראשונה מכילה אינדיקציה האם הלקוח סגור או לא (0 לא סגור, 1 סגור):
 
 ```{sql connection='sqlconn'}
 SELECT TOP 5 * 
-FROM users_9;
+FROM users;
 ```
 
 טבלה שניה מכילה תשלומים של היוזרים השונים:
 
 ```{sql connection='sqlconn'}
 SELECT TOP 5 * 
-FROM payments_9;
+FROM payments;
 ```
 
 
-## 1 שאלה
+## שאלה 1
 
 מצאו את התשלום החציוני של 2 הקבוצות המשתמשים השונות -- אלה החסומים ואלה שאינם.
 
@@ -67,12 +67,12 @@ FROM payments_9;
 
 <mark>נסו בחלון טקסט למטה (SQLite):</mark>
 
-```{.sql .interactive percentiles_q9}
+```{.sql .interactive .percentiles_q9}
 -- EDIT THIS QUERY:
 SELECT *
-FROM users_9 usr
-LEFT JOIN Payments_9 on pmnt on usr.User_id = pmnt.User_id
+FROM LOGS_Q5
 LIMIT 10;
+
 ```
 
 
@@ -96,7 +96,7 @@ LIMIT 10;
 {{< video https://youtu.be/grncXOd5fhE >}}
 
 
-### תשובה
+### תשובה 1
 
 <details>
 
@@ -105,53 +105,24 @@ LIMIT 10;
 (מראה רק את ה-10 שורות הראשונות)
 
 ```{sql connection='sqlconn', echo = TRUE, eval= FALSE}
-WITH recursive_payments  as 
-(
-SELECT from_user,
-	to_user,
-	amount,
-	1 as Iteration
-FROM payments_8
-WHERE from_user = 7804
-UNION ALL
-SELECT ml.from_user,
-	ml.to_user,
-	ml.amount,
-	Iteration + 1 as Iteration
-FROM recursive_payments rp
-JOIN payments_8 ml on ml.from_user = rp.to_user
-where Iteration <= 20
-)
 
-SELECT * 
-FROM recursive_payments
 
 ```
 
+</details>
 
-```{sql connection='sqlconn', echo = FALSE}
-WITH recursive_payments  as 
-(
-SELECT from_user,
-	to_user,
-	amount,
-	1 as Iteration
-FROM payments_8
-WHERE from_user = 7804
-UNION ALL
-SELECT ml.from_user,
-	ml.to_user,
-	ml.amount,
-	Iteration + 1 as Iteration
-FROM recursive_payments rp
-JOIN payments_8 ml on ml.from_user = rp.to_user
-where Iteration <= 20
-)
 
-SELECT * 
-FROM recursive_payments
+### תשובה 2
+
+<details>
+
+<summary>הצג פתרון</summary>
+
+(מראה רק את ה-10 שורות הראשונות)
+
+```{sql connection='sqlconn', echo = TRUE, eval= FALSE}
+
 ```
-
 
 </details>
 
