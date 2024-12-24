@@ -22,7 +22,7 @@ body {
 
 .interactive-sql code {
   background: white;
-  min-height: 150px;
+  min-height: 180px;
   max-height: 450px;
   overflow-y: scroll;
 }

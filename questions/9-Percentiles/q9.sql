@@ -1,9 +1,9 @@
-CREATE TABLE [Users] (
+CREATE TABLE [Users_9] (
     [user_id]	INT,
     [closed]	VARCHAR(512)
 );
 
-INSERT INTO [Users] ([user_id], [closed]) VALUES
+INSERT INTO [Users_9] ([user_id], [closed]) VALUES
 	('1', '0'),
 	('2', '0'),
 	('3', '0'),
@@ -47,12 +47,12 @@ INSERT INTO [Users] ([user_id], [closed]) VALUES
 	
 	
 -- Payments table
-CREATE TABLE [Payments] (
+CREATE TABLE [Payments_9] (
     [user_id]	INT,
     [amount]	INT
 );
 
-INSERT INTO [Payments] ([user_id], [amount]) VALUES
+INSERT INTO [Payments_9] ([user_id], [amount]) VALUES
 	('15', '122'),
 	('22', '76'),
 	('24', '20'),
