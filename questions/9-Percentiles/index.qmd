@@ -1,13 +1,13 @@
 ---
-title: "שימוש במאונים"
+title: "מציאת במאונים"
 description: |
   שימוש במאונים להבנת פיזור הנתונים
 author: ""
-date: "2024-05-04"
+date: "2024-12-27"
 toc: true
 categories: [בסיסי]
 image: featured.png
-draft: true
+draft: false
 filters:
   - interactive-sql
 databases:
@@ -392,9 +392,7 @@ INSERT INTO [payments_9] ([user_id], [amount]) VALUES
 
 ### סרטון הסבר
 
-
-{{< video https://youtu.be/grncXOd5fhE >}}
-
+{{ < video https://youtu.be/iZZ0Bw4ZjFM > }}
 
 ### תשובה 1
 
