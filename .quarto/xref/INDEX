@@ -58,5 +58,8 @@
   },
   "questions/9-Percentiles/index.qmd": {
     "index.html": "28e8b497"
+  },
+  "questions/10-conditional-grouping/index.qmd": {
+    "index.html": "11158fe6"
   }
 }

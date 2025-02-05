@@ -1,5 +1,5 @@
 
-DROP TABLE IF EXISTS q10_payers;
+-- DROP TABLE IF EXISTS q10_payers;
 
 CREATE TABLE q10_payers (
     payment_id	INT,
@@ -28,7 +28,7 @@ INSERT INTO q10_payers (payment_id, payer ) VALUES
 	('19', '12 '),
 	('20', '12 ');
 
-	drop table if exists cash ;
+-- 	drop table if exists cash ;
 
 	CREATE TABLE Cash (
     receiver	INT,
@@ -45,7 +45,7 @@ INSERT INTO Cash (receiver, payment_id, Amount ) VALUES
 	('7', '20', '80 ');
 
 
-	drop table if exists bit;
+-- 	drop table if exists bit;
 
 	CREATE TABLE Bit (
     receiver	INT,
@@ -61,7 +61,7 @@ INSERT INTO Bit (receiver, payment_id, amount ) VALUES
 	('22', '16', '63 '),
 	('7', '17', '75 ');
 
-	drop table if exists checks;
+-- 	drop table if exists checks;
 
 	CREATE TABLE checks (
     receiver	INT,
@@ -76,7 +76,7 @@ INSERT INTO Checks (receiver, payment_id, amount ) VALUES
 	('7', '6', '26 ');
 
 
-drop table q10_payments;
+-- drop table q10_payments;
 
 CREATE TABLE q10_payments (
     payer	INT,
