@@ -101,8 +101,6 @@ FROM q10_payments
 
 ```{sql, eval=  FALSE, attr.source='style="max-height: 250px;overflow: scroll;"', connection='sqlconn'}
 
-DROP TABLE IF EXISTS q10_payers;
-
 CREATE TABLE q10_payers (
     payment_id	INT,
     payer 	INT
@@ -130,24 +128,20 @@ INSERT INTO q10_payers (payment_id, payer ) VALUES
 	('19', '12 '),
 	('20', '12 ');
 
-	drop table if exists cash ;
-
 	CREATE TABLE Cash (
     receiver	INT,
     payment_id	INT,
     Amount 	INT
 );
 
-INSERT INTO Cash (receiver, payment_id, Amount ) VALUES
-	('7', '1', '45 '),
-	('1', '4', '4 '),
-	('3', '13', '84 '),
-	('7', '18', '94 '),
-	('7', '19', '25 '),
-	('7', '20', '80 ');
+INSERT INTO Cash (payment_id, receiver,  Amount ) VALUES
+	('1', '7', '45 '),
+	('4', '1', '4 '),
+	('13','3',  '84 '),
+	('18','7',  '94 '),
+	('19','7',  '25 '),
+	('20','7',  '80 ');
 
-
-	drop table if exists bit;
 
 	CREATE TABLE Bit (
     receiver	INT,
@@ -155,15 +149,13 @@ INSERT INTO Cash (receiver, payment_id, Amount ) VALUES
     amount 	INT
 );
 
-INSERT INTO Bit (receiver, payment_id, amount ) VALUES
-	('7', '2', '17 '),
-	('7', '5', '89 '),
-	('1', '10', '31 '),
-	('22', '14', '23 '),
-	('22', '16', '63 '),
-	('7', '17', '75 ');
-
-	drop table if exists checks;
+INSERT INTO Bit (payment_id, receiver, amount ) VALUES
+	('2', '7', '17 '),
+	('5', '7', '89 '),
+	('10','1',  '31 '),
+	('14','22', '23 '),
+	('16','22', '63 '),
+	('17','7',  '75 ');
 
 	CREATE TABLE checks (
     receiver	INT,
@@ -171,14 +163,12 @@ INSERT INTO Bit (receiver, payment_id, amount ) VALUES
     amount 	INT
 );
 
-INSERT INTO Checks (receiver, payment_id, amount ) VALUES
+INSERT INTO Checks (payment_id, receiver, amount ) VALUES
 	('7', '7', '47 '),
-	('21', '8', '42 '),
-	('22', '15', '1 '),
-	('7', '6', '26 ');
+	('8', '21','42 '),
+	('15','22', '1 '),
+	('6', '7', '26 ');
 
-
-drop table q10_payments;
 
 CREATE TABLE q10_payments (
     payer	INT,
