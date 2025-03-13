@@ -55,7 +55,7 @@ sqlconn <- dbConnect(odbc(),
 
 
 ```{sql connection='sqlconn'}
-SELECT  *
+SELECT  TOP 5 *
 FROM q10_payments
 ```
 
@@ -63,9 +63,10 @@ FROM q10_payments
 
 אנחנו מעוניינים ליצור טבלת מידע על כל המשלמים ומקבלי התשלום.
 
-לשם כך, הדפיסו טבלה שתציג לנו עמודת יוזר מקור, עמודת יוזר רפרנס, כמה תשלומים היוזר רפרנס קיבל מהמקור, כמה תשלומים היוזר רפרנס שלח למקור ומה היה התאריך האחרון שנשלח ביניהם תשלום (לא משנה הכיוון). יוזר רפרנס הוא כל יוזר שהיה לו קשר כלשהו - כמשלם או מקבל - ליוזר המקור שלנו. 
+לשם כך, הדפיסו טבלה שתציג לנו **עמודת יוזר מקור, עמודת יוזר רפרנס, כמה תשלומים היוזר רפרנס קיבל מהמקור, כמה תשלומים היוזר רפרנס שלח למקור ומה היה התאריך האחרון שנשלח ביניהם תשלום (לא משנה הכיוון).** יוזר רפרנס הוא כל יוזר שהיה לו קשר כלשהו - כמשלם או מקבל - ליוזר המקור שלנו. אנחנו רוצים שכל משתמש ייחודי בטבלה (משלם/מקבל) יופיע כיוזר מקור
 
-אנחנו רוצים שכל משתמש ייחודי בטבלה (משלם/מקבל) יופיע כיוזר מקור
+את הפלט סדרו לפי מספר הקשרים השונים של כל יוזר בסדר יורד. כלומר, היוזר שהופיע בהכי הרבה קשרים יהיה ראשון, אחריו היוזר עם מספר המופעים הגדול אחריו וכן הלאה.
+
 
 ## נסו בעצמכם
 
@@ -212,14 +213,39 @@ INSERT INTO q10_payments (payer, receiver, payment_id, Transaction_date, Amount 
 
 ### תשובה 1
 
+```{sql connection='sqlconn', echo = TRUE, eval = FALSE}
+SELECT payer,
+  COALESCE(cash.receiver, bit.receiver, Checks.receiver) AS receiver,
+  sum(coalesce(cash.amount, bit.amount, Checks.amount)) as total_received
+FROM Q10_PAYERS payers
+LEFT JOIN Cash on cash.payment_id = payers.payment_id
+LEFT JOIN Bit ON BIT.payment_id = payers.payment_id
+LEFT JOIN Checks ON Checks.payment_id = payers.payment_id
+WHERE COALESCE(cash.receiver, bit.receiver, Checks.receiver) IS NOT NULL
+GROUP BY payer, COALESCE(cash.receiver, bit.receiver, Checks.receiver)
+order by COUNT(*) OVER (PARTITION BY payer) desc
+-- SELECT * FROM Checks
+```
+
+
 <details>
 
 <summary>הצג פתרון</summary>
 
 **T-SQL**
 
-```{sql connection='sqlconn', echo = TRUE}
---
+```{sql connection='sqlconn', echo = TRUE, eval = FALSE}
+SELECT payer,
+  COALESCE(cash.receiver, bit.receiver, Checks.receiver) AS receiver,
+  sum(coalesce(cash.amount, bit.amount, Checks.amount)) as total_received
+FROM Q10_PAYERS payers
+LEFT JOIN Cash on cash.payment_id = payers.payment_id
+LEFT JOIN Bit ON BIT.payment_id = payers.payment_id
+LEFT JOIN Checks ON Checks.payment_id = payers.payment_id
+WHERE COALESCE(cash.receiver, bit.receiver, Checks.receiver) IS NOT NULL
+GROUP BY payer, COALESCE(cash.receiver, bit.receiver, Checks.receiver)
+order by COUNT(*) OVER (PARTITION BY payer) desc
+-- SELECT * FROM Checks
 ```
 
 </details>
@@ -234,8 +260,24 @@ INSERT INTO q10_payments (payer, receiver, payment_id, Transaction_date, Amount 
 **T-SQL**, (מראה רק את ה-10 שורות הראשונות)
 
 ```{sql connection='sqlconn', echo = TRUE, eval= TRUE}
-SELECT  *
-FROM q10_payments
+with entites as (
+  select payer as entity
+  from q10_payments
+  union
+  select receiver as entity
+  from q10_payments
+)
+
+SELECT  ent.Entity as source,
+  case when ent.entity = q10.payer then q10.receiver else q10.payer end as reference,
+  count(case when ent.entity = q10.payer then payment_id else null end) as n_payments_from_source,
+  count(case when ent.entity = q10.receiver then payment_id else null end) as n_payments_to_source,
+  max(transaction_date) as last_transaction
+FROM entites ent
+left join q10_payments q10 on q10.payer = ent.entity OR ent.entity  = q10.receiver
+group by ent.Entity,
+  case when ent.entity = q10.payer then q10.receiver else q10.payer end
+order by count(*) over(partition by ent.Entity) desc
 
 ```
 

@@ -265,11 +265,11 @@ cookieconsent.run({
 <h2 class="anchored" data-anchor-id="תרגיל-2">תרגיל 2</h2>
 <p>פה כבר יש לנו את טבלת התשלומים המלאה:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span>  <span class="op">*</span></span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span>  TOP <span class="dv">5</span> <span class="op">*</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> q10_payments</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="knitsql-table">
 <table class="table table-sm table-striped small">
-<caption>Displaying records 1 - 10</caption>
+<caption>5 records</caption>
 <thead>
 <tr class="header">
 <th style="text-align: right;">payer</th>
@@ -315,48 +315,13 @@ cookieconsent.run({
 <td style="text-align: left;">2020-08-28</td>
 <td style="text-align: right;">89</td>
 </tr>
-<tr class="even">
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: right;">6</td>
-<td style="text-align: left;">2020-08-29</td>
-<td style="text-align: right;">26</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: left;">2020-08-30</td>
-<td style="text-align: right;">47</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">7</td>
-<td style="text-align: right;">21</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: left;">2020-08-31</td>
-<td style="text-align: right;">42</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">7</td>
-<td style="text-align: right;">21</td>
-<td style="text-align: right;">9</td>
-<td style="text-align: left;">2020-09-01</td>
-<td style="text-align: right;">52</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">10</td>
-<td style="text-align: left;">2020-09-04</td>
-<td style="text-align: right;">31</td>
-</tr>
 </tbody>
 </table>
 </div>
 </div>
 <p>אנחנו מעוניינים ליצור טבלת מידע על כל המשלמים ומקבלי התשלום.</p>
-<p>לשם כך, הדפיסו טבלה שתציג לנו עמודת יוזר מקור, עמודת יוזר רפרנס, כמה תשלומים היוזר רפרנס קיבל מהמקור, כמה תשלומים היוזר רפרנס שלח למקור ומה היה התאריך האחרון שנשלח ביניהם תשלום (לא משנה הכיוון). יוזר רפרנס הוא כל יוזר שהיה לו קשר כלשהו - כמשלם או מקבל - ליוזר המקור שלנו.</p>
-<p>אנחנו רוצים שכל משתמש ייחודי בטבלה (משלם/מקבל) יופיע כיוזר מקור</p>
+<p>לשם כך, הדפיסו טבלה שתציג לנו <strong>עמודת יוזר מקור, עמודת יוזר רפרנס, כמה תשלומים היוזר רפרנס קיבל מהמקור, כמה תשלומים היוזר רפרנס שלח למקור ומה היה התאריך האחרון שנשלח ביניהם תשלום (לא משנה הכיוון).</strong> יוזר רפרנס הוא כל יוזר שהיה לו קשר כלשהו - כמשלם או מקבל - ליוזר המקור שלנו. אנחנו רוצים שכל משתמש ייחודי בטבלה (משלם/מקבל) יופיע כיוזר מקור</p>
+<p>את הפלט סדרו לפי מספר הקשרים השונים של כל יוזר בסדר יורד. כלומר, היוזר שהופיע בהכי הרבה קשרים יהיה ראשון, אחריו היוזר עם מספר המופעים הגדול אחריו וכן הלאה.</p>
 </section>
 <section id="נסו-בעצמכם" class="level2">
 <h2 class="anchored" data-anchor-id="נסו-בעצמכם">נסו בעצמכם</h2>
@@ -499,13 +464,36 @@ cookieconsent.run({
 </section>
 <section id="תשובה-1" class="level3">
 <h3 class="anchored" data-anchor-id="תשובה-1">תשובה 1</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> payer,</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">COALESCE</span>(cash.receiver, bit.receiver, Checks.receiver) <span class="kw">AS</span> receiver,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>(<span class="fu">coalesce</span>(cash.amount, bit.amount, Checks.amount)) <span class="kw">as</span> total_received</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> Q10_PAYERS payers</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> Cash <span class="kw">on</span> cash.payment_id <span class="op">=</span> payers.payment_id</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> Bit <span class="kw">ON</span> BIT.payment_id <span class="op">=</span> payers.payment_id</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> Checks <span class="kw">ON</span> Checks.payment_id <span class="op">=</span> payers.payment_id</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> <span class="fu">COALESCE</span>(cash.receiver, bit.receiver, Checks.receiver) <span class="kw">IS</span> <span class="kw">NOT</span> <span class="kw">NULL</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> payer, <span class="fu">COALESCE</span>(cash.receiver, bit.receiver, Checks.receiver)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="kw">order</span> <span class="kw">by</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">OVER</span> (<span class="kw">PARTITION</span> <span class="kw">BY</span> payer) <span class="kw">desc</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">-- SELECT * FROM Checks</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <details>
 <summary>
 הצג פתרון
 </summary>
 <p><strong>T-SQL</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">--</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> payer,</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">COALESCE</span>(cash.receiver, bit.receiver, Checks.receiver) <span class="kw">AS</span> receiver,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>(<span class="fu">coalesce</span>(cash.amount, bit.amount, Checks.amount)) <span class="kw">as</span> total_received</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> Q10_PAYERS payers</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> Cash <span class="kw">on</span> cash.payment_id <span class="op">=</span> payers.payment_id</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> Bit <span class="kw">ON</span> BIT.payment_id <span class="op">=</span> payers.payment_id</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> Checks <span class="kw">ON</span> Checks.payment_id <span class="op">=</span> payers.payment_id</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> <span class="fu">COALESCE</span>(cash.receiver, bit.receiver, Checks.receiver) <span class="kw">IS</span> <span class="kw">NOT</span> <span class="kw">NULL</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> payer, <span class="fu">COALESCE</span>(cash.receiver, bit.receiver, Checks.receiver)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="kw">order</span> <span class="kw">by</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">OVER</span> (<span class="kw">PARTITION</span> <span class="kw">BY</span> payer) <span class="kw">desc</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">-- SELECT * FROM Checks</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </details>
 </section>
@@ -517,90 +505,113 @@ cookieconsent.run({
 </summary>
 <p><strong>T-SQL</strong>, (מראה רק את ה-10 שורות הראשונות)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span>  <span class="op">*</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> q10_payments</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">with</span> entites <span class="kw">as</span> (</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">select</span> payer <span class="kw">as</span> entity</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">from</span> q10_payments</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">union</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">select</span> receiver <span class="kw">as</span> entity</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">from</span> q10_payments</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span>  ent.Entity <span class="kw">as</span> <span class="kw">source</span>,</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="cf">when</span> ent.entity <span class="op">=</span> q10.payer <span class="cf">then</span> q10.receiver <span class="cf">else</span> q10.payer <span class="cf">end</span> <span class="kw">as</span> reference,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(<span class="cf">case</span> <span class="cf">when</span> ent.entity <span class="op">=</span> q10.payer <span class="cf">then</span> payment_id <span class="cf">else</span> <span class="kw">null</span> <span class="cf">end</span>) <span class="kw">as</span> n_payments_from_source,</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(<span class="cf">case</span> <span class="cf">when</span> ent.entity <span class="op">=</span> q10.receiver <span class="cf">then</span> payment_id <span class="cf">else</span> <span class="kw">null</span> <span class="cf">end</span>) <span class="kw">as</span> n_payments_to_source,</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">max</span>(transaction_date) <span class="kw">as</span> last_transaction</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> entites ent</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="kw">left</span> <span class="kw">join</span> q10_payments q10 <span class="kw">on</span> q10.payer <span class="op">=</span> ent.entity <span class="kw">OR</span> ent.entity  <span class="op">=</span> q10.receiver</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="kw">group</span> <span class="kw">by</span> ent.Entity,</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="cf">when</span> ent.entity <span class="op">=</span> q10.payer <span class="cf">then</span> q10.receiver <span class="cf">else</span> q10.payer <span class="cf">end</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="kw">order</span> <span class="kw">by</span> <span class="fu">count</span>(<span class="op">*</span>) <span class="kw">over</span>(<span class="kw">partition</span> <span class="kw">by</span> ent.Entity) <span class="kw">desc</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="knitsql-table">
 <table class="table table-sm table-striped small">
 <caption>Displaying records 1 - 10</caption>
+<colgroup>
+<col style="width: 8%">
+<col style="width: 12%">
+<col style="width: 29%">
+<col style="width: 26%">
+<col style="width: 21%">
+</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: right;">payer</th>
-<th style="text-align: right;">receiver</th>
-<th style="text-align: right;">payment_id</th>
-<th style="text-align: left;">Transaction_date</th>
-<th style="text-align: right;">Amount</th>
+<th style="text-align: right;">source</th>
+<th style="text-align: right;">reference</th>
+<th style="text-align: right;">n_payments_from_source</th>
+<th style="text-align: right;">n_payments_to_source</th>
+<th style="text-align: left;">last_transaction</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">14</td>
 <td style="text-align: right;">7</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: left;">2020-06-30</td>
-<td style="text-align: right;">45</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">2020-08-28</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">14</td>
 <td style="text-align: right;">7</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: left;">2020-07-28</td>
-<td style="text-align: right;">17</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">2021-05-28</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">14</td>
 <td style="text-align: right;">7</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">2020-08-30</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">2021-07-29</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">0</td>
 <td style="text-align: right;">3</td>
 <td style="text-align: left;">2020-07-29</td>
-<td style="text-align: right;">24</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: left;">2020-08-27</td>
-<td style="text-align: right;">4</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: left;">2020-08-28</td>
-<td style="text-align: right;">89</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: right;">6</td>
-<td style="text-align: left;">2020-08-29</td>
-<td style="text-align: right;">26</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: left;">2020-08-30</td>
-<td style="text-align: right;">47</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">7</td>
 <td style="text-align: right;">21</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: left;">2020-08-31</td>
-<td style="text-align: right;">42</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">7</td>
-<td style="text-align: right;">21</td>
-<td style="text-align: right;">9</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
 <td style="text-align: left;">2020-09-01</td>
-<td style="text-align: right;">52</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">2020-09-10</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">2020-09-07</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">2020-08-28</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">3</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">10</td>
-<td style="text-align: left;">2020-09-04</td>
-<td style="text-align: right;">31</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">2020-09-07</td>
 </tr>
 </tbody>
 </table>
