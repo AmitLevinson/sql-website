@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="">
-<meta name="dcterms.date" content="2025-01-22">
+<meta name="dcterms.date" content="2025-03-29">
 <meta name="description" content="תרגילי SQL משגרת העבודה של אנליסט">
 
 <title>שאילתות מהחיים - עמודות מותנות</title>
@@ -131,14 +131,14 @@ cookieconsent.run({
 
 <link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="שאילתות מהחיים - עמודות מותנות">
-<meta property="og:description" content="אגרגציה לפי מגוון עמודות">
+<meta property="og:description" content="אגרגציה על פני מגוון עמודות">
 <meta property="og:image" content="https://sql.amitgrinson.com/questions/10-conditional-grouping/featured.png">
 <meta property="og:site-name" content="שאילתות מהחיים">
 <meta property="og:locale" content="he_IL">
 <meta property="og:image:height" content="630">
 <meta property="og:image:width" content="1200">
 <meta name="twitter:title" content="שאילתות מהחיים - עמודות מותנות">
-<meta name="twitter:description" content="אגרגציה לפי מגוון עמודות">
+<meta name="twitter:description" content="אגרגציה על פני מגוון עמודות">
 <meta name="twitter:image" content="https://sql.amitgrinson.com/questions/10-conditional-grouping/featured.png">
 <meta name="twitter:creator" content="@Amit_Levinson">
 <meta name="twitter:card" content="summary">
@@ -190,7 +190,7 @@ cookieconsent.run({
       <h1 class="title">עמודות מותנות</h1>
                   <div>
         <div class="description">
-          <p>אגרגציה לפי מגוון עמודות</p>
+          <p>אגרגציה על פני מגוון עמודות</p>
         </div>
       </div>
                           <div class="quarto-categories">
@@ -206,7 +206,7 @@ cookieconsent.run({
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">January 22, 2025</p>
+        <p class="date">March 29, 2025</p>
       </div>
     </div>
     
@@ -460,10 +460,81 @@ cookieconsent.run({
 <h2 class="anchored" data-anchor-id="תשובות">תשובות</h2>
 <section id="סרטון-הסבר" class="level3">
 <h3 class="anchored" data-anchor-id="סרטון-הסבר">סרטון הסבר</h3>
-<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/iZZ0Bw4ZjFM" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/pcDbYOe7XQw" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 </section>
 <section id="תשובה-1" class="level3">
 <h3 class="anchored" data-anchor-id="תשובה-1">תשובה 1</h3>
+<div class="cell">
+<div class="knitsql-table">
+<table class="table table-sm table-striped small">
+<caption>Displaying records 1 - 10</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">payer</th>
+<th style="text-align: right;">receiver</th>
+<th style="text-align: right;">total_received</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">31</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">84</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">89</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">75</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">73</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">199</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">62</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">42</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">87</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<details>
+<summary>
+הצג פתרון
+</summary>
+<p><strong>T-SQL</strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> payer,</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">COALESCE</span>(cash.receiver, bit.receiver, Checks.receiver) <span class="kw">AS</span> receiver,</span>
@@ -474,55 +545,13 @@ cookieconsent.run({
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> Checks <span class="kw">ON</span> Checks.payment_id <span class="op">=</span> payers.payment_id</span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> <span class="fu">COALESCE</span>(cash.receiver, bit.receiver, Checks.receiver) <span class="kw">IS</span> <span class="kw">NOT</span> <span class="kw">NULL</span></span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> payer, <span class="fu">COALESCE</span>(cash.receiver, bit.receiver, Checks.receiver)</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="kw">order</span> <span class="kw">by</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">OVER</span> (<span class="kw">PARTITION</span> <span class="kw">BY</span> payer) <span class="kw">desc</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">-- SELECT * FROM Checks</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<details>
-<summary>
-הצג פתרון
-</summary>
-<p><strong>T-SQL</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> payer,</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">COALESCE</span>(cash.receiver, bit.receiver, Checks.receiver) <span class="kw">AS</span> receiver,</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>(<span class="fu">coalesce</span>(cash.amount, bit.amount, Checks.amount)) <span class="kw">as</span> total_received</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> Q10_PAYERS payers</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> Cash <span class="kw">on</span> cash.payment_id <span class="op">=</span> payers.payment_id</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> Bit <span class="kw">ON</span> BIT.payment_id <span class="op">=</span> payers.payment_id</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> Checks <span class="kw">ON</span> Checks.payment_id <span class="op">=</span> payers.payment_id</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> <span class="fu">COALESCE</span>(cash.receiver, bit.receiver, Checks.receiver) <span class="kw">IS</span> <span class="kw">NOT</span> <span class="kw">NULL</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> payer, <span class="fu">COALESCE</span>(cash.receiver, bit.receiver, Checks.receiver)</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="kw">order</span> <span class="kw">by</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">OVER</span> (<span class="kw">PARTITION</span> <span class="kw">BY</span> payer) <span class="kw">desc</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">-- SELECT * FROM Checks</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">-- SELECT * FROM Checks</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </details>
 </section>
 <section id="תשובה-2" class="level3">
 <h3 class="anchored" data-anchor-id="תשובה-2">תשובה 2</h3>
-<details>
-<summary>
-הצג פתרון
-</summary>
-<p><strong>T-SQL</strong>, (מראה רק את ה-10 שורות הראשונות)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">with</span> entites <span class="kw">as</span> (</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">select</span> payer <span class="kw">as</span> entity</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">from</span> q10_payments</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">union</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">select</span> receiver <span class="kw">as</span> entity</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">from</span> q10_payments</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span>  ent.Entity <span class="kw">as</span> <span class="kw">source</span>,</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="cf">when</span> ent.entity <span class="op">=</span> q10.payer <span class="cf">then</span> q10.receiver <span class="cf">else</span> q10.payer <span class="cf">end</span> <span class="kw">as</span> reference,</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(<span class="cf">case</span> <span class="cf">when</span> ent.entity <span class="op">=</span> q10.payer <span class="cf">then</span> payment_id <span class="cf">else</span> <span class="kw">null</span> <span class="cf">end</span>) <span class="kw">as</span> n_payments_from_source,</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(<span class="cf">case</span> <span class="cf">when</span> ent.entity <span class="op">=</span> q10.receiver <span class="cf">then</span> payment_id <span class="cf">else</span> <span class="kw">null</span> <span class="cf">end</span>) <span class="kw">as</span> n_payments_to_source,</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">max</span>(transaction_date) <span class="kw">as</span> last_transaction</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> entites ent</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="kw">left</span> <span class="kw">join</span> q10_payments q10 <span class="kw">on</span> q10.payer <span class="op">=</span> ent.entity <span class="kw">OR</span> ent.entity  <span class="op">=</span> q10.receiver</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="kw">group</span> <span class="kw">by</span> ent.Entity,</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="cf">when</span> ent.entity <span class="op">=</span> q10.payer <span class="cf">then</span> q10.receiver <span class="cf">else</span> q10.payer <span class="cf">end</span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="kw">order</span> <span class="kw">by</span> <span class="fu">count</span>(<span class="op">*</span>) <span class="kw">over</span>(<span class="kw">partition</span> <span class="kw">by</span> ent.Entity) <span class="kw">desc</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="knitsql-table">
 <table class="table table-sm table-striped small">
 <caption>Displaying records 1 - 10</caption>
@@ -616,6 +645,31 @@ cookieconsent.run({
 </tbody>
 </table>
 </div>
+</div>
+<details>
+<summary>
+הצג פתרון
+</summary>
+<p><strong>T-SQL</strong>, (מראה רק את ה-10 שורות הראשונות)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">with</span> entites <span class="kw">as</span> (</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">select</span> payer <span class="kw">as</span> entity</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">from</span> q10_payments</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">union</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">select</span> receiver <span class="kw">as</span> entity</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">from</span> q10_payments</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span>  ent.Entity <span class="kw">as</span> <span class="kw">source</span>,</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="cf">when</span> ent.entity <span class="op">=</span> q10.payer <span class="cf">then</span> q10.receiver <span class="cf">else</span> q10.payer <span class="cf">end</span> <span class="kw">as</span> reference,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(<span class="cf">case</span> <span class="cf">when</span> ent.entity <span class="op">=</span> q10.payer <span class="cf">then</span> payment_id <span class="cf">else</span> <span class="kw">null</span> <span class="cf">end</span>) <span class="kw">as</span> n_payments_from_source,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(<span class="cf">case</span> <span class="cf">when</span> ent.entity <span class="op">=</span> q10.receiver <span class="cf">then</span> payment_id <span class="cf">else</span> <span class="kw">null</span> <span class="cf">end</span>) <span class="kw">as</span> n_payments_to_source,</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">max</span>(transaction_date) <span class="kw">as</span> last_transaction</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> entites ent</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="kw">left</span> <span class="kw">join</span> q10_payments q10 <span class="kw">on</span> q10.payer <span class="op">=</span> ent.entity <span class="kw">OR</span> ent.entity  <span class="op">=</span> q10.receiver</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="kw">group</span> <span class="kw">by</span> ent.Entity,</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="cf">when</span> ent.entity <span class="op">=</span> q10.payer <span class="cf">then</span> q10.receiver <span class="cf">else</span> q10.payer <span class="cf">end</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="kw">order</span> <span class="kw">by</span> <span class="fu">count</span>(<span class="op">*</span>) <span class="kw">over</span>(<span class="kw">partition</span> <span class="kw">by</span> ent.Entity) <span class="kw">desc</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </details>
 

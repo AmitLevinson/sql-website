@@ -1,13 +1,13 @@
 ---
 title: "עמודות מותנות"
 description: |
-  אגרגציה לפי מגוון עמודות
+  אגרגציה על פני מגוון עמודות
 author: ""
-date: "2025-01-22"
+date: "2025-03-29"
 toc: true
 categories: [בסיסי]
 image: featured.png
-draft: true
+draft: false
 filters:
   - interactive-sql
 databases:
@@ -209,11 +209,13 @@ INSERT INTO q10_payments (payer, receiver, payment_id, Transaction_date, Amount 
 
 ### סרטון הסבר
 
-{{< video https://youtu.be/iZZ0Bw4ZjFM >}}
+{{< video https://youtu.be/pcDbYOe7XQw >}}
+
+
 
 ### תשובה 1
 
-```{sql connection='sqlconn', echo = TRUE, eval = FALSE}
+```{sql connection='sqlconn', echo = FALSE, eval = TRUE}
 SELECT payer,
   COALESCE(cash.receiver, bit.receiver, Checks.receiver) AS receiver,
   sum(coalesce(cash.amount, bit.amount, Checks.amount)) as total_received
@@ -223,7 +225,6 @@ LEFT JOIN Bit ON BIT.payment_id = payers.payment_id
 LEFT JOIN Checks ON Checks.payment_id = payers.payment_id
 WHERE COALESCE(cash.receiver, bit.receiver, Checks.receiver) IS NOT NULL
 GROUP BY payer, COALESCE(cash.receiver, bit.receiver, Checks.receiver)
-order by COUNT(*) OVER (PARTITION BY payer) desc
 -- SELECT * FROM Checks
 ```
 
@@ -244,7 +245,6 @@ LEFT JOIN Bit ON BIT.payment_id = payers.payment_id
 LEFT JOIN Checks ON Checks.payment_id = payers.payment_id
 WHERE COALESCE(cash.receiver, bit.receiver, Checks.receiver) IS NOT NULL
 GROUP BY payer, COALESCE(cash.receiver, bit.receiver, Checks.receiver)
-order by COUNT(*) OVER (PARTITION BY payer) desc
 -- SELECT * FROM Checks
 ```
 
@@ -253,13 +253,35 @@ order by COUNT(*) OVER (PARTITION BY payer) desc
 
 ### תשובה 2
 
+```{sql connection='sqlconn', echo = FALSE, eval= TRUE}
+with entites as (
+  select payer as entity
+  from q10_payments
+  union
+  select receiver as entity
+  from q10_payments
+)
+
+SELECT  ent.Entity as source,
+  case when ent.entity = q10.payer then q10.receiver else q10.payer end as reference,
+  count(case when ent.entity = q10.payer then payment_id else null end) as n_payments_from_source,
+  count(case when ent.entity = q10.receiver then payment_id else null end) as n_payments_to_source,
+  max(transaction_date) as last_transaction
+FROM entites ent
+left join q10_payments q10 on q10.payer = ent.entity OR ent.entity  = q10.receiver
+group by ent.Entity,
+  case when ent.entity = q10.payer then q10.receiver else q10.payer end
+order by count(*) over(partition by ent.Entity) desc
+
+```
+
 <details>
 
 <summary>הצג פתרון</summary>
 
 **T-SQL**, (מראה רק את ה-10 שורות הראשונות)
 
-```{sql connection='sqlconn', echo = TRUE, eval= TRUE}
+```{sql connection='sqlconn', echo = TRUE, eval= FALSE}
 with entites as (
   select payer as entity
   from q10_payments
