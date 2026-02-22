@@ -7,7 +7,7 @@ date: "2026-02-21"
 toc: true
 categories: [Mock interview]
 image: featured.png
-draft: true
+draft: false
 filters:
   - interactive-sql
 databases:
