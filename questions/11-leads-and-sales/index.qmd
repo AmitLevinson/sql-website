@@ -1,0 +1,131 @@
+---
+title: "לידים ומכירות לפי מקור"
+description: |
+  ספירת לידים לפי מקור ושנה, וסכימת מכירות לפי מקור ושנת סגירה
+author: ""
+date: "2026-01-29"
+toc: true
+categories: [בסיסי]
+image: featured.png
+draft: false
+filters:
+  - interactive-sql
+databases:
+  - name: leads_q11
+    path: "https://raw.githubusercontent.com/AmitLevinson/sql-website/main/questions/11-leads-and-sales/q11.sql"
+---
+
+```{r, include = FALSE}
+library(odbc)
+library(DBI)
+
+sqlconn <- dbConnect(odbc(),
+                      Driver = "SQL Server",
+                      Server = "localhost\\SQLEXPRESS",
+                      Database = "sql-questions")
+```
+
+ברוכים הבאים לתרגיל ה-11!
+
+בתרגיל הזה נתרגל שתי שאלות “יום-יומיות” של אנליסט: ספירה לפי מקור ושנה, וסכימה (Revenue) לפי מקור ושנת סגירה.
+
+## הדאטה
+
+יש לנו שתי טבלאות:
+
+- `leads`
+  - `lead_id`: מזהה ליד
+  - `source`: מקור הליד (למשל Email / Social Media / Referral)
+  - `created_date`: תאריך יצירת הליד
+- `sales`
+  - `lead_id`: מזהה ליד (FK לטבלת `leads`)
+  - `amount`: סכום מכירה
+  - `closed_date`: תאריך סגירת המכירה
+
+## שאלות
+
+### שאלה 1
+
+כתבו שאילתה שמחזירה את **מספר הלידים** שנוצרו דרך `'Email'` בשנת **2025**.
+
+### שאלה 2
+
+כתבו שאילתה שמחזירה את **סך סכום המכירות** שנוצר ממכירות של לידים שמקורם `'Social Media'`, כאשר תאריך הסגירה (`closed_date`) הוא בשנת **2025**.
+
+## נסו בעצמכם
+
+### אונליין
+
+<mark>נסו בחלון טקסט למטה (SQLite):</mark>
+
+```{.sql .interactive .leads_q11}
+-- Quick peek:
+SELECT *
+FROM leads
+LIMIT 10;
+
+-- SELECT *
+-- FROM sales
+-- LIMIT 10;
+```
+
+## תשובות
+
+שימו לב: תיבת האונליין היא **SQLite**, ולכן פונקציות “שנה” שונות מ-T‑SQL.
+
+### תשובה 1
+
+#### SQLite (האונליין)
+
+```{.sql .interactive .leads_q11}
+SELECT COUNT(DISTINCT lead_id) AS n_leads
+FROM leads
+WHERE source = 'Email'
+  AND strftime('%Y', created_date) = '2025';
+```
+
+#### T‑SQL (SQL Server)
+
+<details>
+<summary>הצג פתרון</summary>
+
+```{sql connection='sqlconn', echo=TRUE, eval=FALSE}
+SELECT COUNT(DISTINCT lead_id) AS n_leads
+FROM leads
+WHERE source = 'Email'
+  AND YEAR(created_date) = 2025;
+```
+
+</details>
+
+### תשובה 2
+
+#### SQLite (האונליין)
+
+```{.sql .interactive .leads_q11}
+SELECT SUM(s.amount) AS total_sales_amount
+FROM leads l
+JOIN sales s ON s.lead_id = l.lead_id
+WHERE l.source = 'Social Media'
+  AND strftime('%Y', s.closed_date) = '2025';
+```
+
+#### T‑SQL (SQL Server)
+
+<details>
+<summary>הצג פתרון</summary>
+
+```{sql connection='sqlconn', echo=TRUE, eval=FALSE}
+SELECT SUM(s.amount) AS total_sales_amount
+FROM leads l
+JOIN sales s ON s.lead_id = l.lead_id
+WHERE l.source = 'Social Media'
+  AND YEAR(s.closed_date) = 2025;
+```
+
+</details>
+
+```{r echo = FALSE, eval = FALSE}
+dbDisconnect(sqlconn)
+```
+

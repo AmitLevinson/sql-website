@@ -2,58 +2,66 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://sql.amitgrinson.com/about.html</loc>
-    <lastmod>2023-09-03T19:07:18.208Z</lastmod>
+    <lastmod>2026-01-29T19:43:08.153Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sql.amitgrinson.com/docs/ADD_NEW_QUESTION.html</loc>
+    <lastmod>2026-01-29T19:43:11.813Z</lastmod>
   </url>
   <url>
     <loc>https://sql.amitgrinson.com/index.html</loc>
-    <lastmod>2025-03-29T19:33:12.403Z</lastmod>
+    <lastmod>2026-02-22T19:41:28.557Z</lastmod>
   </url>
   <url>
     <loc>https://sql.amitgrinson.com/questions/1-consecutive-actions/index.html</loc>
-    <lastmod>2024-02-25T19:16:18.459Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sql.amitgrinson.com/website.html</loc>
-    <lastmod>2023-09-03T19:06:55.879Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sql.amitgrinson.com/questions/2-identical-different-payments/index.html</loc>
-    <lastmod>2024-02-25T19:18:04.593Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sql.amitgrinson.com/questions/3-ranking-without-window-function/index.html</loc>
-    <lastmod>2024-02-25T19:38:58.553Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sql.amitgrinson.com/questions/4-before-and-after/index.html</loc>
-    <lastmod>2024-02-25T19:47:53.566Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sql.amitgrinson.com/questions/5-extract-text-from-logs/index.html</loc>
-    <lastmod>2024-02-25T20:01:50.284Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sql.amitgrinson.com/questions/6-implementing-formulas/index.html</loc>
-    <lastmod>2024-12-28T18:31:42.874Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sql.amitgrinson.com/questions/q7-identifying-bots/index.html</loc>
-    <lastmod>2024-02-26T06:50:38.296Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sql.amitgrinson.com/questions/7-identifying-bots/index.html</loc>
-    <lastmod>2024-04-22T17:22:30.869Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sql.amitgrinson.com/questions/8-tracking-money-layering/index.html</loc>
-    <lastmod>2024-05-06T04:48:56.412Z</lastmod>
-  </url>
-  <url>
-    <loc>https://sql.amitgrinson.com/questions/9-Percentiles/index.html</loc>
-    <lastmod>2025-03-29T19:32:52.056Z</lastmod>
+    <lastmod>2026-01-29T19:43:14.973Z</lastmod>
   </url>
   <url>
     <loc>https://sql.amitgrinson.com/questions/10-conditional-grouping/index.html</loc>
-    <lastmod>2025-03-29T19:33:11.458Z</lastmod>
+    <lastmod>2026-02-22T09:14:25.347Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sql.amitgrinson.com/questions/11-leads-and-sales/index.html</loc>
+    <lastmod>2026-02-22T19:36:42.273Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sql.amitgrinson.com/questions/2-identical-different-payments/index.html</loc>
+    <lastmod>2026-01-29T19:43:19.658Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sql.amitgrinson.com/questions/3-ranking-without-window-function/index.html</loc>
+    <lastmod>2026-01-29T19:43:20.698Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sql.amitgrinson.com/questions/4-before-and-after/index.html</loc>
+    <lastmod>2026-01-29T19:43:21.842Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sql.amitgrinson.com/questions/5-extract-text-from-logs/index.html</loc>
+    <lastmod>2026-01-29T19:43:22.797Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sql.amitgrinson.com/questions/6-implementing-formulas/index.html</loc>
+    <lastmod>2026-01-29T19:43:23.690Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sql.amitgrinson.com/questions/7-identifying-bots/index.html</loc>
+    <lastmod>2026-01-29T19:43:27.120Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sql.amitgrinson.com/questions/8-tracking-money-layering/index.html</loc>
+    <lastmod>2026-01-29T19:43:28.154Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sql.amitgrinson.com/questions/9-Percentiles/index.html</loc>
+    <lastmod>2026-01-29T19:43:29.192Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sql.amitgrinson.com/website.html</loc>
+    <lastmod>2026-01-29T19:45:07.325Z</lastmod>
+  </url>
+  <url>
+    <loc>https://sql.amitgrinson.com/mock-interviews/index.html</loc>
+    <lastmod>2026-02-22T19:36:41.310Z</lastmod>
   </url>
 </urlset>

@@ -1,0 +1,19 @@
+# options specified here will apply to all posts in this folder
+
+image: featured.png
+card-style: "summary"
+
+# freeze computational output (so deploy doesn't require local runtimes)
+freeze: true
+
+# Enable banner style title blocks
+title-block-banner: true
+
+comments: 
+  utterances: 
+    repo: AmitLevinson/sql-website-comments
+
+format:
+  html:
+    include-after-body: ../footer.html
+

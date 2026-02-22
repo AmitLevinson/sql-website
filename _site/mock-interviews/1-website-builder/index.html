@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="">
-<meta name="dcterms.date" content="2023-07-20">
-<meta name="description" content="קטלוג לקוחות עם סטטוס תשלומים זהה או לפחות אחד שונה">
+<meta name="dcterms.date" content="2026-02-22">
+<meta name="description" content="תרגילי SQL משגרת העבודה של אנליסט">
 
-<title>שאילתות מהחיים - אפיון תשלומים זהים או שונים</title>
+<title>שאילתות מהחיים - ראיון דמה — Website builder (מוצר בונה אתרים)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -68,6 +68,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
 <link href="../../static/img/favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -77,6 +79,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/quarto-contrib/interactive-sql-1.0.0/interactive-sql.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -96,18 +99,51 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit"
   }
 }</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-YRDSPV195D"></script>
+
+<script type="text/plain" cookie-consent="tracking">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-YRDSPV195D', { 'anonymize_ip': true});
+</script>
+
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({
+  "notice_banner_type":"simple",
+  "consent_type":"implied",
+  "palette":"light",
+  "language":"en",
+  "page_load_consent_levels":["strictly-necessary","functionality","tracking","targeting"],
+  "notice_banner_reject_button_hide":false,
+  "preferences_center_close_button_hide":false,
+  "website_name":""
+  });
+});
+</script> 
+  
+<script src="https://unpkg.com/@antonz/sqlite@3.40.0/dist/sqlite3.js"></script>
+<script src="https://unpkg.com/sqlime@0.1.3/dist/sqlime-db.js"></script>
+<script src="https://unpkg.com/sqlime@0.1.3/dist/sqlime-examples.js"></script>
 
 
 <link rel="stylesheet" href="../../styles.css">
-<meta property="og:title" content="שאילתות מהחיים">
-<meta property="og:description" content="תרגילי SQL משגרת העבודה של אנליסט">
-<meta property="og:image" content="https://sql.amitgrinson.com/questions/2-identical-different-outcomes/static/img/banner.png">
+<meta property="og:title" content="שאילתות מהחיים - ראיון דמה — Website builder (מוצר בונה אתרים)">
+<meta property="og:description" content="תרגיל Mock interview משולב: SQL + חשיבה מוצרית. ירידת המרה בעקבות ספייק תנועה מסושיאל.">
+<meta property="og:image" content="https://sql.amitgrinson.com/mock-interviews/1-website-builder/featured.png">
 <meta property="og:site-name" content="שאילתות מהחיים">
-<meta name="twitter:title" content="שאילתות מהחיים">
-<meta name="twitter:description" content="תרגילי SQL משגרת העבודה של אנליסט">
-<meta name="twitter:image" content="https://sql.amitgrinson.com/questions/2-identical-different-outcomes/static/img/banner.png">
+<meta property="og:locale" content="he_IL">
+<meta property="og:image:height" content="630">
+<meta property="og:image:width" content="1200">
+<meta name="twitter:title" content="שאילתות מהחיים - ראיון דמה — Website builder (מוצר בונה אתרים)">
+<meta name="twitter:description" content="תרגיל Mock interview משולב: SQL + חשיבה מוצרית. ירידת המרה בעקבות ספייק תנועה מסושיאל.">
+<meta name="twitter:image" content="https://sql.amitgrinson.com/mock-interviews/1-website-builder/featured.png">
 <meta name="twitter:creator" content="@Amit_Levinson">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image-height" content="630">
+<meta name="twitter:image-width" content="1200">
 </head>
 
 <body class="nav-fixed">
@@ -151,14 +187,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">אפיון תשלומים זהים או שונים</h1>
+      <h1 class="title">ראיון דמה — Website builder (מוצר בונה אתרים)</h1>
                   <div>
         <div class="description">
-          <p>קטלוג לקוחות עם סטטוס תשלומים זהה או לפחות אחד שונה</p>
+          <p>תרגיל Mock interview משולב: SQL + חשיבה מוצרית. ירידת המרה בעקבות ספייק תנועה מסושיאל.</p>
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">קל</div>
+                <div class="quarto-category">Mock interview</div>
               </div>
                   </div>
   </div>
@@ -170,7 +206,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">July 20, 2023</p>
+        <p class="date">February 22, 2026</p>
       </div>
     </div>
     
@@ -186,10 +222,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#הדאטה" id="toc-הדאטה" class="nav-link active" data-scroll-target="#הדאטה">הדאטה</a></li>
-  <li><a href="#שאלה" id="toc-שאלה" class="nav-link" data-scroll-target="#שאלה">שאלה</a></li>
-  <li><a href="#יצירת-הטבלה" id="toc-יצירת-הטבלה" class="nav-link" data-scroll-target="#יצירת-הטבלה">יצירת הטבלה</a></li>
-  <li><a href="#תשובה" id="toc-תשובה" class="nav-link" data-scroll-target="#תשובה">תשובה</a></li>
+  <li><a href="#הסיפור-context" id="toc-הסיפור-context" class="nav-link active" data-scroll-target="#הסיפור-context">הסיפור (Context)</a></li>
+  <li><a href="#הדאטה" id="toc-הדאטה" class="nav-link" data-scroll-target="#הדאטה">הדאטה</a></li>
+  <li><a href="#נסו-בעצמכם-sqlite-אונליין" id="toc-נסו-בעצמכם-sqlite-אונליין" class="nav-link" data-scroll-target="#נסו-בעצמכם-sqlite-אונליין">נסו בעצמכם (SQLite אונליין)</a></li>
+  <li><a href="#שאלות" id="toc-שאלות" class="nav-link" data-scroll-target="#שאלות">שאלות</a></li>
   </ul>
 </nav>
     </div>
@@ -199,202 +235,131 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>ברוכים הבאים לתרגיל השני!</p>
+<section id="הסיפור-context" class="level2">
+<h2 class="anchored" data-anchor-id="הסיפור-context">הסיפור (Context)</h2>
+<p>דמיינו מוצר <strong>consumer website-builder</strong> שמאפשר לאנשים לבנות אתר לעצמם. יוזר מגיע, נרשם, ונכנס לזרימה של יצירת אתר. חלק מהיוזרים מסיימים את הזרימה ויוצרים אתר בפועל — זה ה-<em>conversion</em> המרכזי שלנו.</p>
+</section>
 <section id="הדאטה" class="level2">
 <h2 class="anchored" data-anchor-id="הדאטה">הדאטה</h2>
-<p>בטבלה למטה ניתן לראות פירוט תשלומים של יוזרים:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> TOP <span class="dv">10</span> <span class="op">*</span> <span class="kw">FROM</span> payments_ag_2;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="knitsql-table">
-<table class="table table-sm table-striped small">
-<caption>Displaying records 1 - 10</caption>
-<thead>
-<tr class="header">
-<th style="text-align: right;">user_id</th>
-<th style="text-align: left;">date</th>
-<th style="text-align: left;">status</th>
-<th style="text-align: right;">amount</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">2023-06-01</td>
-<td style="text-align: left;">Load</td>
-<td style="text-align: right;">234</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">2023-06-14</td>
-<td style="text-align: left;">Cancel</td>
-<td style="text-align: right;">42</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">2023-06-16</td>
-<td style="text-align: left;">Load</td>
-<td style="text-align: right;">52</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">2023-06-22</td>
-<td style="text-align: left;">Load</td>
-<td style="text-align: right;">6</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">2023-06-23</td>
-<td style="text-align: left;">Load</td>
-<td style="text-align: right;">36</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">2023-06-24</td>
-<td style="text-align: left;">Pending</td>
-<td style="text-align: right;">74</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">2</td>
-<td style="text-align: left;">2023-06-03</td>
-<td style="text-align: left;">Load</td>
-<td style="text-align: right;">58</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2</td>
-<td style="text-align: left;">2023-06-05</td>
-<td style="text-align: left;">Load</td>
-<td style="text-align: right;">33</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">2</td>
-<td style="text-align: left;">2023-06-09</td>
-<td style="text-align: left;">Load</td>
-<td style="text-align: right;">65</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2</td>
-<td style="text-align: left;">2023-06-10</td>
-<td style="text-align: left;">Load</td>
-<td style="text-align: right;">74</td>
-</tr>
-</tbody>
-</table>
-</div>
+<p>קובץ הדאטה: <code>user_events.csv</code> (שורה אחת לכל משתמש/ביקור).</p>
+<p>עמודות:</p>
+<ul>
+<li><code>user_id</code>: מזהה משתמש (int)</li>
+<li><code>visit_date</code>: תאריך כניסה לפאנל (date)</li>
+<li><code>created_site_date</code>: תאריך יצירת אתר (date, יכול להיות NULL)</li>
+<li><code>source</code>: <code>organic</code> / <code>email</code> / <code>paid_search</code> / <code>social</code></li>
+<li><code>device</code>: <code>desktop</code> / <code>mobile</code> / <code>tablet</code></li>
+<li><code>country</code>: קוד מדינה</li>
+</ul>
+</section>
+<section id="נסו-בעצמכם-sqlite-אונליין" class="level2">
+<h2 class="anchored" data-anchor-id="נסו-בעצמכם-sqlite-אונליין">נסו בעצמכם (SQLite אונליין)</h2>
+<p><mark>החלון למטה משתמש ב-SQLite, אבל המשימות מוגדרות כ-PostgreSQL/BigQuery. זה בסדר—כאן המטרה היא לחקור את הנתונים.</mark></p>
+<div class="interactive-sql">
+<div class="sourceCode" id="cb1"><pre class="sourceCode sql interactive website_builder_mi1 code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Quick peek:</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> user_events</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">LIMIT</span> <span class="dv">10</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="שאלה" class="level2">
-<h2 class="anchored" data-anchor-id="שאלה">שאלה</h2>
-<p>עבור כל יוזר החזר טבלה עם מספר התשלומים שהוא קיבל, עמודה המציינת האם כל התשלומים שהוא קיבל הם עם סטטוס ‘Load’ (1 כן, 0 לא), האם מספר התשלומים שנטענו היה גדול ממספר התשלומים שבוטלו (1 כן, 0 לא) והאם יש לו לפחות תשלום אחד שהוא ‘Pending’ (1 כן, 0 לא)</p>
-<p><strong>בהצלחה!</strong></p>
-</section>
-<section id="יצירת-הטבלה" class="level2">
-<h2 class="anchored" data-anchor-id="יצירת-הטבלה">יצירת הטבלה</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2" style="max-height: 200px;overflow: scroll;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>DROP table <span class="cf">if</span> exists payments_ag_2;</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>CREATE TABLE payments_ag_2</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    ([user_id] int, [date] date, [status] <span class="fu">varchar</span>(<span class="dv">7</span>), [amount] int)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>;</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>INSERT INTO payments_ag_2</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    ([user_id], [date], [status], [amount])</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>VALUES</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="st">'2023-06-01'</span>, <span class="st">'Load'</span>, <span class="dv">234</span>),</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="st">'2023-06-14'</span>, <span class="st">'Cancel'</span>, <span class="dv">42</span>),</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="st">'2023-06-16'</span>, <span class="st">'Load'</span>, <span class="dv">52</span>),</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="st">'2023-06-22'</span>, <span class="st">'Load'</span>, <span class="dv">6</span>),</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="st">'2023-06-23'</span>, <span class="st">'Load'</span>, <span class="dv">36</span>),</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span>, <span class="st">'2023-06-24'</span>, <span class="st">'Pending'</span>, <span class="dv">74</span>),</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2</span>, <span class="st">'2023-06-03'</span>, <span class="st">'Load'</span>, <span class="dv">58</span>),</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2</span>, <span class="st">'2023-06-05'</span>, <span class="st">'Load'</span>, <span class="dv">33</span>),</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2</span>, <span class="st">'2023-06-09'</span>, <span class="st">'Load'</span>, <span class="dv">65</span>),</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2</span>, <span class="st">'2023-06-10'</span>, <span class="st">'Load'</span>, <span class="dv">74</span>),</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2</span>, <span class="st">'2023-06-14'</span>, <span class="st">'Load'</span>, <span class="dv">98</span>),</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">2</span>, <span class="st">'2023-06-18'</span>, <span class="st">'Load'</span>, <span class="dv">14</span>),</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3</span>, <span class="st">'2023-06-01'</span>, <span class="st">'Cancel'</span>, <span class="dv">52</span>),</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3</span>, <span class="st">'2023-06-04'</span>, <span class="st">'Cancel'</span>, <span class="dv">5</span>),</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">3</span>, <span class="st">'2023-06-07'</span>, <span class="st">'Pending'</span>, <span class="dv">99</span>),</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">4</span>, <span class="st">'2023-06-09'</span>, <span class="st">'Load'</span>, <span class="dv">100</span>),</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">4</span>, <span class="st">'2023-06-10'</span>, <span class="st">'Cancel'</span>, <span class="dv">15</span>),</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">5</span>, <span class="st">'2023-06-15'</span>, <span class="st">'Load'</span>, <span class="dv">20</span>),</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">6</span>, <span class="st">'2023-06-16'</span>, <span class="st">'Pending'</span>, <span class="dv">21</span>),</span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">6</span>, <span class="st">'2023-06-16'</span>, <span class="st">'Load'</span>, <span class="dv">42</span>)</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="שאלות" class="level2">
+<h2 class="anchored" data-anchor-id="שאלות">שאלות</h2>
+<style>
+/* Make chart outputs span the available page width (no horizontal scrolling). */
+.quarto-figure img.figure-img { width: 100%; height: auto; }
+</style>
+<div class="callout callout-style-default callout-note callout-titled" title="שאלה 1 — SQL (a + b)">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
+<div class="callout-title-container flex-fill">
+שאלה 1 — SQL (a + b)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<section id="a-חישוב-מקור-כניסה" class="level4">
+<h4 class="anchored" data-anchor-id="a-חישוב-מקור-כניסה">1.a — חישוב מקור כניסה</h4>
+<p>עבור כל חודש, זהו את <strong>התאריך הראשון</strong> שבו עברנו <strong>20 משתמשים מצטברים</strong> שיצרו אתר באותו חודשעבור כל חודש, החזירו את ה-<code>source</code> עם הכי הרבה הרשמות ואת האחוז היחסי של אותם נרשמים מכלל הנרשמים באותו חודש.</p>
 </section>
-<section id="תשובה" class="level2">
-<h2 class="anchored" data-anchor-id="תשובה">תשובה</h2>
-<p>(דרך הפתרון תפורסם עם השאלה הבאה)</p>
-<div class="cell">
-<div class="knitsql-table">
-<table class="table table-sm table-striped small">
-<caption>6 records</caption>
-<colgroup>
-<col style="width: 10%">
-<col style="width: 14%">
-<col style="width: 14%">
-<col style="width: 32%">
-<col style="width: 27%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">user_id</th>
-<th style="text-align: right;">n_payments</th>
-<th style="text-align: right;">all_loaded</th>
-<th style="text-align: right;">more_loaded_than_failed</th>
-<th style="text-align: right;">has_pending_payment</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">1</td>
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">2</td>
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">3</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">4</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">5</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">6</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-</tr>
-</tbody>
-</table>
+<section id="b-הגדרת-המרה" class="level4">
+<h4 class="anchored" data-anchor-id="b-הגדרת-המרה">1.b — הגדרת המרה</h4>
+<p>הגדירו וחישבו <strong>שיעור המרה חודשי</strong> (Monthly conversion rate).</p>
+</section>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="שאלה 2 — ירידה בשיעור ההמרה (ניתוח + ויזואליזציה)">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+שאלה 2 — ירידה בשיעור ההמרה (ניתוח + ויזואליזציה)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<section id="a-מבט-על-שיעור-ההמרה" class="level4 callout-body-container callout-body">
+<h4 class="anchored" data-anchor-id="a-מבט-על-שיעור-ההמרה">2.a — מבט על שיעור ההמרה</h4>
+<p>מוצג לכם גרף חודשי של <strong>שיעור ההמרה</strong> לאורך התקופה.</p>
+<p>מה אתם רואים? איך הייתם מנתחים/ות את הירידה בחודש האחרון?</p>
+<div class="cell" data-fig-dpi="200" data-fig-height="2.8" data-fig-width="11" data-execution_count="1">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-2-output-1.png" width="1046" height="259" class="figure-img"></p>
+<figcaption class="figure-caption">Monthly conversion rate</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<details>
+<summary>
+מאיפה הירידה מגיעה?
+</summary>
+<p>מוצג לכם גרף חודשי שמפרק את ההמרה ל:</p>
+<ul>
+<li><strong>נרשמו/נכנסו לפאנל</strong> (Signups/entrants)</li>
+<li><strong>יצרו אתר</strong></li>
+</ul>
+<p>מה הבעיה בהמרה? מה הייתם מנסים כדי לשפר?</p>
+<div class="cell" data-fig-dpi="200" data-fig-height="2.8" data-fig-width="11" data-execution_count="2">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-3-output-1.png" width="1046" height="259" class="figure-img"></p>
+<figcaption class="figure-caption">Monthly numerator vs denominator: entrants vs site creators</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</details>
+</section>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="שאלה 3 — Product sense">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+שאלה 3 — Product sense
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>ה-PM מגיע אליכם עם רעיון מהפכני לאתר: “נאפשר למשתמש לכתוב תיאור קצר (פרומפט), והמערכת תייצר אתר ראשוני אוטומטית, במקום (או לפני) תהליך ה-Drag-and-drop הקיים. תעזרו לו להעריך את הרעיון והציעו דרך לבחון את זה.</p>
+</div>
 </div>
 </div>
 
 
+<sqlime-db name="website_builder_mi1" path="https://raw.githubusercontent.com/AmitLevinson/sql-website/main/mock-interviews/1-website-builder/user_events_seed.sql"></sqlime-db>
+<sqlime-examples db="website_builder_mi1" selector="div.interactive-sql pre.website_builder_mi1 code" editable=""></sqlime-examples>
 </section>
 
 </main> <!-- /main -->
@@ -635,7 +600,19 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <script src="https://utteranc.es/client.js" repo="AmitLevinson/sql-website-comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center"><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
 
 
 
+<script src="../../site_libs/quarto-contrib/interactive-sql-1.0.0/interactive-sql.js"></script>
 </body></html>

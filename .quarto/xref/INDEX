@@ -61,5 +61,17 @@
   },
   "questions/10-conditional-grouping/index.qmd": {
     "index.html": "11158fe6"
+  },
+  "docs/ADD_NEW_QUESTION.qmd": {
+    "ADD_NEW_QUESTION.html": "27072fbc"
+  },
+  "questions/11-leads-and-sales/index.qmd": {
+    "index.html": "47482345"
+  },
+  "mock-interviews/1-website-builder/index.qmd": {
+    "index.html": "13bda117"
+  },
+  "mock-interviews/index.qmd": {
+    "index.html": "a3ab1596"
   }
 }

@@ -2,7 +2,7 @@
 title: "מקבץ תרגילים ממקרים שהיו"
 subtitle: "תרגילי SQL משגרת העבודה של אנליסט"
 listing:
-  contents: questions
+  contents: [questions, mock-interviews]
   sort: "date desc"
   type: default
   categories: true

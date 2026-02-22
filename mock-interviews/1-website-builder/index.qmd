@@ -1,0 +1,169 @@
+---
+title: "ראיון דמה — Website builder (מוצר בונה אתרים)"
+description: |
+  תרגיל Mock interview משולב: SQL + חשיבה מוצרית. ירידת המרה בעקבות ספייק תנועה מסושיאל.
+author: ""
+date: "2026-02-21"
+toc: true
+categories: [Mock interview]
+image: featured.png
+draft: true
+filters:
+  - interactive-sql
+databases:
+  - name: website_builder_mi1
+    path: "https://raw.githubusercontent.com/AmitLevinson/sql-website/main/mock-interviews/1-website-builder/user_events_seed.sql"
+---
+
+## הסיפור (Context)
+
+דמיינו מוצר **consumer website-builder** שמאפשר לאנשים לבנות אתר לעצמם. יוזר מגיע, נרשם, ונכנס לזרימה של יצירת אתר. חלק מהיוזרים מסיימים את הזרימה ויוצרים אתר בפועל — זה ה-*conversion* המרכזי שלנו.
+
+
+## הדאטה
+
+קובץ הדאטה: `user_events.csv` (שורה אחת לכל משתמש/ביקור).
+
+עמודות:
+
+- `user_id`: מזהה משתמש (int)
+- `visit_date`: תאריך כניסה לפאנל (date)
+- `created_site_date`: תאריך יצירת אתר (date, יכול להיות NULL)
+- `source`: `organic` / `email` / `paid_search` / `social`
+- `device`: `desktop` / `mobile` / `tablet`
+- `country`: קוד מדינה
+
+
+## נסו בעצמכם (SQLite אונליין)
+
+<mark>החלון למטה משתמש ב-SQLite, אבל המשימות מוגדרות כ-PostgreSQL/BigQuery. זה בסדר—כאן המטרה היא לחקור את הנתונים.</mark>
+
+```{.sql .interactive .website_builder_mi1}
+-- Quick peek:
+SELECT *
+FROM user_events
+LIMIT 10;
+```
+
+
+## שאלות
+
+```{=html}
+<style>
+/* Make chart outputs span the available page width (no horizontal scrolling). */
+.quarto-figure img.figure-img { width: 100%; height: auto; }
+</style>
+```
+
+::: {.callout-note collapse="true" title="שאלה 1 — SQL (a + b)"}
+
+#### 1.a — חישוב מקור כניסה
+
+עבור כל חודש, זהו את **התאריך הראשון** שבו עברנו **20 משתמשים מצטברים** שיצרו אתר באותו חודשעבור כל חודש, החזירו את ה-`source` עם הכי הרבה הרשמות ואת האחוז היחסי של אותם נרשמים מכלל הנרשמים באותו חודש.
+
+#### 1.b — הגדרת המרה
+
+הגדירו וחישבו **שיעור המרה חודשי** (Monthly conversion rate).
+
+:::
+
+::: {.callout-note collapse="true" title="שאלה 2 — ירידה בשיעור ההמרה (ניתוח + ויזואליזציה)"}
+
+#### 2.a — מבט על שיעור ההמרה
+
+מוצג לכם גרף חודשי של **שיעור ההמרה** לאורך התקופה.
+
+מה אתם רואים? איך הייתם מנתחים/ות את הירידה בחודש האחרון?
+
+```{python}
+#| echo: false
+#| warning: false
+#| message: false
+#| out-width: "100%"
+#| fig-width: 11
+#| fig-height: 2.8
+#| fig-dpi: 200
+#| fig-cap: "Monthly conversion rate"
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv("user_events.csv", parse_dates=["visit_date", "created_site_date"])
+df["month"] = df["visit_date"].dt.to_period("M").dt.to_timestamp()
+
+monthly = df.groupby("month").agg(
+    signups=("user_id", "size"),
+    created_sites=("created_site_date", lambda s: s.notna().sum()),
+)
+monthly["conversion_rate"] = monthly["created_sites"] / monthly["signups"]
+
+plt.rcParams.update({"figure.facecolor": "white", "axes.facecolor": "white", "axes.grid": False})
+fig, ax = plt.subplots(figsize=(11, 2.8))
+
+x = monthly.index
+ax.plot(x, monthly["conversion_rate"], color="#d62728", linewidth=2.2, marker="o", markersize=4)
+ax.set_ylabel("Monthly conversion rate")
+ax.set_ylim(0, max(0.15, float(monthly["conversion_rate"].max()) * 1.6))
+ax.set_xticks(list(x))
+ax.set_xticklabels([d.strftime("%Y-%m") for d in x])
+ax.spines["top"].set_visible(False)
+ax.spines["right"].set_visible(False)
+ax.grid(False)
+fig.tight_layout()
+plt.show()
+```
+
+<details>
+<summary> מאיפה הירידה מגיעה? </summary>
+
+  
+  
+מוצג לכם גרף חודשי שמפרק את ההמרה ל:
+
+- **נרשמו/נכנסו לפאנל** (Signups/entrants)
+- **יצרו אתר**
+
+מה הבעיה בהמרה? מה הייתם מנסים כדי לשפר?
+
+```{python}
+#| echo: false
+#| warning: false
+#| message: false
+#| out-width: "100%"
+#| fig-width: 11
+#| fig-height: 2.8
+#| fig-dpi: 200
+#| fig-cap: "Monthly numerator vs denominator: entrants vs site creators"
+
+import matplotlib.pyplot as plt
+
+plt.rcParams.update({"figure.facecolor": "white", "axes.facecolor": "white", "axes.grid": False})
+fig, ax = plt.subplots(figsize=(11, 2.8))
+
+ax.plot(x, monthly["signups"], color="#1f77b4", linewidth=2.2, marker="o", markersize=4, label="Entrants")
+ax.plot(x, monthly["created_sites"], color="#2ca02c", linewidth=2.2, marker="o", markersize=4, label="Site creators")
+ax.set_ylabel("Users per month")
+ax.set_xticks(list(x))
+ax.set_xticklabels([d.strftime("%Y-%m") for d in x])
+ax.spines["top"].set_visible(False)
+ax.spines["right"].set_visible(False)
+ax.grid(False)
+ax.legend(loc="upper left", frameon=False, ncol=2)
+
+fig.tight_layout()
+plt.show()
+```
+</details>
+
+:::
+
+::: {.callout-note collapse="true" title="שאלה 3 — Product sense"}
+
+ה-PM מגיע אליכם עם רעיון מהפכני לאתר: "נאפשר למשתמש לכתוב תיאור קצר (פרומפט), והמערכת תייצר אתר ראשוני אוטומטית, במקום (או לפני) תהליך ה-Drag-and-drop הקיים.
+תעזרו לו להעריך את הרעיון והציעו דרך לבחון את זה.
+
+
+
+:::
+
+

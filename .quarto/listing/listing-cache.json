@@ -1,7 +1,11 @@
 {
   "listingMap": {
     "index.qmd": [
-      "questions"
+      "questions",
+      "mock-interviews"
+    ],
+    "mock-interviews\\index.qmd": [
+      "."
     ]
   }
 }
