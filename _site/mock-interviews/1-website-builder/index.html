@@ -124,9 +124,10 @@ cookieconsent.run({
 });
 </script> 
   
-<script src="https://unpkg.com/@antonz/sqlite@3.40.0/dist/sqlite3.js"></script>
-<script src="https://unpkg.com/sqlime@0.1.3/dist/sqlime-db.js"></script>
-<script src="https://unpkg.com/sqlime@0.1.3/dist/sqlime-examples.js"></script>
+<!-- Use jsDelivr instead of unpkg: unpkg intermittently 500s on sqlite3.wasm, which breaks the Run UI in production. -->
+<script src="https://cdn.jsdelivr.net/npm/@antonz/sqlite@3.40.0/dist/sqlite3.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sqlime@0.1.3/dist/sqlime-db.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sqlime@0.1.3/dist/sqlime-examples.js"></script>
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -309,7 +310,7 @@ cookieconsent.run({
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-2-output-1.png" width="1046" height="259" class="figure-img"></p>
+<p><img src="index_files/figure-html/cell-2-output-1.png" class="img-fluid figure-img"></p>
 <figcaption class="figure-caption">Monthly conversion rate</figcaption>
 </figure>
 </div>
@@ -329,7 +330,7 @@ cookieconsent.run({
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-3-output-1.png" width="1046" height="259" class="figure-img"></p>
+<p><img src="index_files/figure-html/cell-3-output-1.png" class="img-fluid figure-img"></p>
 <figcaption class="figure-caption">Monthly numerator vs denominator: entrants vs site creators</figcaption>
 </figure>
 </div>
